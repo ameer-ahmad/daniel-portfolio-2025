@@ -1,5 +1,121 @@
 @import "tailwindcss";
 
+/* Black */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-Black.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-BlackIt.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-BlackIt.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-Bold.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-BoldIt.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-BoldIt.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Semibold */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-Semibold.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-SemiboldIt.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-SemiboldIt.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-Regular.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-It.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-It.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-Light.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-LightIt.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-LightIt.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ExtraLight */
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-ExtraLight.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif Pro';
+  src: url('/fonts/SourceSerifPro-ExtraLightIt.woff2') format('woff2'),
+       url('/fonts/SourceSerifPro-ExtraLightIt.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -22,5 +138,18 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.header-text {
+  font-family: 'Source Serif Pro', serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.shadow-glow {
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
 }
