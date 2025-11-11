@@ -20,41 +20,70 @@ export default function NavBar() {
         damping: 20,
         mass: 1,
       }}
-      className="bg-white text-[#1c1c1c]  px-[20px] shadow-glow"
+      className="bg-white text-[#1c1c1c]  px-[20px] shadow-glow overflow-hidden relative z-[999]"
     >
       <div className="flex items-center justify-between w-full h-[60px]">
-        <div className="flex items-center gap-[210px]">
+        <div className="flex items-start gap-[210px] h-[20px] w-[473px] overflow-hidden relative">
           <span className="header-text w-[217px]">Daniel Shui</span>
-          <span
-            onClick={toggleInfo}
-            className="header-text flex items-center gap-[2px] cursor-pointer"
+          <motion.div
+            initial={{ top: "-20px" }}
+            animate={{ top: isInfoOpen ? 0 : "-20px" }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            }}
+            className="flex flex-col absolute right-0"
           >
-            INFO
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="10"
-              height="11"
-              viewBox="0 0 10 11"
-              fill="none"
+            <span
+              onClick={toggleInfo}
+              className="header-text flex items-center gap-[2px] cursor-pointer h-full"
             >
-              <rect
-                x="4.25"
-                y="7"
-                width="1.5"
-                height="1.5"
-                stroke="#1C1C1C"
-                strokeWidth="1.5"
-              />
-              <rect
-                x="4.25"
-                y="2"
-                width="1.5"
-                height="1.5"
-                stroke="#1C1C1C"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </span>
+              CLOSE
+              
+            </span>
+            <motion.span
+              whileHover="hovered"
+              initial="initial"
+              onClick={toggleInfo}
+              className="header-text flex items-center gap-[2px] cursor-pointer h-full"
+            >
+              INFO
+              <motion.span
+                className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]"
+              >
+                <motion.span
+                  variants={{
+                    initial: { scale: 1 },
+                    hovered: { scale: 0.666666666, transition: {duration: 0.25, ease: 'easeOut'} },
+                  }}
+                  className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    initial: { scale: 1 },
+                    hovered: { scale: 0.666666666, transition: {duration: 0.25, ease: 'easeOut'} },
+                  }}
+                  className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    initial: { scale: 1 },
+                    hovered: { scale: 0.666666666, transition: {duration: 0.25, ease: 'easeOut'} },
+                  }}
+                  className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    initial: { scale: 1 },
+                    hovered: { scale: 0.666666666, transition: {duration: 0.25, ease: 'easeOut'} },
+                  }}
+                  className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                ></motion.span>
+              </motion.span>
+            </motion.span>
+          </motion.div>
         </div>
         <div className="flex items-center gap-[40px] pr-[8px]">
           <span className="header-text cursor-pointer">Work</span>
@@ -63,9 +92,10 @@ export default function NavBar() {
       </div>
       <div className="flex mt-[20px] justify-start gap-[20px] w-full h-[279px] text-[14px] line-height-[20px]">
         <motion.span
-          initial={{ color: "rgba(0, 0, 0, 0)" }}
+          initial={{ color: "rgba(0, 0, 0, 0)", pointerEvents: "none" }}
           animate={{
             color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+            pointerEvents: isInfoOpen ? "auto" : "none",
           }}
           transition={{
             type: "spring",
@@ -89,9 +119,10 @@ export default function NavBar() {
           more.
         </motion.span>
         <motion.div
-          initial={{ color: "rgba(0, 0, 0, 0)" }}
+          initial={{ color: "rgba(0, 0, 0, 0)", pointerEvents: "none" }}
           animate={{
             color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+            pointerEvents: isInfoOpen ? "auto" : "none",
           }}
           transition={{
             type: "spring",

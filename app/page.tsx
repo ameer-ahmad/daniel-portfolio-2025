@@ -1,7 +1,6 @@
-import NavBar from "@/components/NavBar";
+import Home from "@/components/Home"; // your client component
 
-export default function Home() {
-  return (
-    <NavBar />
-  );
+export default async function Page() {
+
+  return <Home />;
 }
