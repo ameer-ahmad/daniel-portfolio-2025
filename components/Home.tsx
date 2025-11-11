@@ -18,11 +18,6 @@ export default function Home() {
     setTopOffset(activeProject?.offsetTop || 0)
   }, [activeId]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("showGif");
-    }, 1000);
-  }, []);
 
   return (
     <>
