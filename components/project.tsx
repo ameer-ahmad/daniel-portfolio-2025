@@ -14,7 +14,7 @@ export default function Project({
       <div className="w-full h-full relative">
         {project.image && (
           <Image
-            src={`/images${project.image}`}
+            src={`/daniel-portfolio-2025/images${project.image}`}
             alt={project.title}
             fill
             sizes="100%"

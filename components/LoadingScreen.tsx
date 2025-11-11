@@ -43,7 +43,7 @@ export default function LoadingScreen() {
         className="h-[125px] w-[125px] flex relative"
       >
         <Image
-          src="./images/running-loader.gif"
+          src="/daniel-portfolio-2025/images/running-loader.gif"
           alt="Loading"
           width={125}
           height={125}
