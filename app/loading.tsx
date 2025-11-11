@@ -15,7 +15,7 @@ export default function Loading() {
 
 
   return (
-    <div className="w-screen h-screen bg-white z-[9999] absolute top-0 left-0 flex justify-center items-center">
+    <div className="w-screen h-screen pointer-events-none bg-white z-[9999] absolute top-0 left-0 flex justify-center items-center">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: showGif ? 1 : 0 }}
