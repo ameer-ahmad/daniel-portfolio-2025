@@ -17,8 +17,6 @@ export default function Home() {
     const activeProject = document.getElementById(activeId)
     setTopOffset(activeProject?.offsetTop || 0)
   }, [activeId]);
-
-
   return (
     <>
     <LoadingScreen />
