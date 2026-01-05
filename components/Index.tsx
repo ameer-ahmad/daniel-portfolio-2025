@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { useEffect } from "react";
+import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 
 export default function Index() {
   const { activeId, setActiveId, isActive } = useActiveProject();
-
+  const { loadingDone } = useLoadingDone();
   useEffect(() => {
     if (!activeId && Object.keys(projects).length > 0) {
       setActiveId(Object.keys(projects)[0]);
@@ -18,13 +19,15 @@ export default function Index() {
 
   return (
     <motion.div
-      initial={{ width: "142px" }}
+      initial={{ width: "142px", x: "-40px", opacity: 0 }}
+      animate={{ x: loadingDone ? 0 : "-40px", opacity: loadingDone ? 1 : 0 }}
       whileHover={{ width: "346px" }}
       transition={{
         type: "spring",
         stiffness: 80,
         damping: 20,
         mass: 1,
+        duration: 0.8,
       }}
       className="p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
     >

@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 
 export default function LoadingScreen() {
+  const setLoadingDone = useLoadingDone((s) => s.setLoadingDone);
   const [showGif, setShowGif] = useState(false);
   const [showText, setShowText] = useState(false);
   const [slideText, setSlideText] = useState(false);
@@ -25,8 +27,9 @@ export default function LoadingScreen() {
       setHideText(true);
     }, 6750);
     setTimeout(() => {
-        setShowContent(true);
-      }, 7750);
+      setLoadingDone(true);
+      setShowContent(true);
+    }, 7750);
   }, []);
 
   return (
@@ -43,7 +46,11 @@ export default function LoadingScreen() {
         className="h-[125px] w-[125px] flex relative"
       >
         <Image
-          src="/daniel-portfolio-2025/images/running-loader.gif"
+          src={`${
+            process.env.NODE_ENV === "development"
+              ? "/"
+              : "/daniel-portfolio-2025/"
+          }images/running-loader.gif`}
           alt="Loading"
           width={125}
           height={125}

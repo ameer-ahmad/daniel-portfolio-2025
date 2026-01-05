@@ -2,19 +2,23 @@
 
 import { motion } from "framer-motion";
 import { ProjectType } from "@/data/projects";
+import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 
 export default function Information({
   project,
 }: {
   project: ProjectType[keyof ProjectType];
 }) {
+  const { loadingDone } = useLoadingDone();
   return (
     <motion.div
-      initial={{ width: "142px" }}
+      initial={{ width: "142px", x: "-90px", opacity: 0 }}
+      animate={{ x: loadingDone ? 0 : "-90px", opacity: loadingDone ? 1 : 0 }}
       whileHover={{ width: "346px" }}
       transition={{
         type: "spring",
         stiffness: 80,
+        duration: 0.8,
         damping: 20,
         mass: 1,
       }}
