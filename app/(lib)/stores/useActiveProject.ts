@@ -6,7 +6,7 @@ type ActiveProjectState = {
   /** store just the id/slug; components can look up the full project object */
   activeId: string | "exhibition-poster";
 
-  playActive: Boolean;
+  playActive: boolean;
 
   setPlayActive: (active: boolean) => void;
 

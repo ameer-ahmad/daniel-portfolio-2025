@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import NavBar from "@/components/NavBar";
+import FontLoader from "@/components/FontLoader";
 import "./globals.css";
 
 
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body
         className={`antialiased !bg-white`}
       >
+        <FontLoader />
         <NavBar />
         {children}
       </body>

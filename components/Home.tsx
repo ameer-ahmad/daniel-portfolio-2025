@@ -6,7 +6,7 @@ import Project from "@/components/project";
 import { projects } from "@/data/projects";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import Play from "@/components/Play";
 
