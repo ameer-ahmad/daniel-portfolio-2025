@@ -111,7 +111,7 @@ export default function Play() {
           className="absolute top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
         >
           <span>
-            {currentIndex + 1}/{playArray.length}
+            {String(currentIndex + 1).padStart(2, '0')}/{String(playArray.length).padStart(2, '0')}
           </span>
           <span>{currentItem.title}</span>
         </motion.div>

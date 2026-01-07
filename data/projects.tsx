@@ -2,136 +2,92 @@ export type ProjectType = {
   [key: string]: {
     id: number;
     title: string;
+    subtitle: string;
     desc: string;
-    image?: string;
-    mobile?: string;
-    bg: string;
+    images?: (string | string[])[];
     video?: string;
     date?: string;
     details?: string;
-    extra?: string;
+    extra: string;
   };
 };
 
 export const projects: ProjectType = {
-  "exhibition-poster": {
+  "chicago-bulls": {
     id: 1,
-    title: "Exhibition poster",
-    desc: "Pluriversal Typography in Local and Global Contexts",
-    image: "/hongik-poster.jpg",
-    mobile: "/hongik-poster-mobile.jpg",
-    bg: "white",
+    title: "Chicago Bulls 2025-26, <span class='lowercase not-italic'>renewal websites</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
+  },
+  "analog-digital": {
+    id: 2,
+    title: "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
+  },
+  "exhibition-poster": {
+    id: 3,
+    title: "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
+    subtitle: "Pluriversal Typography in Local and Global Contexts, <span class='not-italic capitalize'>Exhibition Poster Design</span>",
+    desc: "In this international cultural exchange, students from OCAD and Hongik University collaborated in Seoul in honour of the sixtieth anniversary of diplomatic relations between South Korea and Canada. The exhibition shows the final works of a week-long intensive workshop, site-visits related to Korean culture, and the celebration of Hangul Day.<br /><br />Taking advantage of the angular construction found throughout the Korean Hangul alphabet, the letterform graphic is created through light beams. Using spotlights, I cast light on surfaces from different angles to create organic letterforms reminiscent of traditional Korean calligraphy (서예), representing the cultural focus of the exhibition. The poster is printed on black paper using RISO.",
+    images: ["/korean-poster.png", ["/korean-poster-2.png", "/korean-poster-3.png"]],
     date: "January 2024",
     details: "20 x 44 cm",
-    extra: "Exhibited as part of Swash & Serif 8",
+    extra:
+      "Exhibited in part of <a href='https://swashserif8.com' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
+  },
+  "texas-rangers": {
+    id: 4,
+    title: "Texas Rangers 2025-26, <span class='lowercase not-italic'>websites series</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
   },
   "double-sided-poster": {
-    id: 2,
-    title: "Double-sided poster",
-    desc: "How can materiality/craft be applied to create type that challenges the ubiquitous nature of digital design?",
-    image: "/circuit-posters.jpg",
-    mobile: "/circuit-poster-mobile.jpg",
-    bg: "white",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "thesis-book": {
-    id: 3,
-    title: "Thesis book with works and essays",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/thesis-book-covers.jpg",
-    mobile: "/thesis-book-covers-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "thesis-book-essay-spreads": {
-    id: 4,
-    title: "Thesis book essay spreads",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/analog-to-digital-1.jpg",
-    mobile: "/analog-to-digital-1-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-  },
-  "thesis-book-content-spreads": {
     id: 5,
-    title: "Thesis book content spreads",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/analog-to-digital-2.jpg",
-    mobile: "/analog-to-digital-2-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
+    title: "How can materiality/craft be applied to create type that challenges the ubiquitous nature of digital design, <span class='lowercase not-italic'>double-sided poster</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
   },
-  "analog-to-digital-finals-spreads": {
+  "exran": {
     id: 6,
-    title: "Thesis book finals spreads",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/analog-to-digital-3.jpg",
-    mobile: "/analog-to-digital-3-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
+    title: "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
   },
-  "analog-to-digital-scroll-poster": {
+  "olympiad": {
     id: 7,
-    title: "Experimental long-format scroll poster",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/chineseposter.jpg",
-    mobile: "/scroll-poster-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "analog-to-digital-materiality": {
-    id: 8,
-    title: "Experiments with Digital Materiality",
-    desc: "Analog to Digital, Design Thesis",
-    image: "/3d-type.jpg",
-    mobile: "/3d-letters-mobile.jpg",
-    bg: "white",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "reconfigurable-typography": {
-    id: 9,
-    title: "A blueprint to physical making",
-    desc: "Reconfigurable Typography A-Z",
-    image: "/reconfig-type.jpg",
-    mobile: "/reconfigurable-mobile.jpg",
-    bg: "white",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "texas-rangers-ticket-renewal": {
-    id: 10,
-    title:
-      "Single-page website for season ticket holders, project led by John Dermody",
-    desc: "2024 Texas Rangers Ticket Renewal",
-    video: "/rangers-video.mp4",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "exran-sans": {
-    id: 11,
-    title: "Type specimen for ongoing work-in-process display typeface",
-    desc: "Exran Sans",
-    image: "/typespecimen.jpg",
-    mobile: "/exran-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
-  },
-  "experimental-poster": {
-    id: 12,
-    title: "Experimental poster",
-    desc: "40th Science Olympiad at Michigan State University",
-    image: "/so-poster.jpg",
-    mobile: "/so-poster-mobile.jpg",
-    bg: "black",
-    date: "January 2024",
-    details: "20 x 44 cm",
+    title: "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
+    subtitle: "",
+    desc: "",
+    images: [],
+    date: "",
+    details: "",
+    extra:
+      "",
   },
 };

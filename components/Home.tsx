@@ -46,7 +46,7 @@ export default function Home() {
       <motion.div 
       style={{ x: xSpring }}
       className="flex w-[200vw]">
-        <div className="flex w-screen">
+        <div className="flex">
           <Index />
           <div className="w-full h-full relative">
             <motion.div

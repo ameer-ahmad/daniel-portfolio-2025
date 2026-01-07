@@ -7,11 +7,20 @@ import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 export default function NavBar() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const { loadingDone } = useLoadingDone();
-  const { setPlayActive } = useActiveProject();
+  const { setPlayActive, setActiveId, playActive } = useActiveProject();
   const toggleInfo = () => {
     setIsInfoOpen(!isInfoOpen);
   };
-
+  const resetInfo = () => {
+    if (playActive) {
+      setPlayActive(false);
+      setTimeout(() => {
+        setActiveId("exhibition-poster");
+      }, 800);
+    } else {
+      setActiveId("exhibition-poster");
+    }
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: "-100%" }}
@@ -36,8 +45,13 @@ export default function NavBar() {
         className="bg-white text-[#1c1c1c]  px-[20px] overflow-hidden relative z-[999]"
       >
         <div className="flex items-center justify-between w-full h-[60px]">
-          <div className="flex items-start gap-[210px] h-[20px] w-[473px] overflow-hidden relative">
-            <span className="header-text w-[217px]">Daniel Shui</span>
+          <div className="flex items-start gap-[210px] h-[20px] w-[485px] mb-[2px] overflow-hidden relative">
+            <span
+              className="header-text w-[217px] cursor-pointer"
+              onClick={resetInfo}
+            >
+              Daniel Shui
+            </span>
             <motion.div
               initial={{ top: "-20px" }}
               animate={{ top: isInfoOpen ? 0 : "-20px" }}
@@ -49,12 +63,41 @@ export default function NavBar() {
               }}
               className="flex flex-col absolute right-0"
             >
-              <span
+              <motion.span
+                whileHover="hovered"
+                initial="initial"
                 onClick={toggleInfo}
                 className="header-text flex items-center gap-[2px] cursor-pointer h-full"
               >
                 CLOSE
-              </span>
+                  <motion.svg
+                    variants={{
+                      initial: { scale: 1 },
+                      hovered: {
+                        scale: 0.666666666,
+                        transition: { duration: 0.25, ease: "easeOut" },
+                      },
+                    }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M8 2L2 8"
+                      stroke="#1C1C1C"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M2 2L8 8"
+                      stroke="#1C1C1C"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </motion.svg>
+              </motion.span>
               <motion.span
                 whileHover="hovered"
                 initial="initial"
@@ -107,17 +150,86 @@ export default function NavBar() {
               </motion.span>
             </motion.div>
           </div>
-          <div className="flex items-center gap-[40px] pr-[8px]">
-            <span className="header-text cursor-pointer" onClick={() => setPlayActive(false)}>Work</span>
-            <span className="header-text cursor-pointer" onClick={() => setPlayActive(true)}>Play</span>
+          <div className="flex justify-between items-center gap-[40px] pr-[8px] mb-[2px]">
+            <motion.span
+              whileHover="hovered"
+              initial="initial"
+              variants={{
+                initial: { gap: '2px' },
+                hovered: {
+                  gap: '4px',
+                  transition: { duration: 0.25, ease: "easeOut" },
+                },
+              }}
+              className="header-text cursor-pointer flex items-center gap-[2px]"
+              onClick={() => setPlayActive(false)}
+            >
+              Work
+              <motion.span
+              initial={{ opacity: 0, width: 6, height: 6 }}
+              animate={{ opacity: playActive ? 0 : 1 }}
+              variants={{
+                initial: { width: 6, height: 6 },
+                hovered: {
+                  width: 4,
+                  height: 4,
+                  transition: { duration: 0.25, ease: "easeOut" },
+                },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
+              }}
+               className="w-[6px] h-[6px] border-[2px] solid #1c1c1c rounded-full block" />
+            </motion.span>
+            <motion.span
+              whileHover="hovered"
+              initial="initial"
+              variants={{
+                initial: { gap: '2px' },
+                hovered: {
+                  gap: '4px',
+                  transition: { duration: 0.25, ease: "easeOut" },
+                },
+              }}
+              className="header-text cursor-pointer flex items-center gap-[2px]"
+              onClick={() => setPlayActive(true)}
+            >
+              Play
+              <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: playActive ? 1 : 0 }}
+              variants={{
+                initial: { width: 6, height: 6 },
+                hovered: {
+                  width: 4,
+                  height: 4,
+                  transition: { duration: 0.25, ease: "easeOut" },
+                },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
+              }}
+               className="w-[6px] h-[6px] border-[2px] solid #1c1c1c rounded-full block" />
+            </motion.span>
           </div>
         </div>
         <div className="flex mt-[20px] justify-start gap-[20px] w-full h-[279px] text-[14px] line-height-[20px]">
           <motion.span
-            initial={{ color: "rgba(0, 0, 0, 0)", pointerEvents: "none" }}
+            initial={{
+              color: "rgba(0, 0, 0, 0)",
+              pointerEvents: "none",
+              y: "-20px",
+            }}
             animate={{
               color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
               pointerEvents: isInfoOpen ? "auto" : "none",
+              y: isInfoOpen ? 0 : "-20px",
             }}
             transition={{
               type: "spring",
@@ -141,10 +253,15 @@ export default function NavBar() {
             Barcelona, & many more.
           </motion.span>
           <motion.div
-            initial={{ color: "rgba(0, 0, 0, 0)", pointerEvents: "none" }}
+            initial={{
+              color: "rgba(0, 0, 0, 0)",
+              pointerEvents: "none",
+              y: "-20px",
+            }}
             animate={{
               color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
               pointerEvents: isInfoOpen ? "auto" : "none",
+              y: isInfoOpen ? 0 : "-20px",
             }}
             transition={{
               type: "spring",
@@ -155,14 +272,49 @@ export default function NavBar() {
             className="flex flex-col gap-[20px] w-[265px]"
           >
             <span className="">
-              Special thanks to Ameer Ahmad, for programming this website.
-              Designed by Daniel Shui. Last updated on{" "}
-              <span className="italic">05/07/25.</span>
+              Special thanks to{" "}
+              <a
+                href="https://ameerahmad.com"
+                target="_blank"
+                rel="noreferrer"
+                className="underline squiggle"
+              >
+                Ameer Ahmad
+              </a>
+              , for programming this website. Designed by Daniel Shui. Last
+              updated on <span className="italic">05/07/25.</span>
             </span>
-            <ul>
-              <li>Email</li>
-              <li>Are.na</li>
-              <li>Instagram</li>
+            <ul className="navbar-links">
+              <li>
+                <a
+                  href="mailto:danielshui.design@gmail.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="squiggle"
+                >
+                  Email
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.are.na/daniel-shui-40niceg9sse/channels"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="squiggle"
+                >
+                  Are.na
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/daniel.shui/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="squiggle"
+                >
+                  Instagram
+                </a>
+              </li>
               <li>Resume</li>
             </ul>
           </motion.div>

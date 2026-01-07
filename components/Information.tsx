@@ -12,24 +12,56 @@ export default function Information({
   const { loadingDone } = useLoadingDone();
   return (
     <motion.div
-      initial={{ width: "142px", x: "-90px", opacity: 0 }}
+      initial={{ width: "143px", x: "-90px", opacity: 0, minWidth: "143px" }}
       animate={{ x: loadingDone ? 0 : "-90px", opacity: loadingDone ? 1 : 0 }}
-      whileHover={{ width: "346px" }}
+      whileHover={{ width: "447px", minWidth: "447px" }}
       transition={{
-        type: "spring",
-        stiffness: 80,
-        duration: 0.8,
-        damping: 20,
-        mass: 1,
+        x: {
+          type: "spring",
+          stiffness: 40,
+          damping: 20,
+          mass: 1,
+          duration: 0.8,
+        },
+        opacity: {
+          type: "spring",
+          stiffness: 40,
+          damping: 20,
+          mass: 1,
+          duration: 0.8,
+        },
+        width: {
+          type: "spring",
+          stiffness: 80,
+          damping: 20,
+          mass: 1,
+        },
+        minWidth: {
+          type: "spring",
+          stiffness: 80,
+          damping: 20,
+          mass: 1,
+        },
       }}
       className="p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
     >
-      <div className="flex flex-col pr-[20px] min-w-[300px] box-content italic">
-        <span className="header-text not-italic">{project.title}</span>
-        <span className="mt-[20px]">{project.desc}</span>
+      <div className="flex flex-col pr-[20px] min-w-[407px] box-content italic">
+        <span
+          className="header-text italic !capitalize"
+          dangerouslySetInnerHTML={{ __html: project.subtitle }}
+        />
+        <span
+          className="mt-[20px] !not-italic"
+          dangerouslySetInnerHTML={{ __html: project.desc }}
+        />
         {project.date && <span className="mt-[20px]">{project.date}</span>}
         {project.details && <span className="">{project.details}</span>}
-        {project.extra && <span className="mt-[20px]">{project.extra}</span>}
+        {project.extra && (
+          <span
+            className="mt-[20px] not-italic"
+            dangerouslySetInnerHTML={{ __html: project.extra }}
+          ></span>
+        )}
       </div>
     </motion.div>
   );

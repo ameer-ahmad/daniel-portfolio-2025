@@ -2,6 +2,8 @@
 
 /* Font faces are loaded dynamically via FontLoader component based on environment */
 
+/* Ensure Tailwind includes classes used in dangerouslySetInnerHTML */
+/* not-italic lowercase capitalize underline */
 
 :root {
   --background: #ffffff;
@@ -25,12 +27,12 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Source Serif Pro', serif;
+  font-family: "Source Serif Pro", serif;
   overflow: hidden;
 }
 
 .header-text {
-  font-family: 'Source Serif Pro', serif;
+  font-family: "Source Serif Pro", serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
@@ -44,4 +46,33 @@ body {
 
 div::-webkit-scrollbar {
   display: none;
+}
+
+.navbar-links {
+  margin-left: 18px;
+  padding-left: 0;
+}
+
+.navbar-links li {
+  padding-left: 26px;
+  text-indent: -29px;
+}
+
+.navbar-links li::before {
+  content: "→";
+  padding-right: 10px;
+  width: 15px;
+}
+
+.navbar-links li a {
+  text-decoration: underline;
+}
+
+.squiggle:hover {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='rgb(113, 100, 89)' stroke-width='1' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-size: 20px;
+    border-bottom: 0;
+    text-decoration: none;
 }

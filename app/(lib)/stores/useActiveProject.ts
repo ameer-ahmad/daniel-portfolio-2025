@@ -13,6 +13,9 @@ type ActiveProjectState = {
   /** actions */
   setActiveId: (id: string) => void;
 
+  /** reset counter - increments on every setActiveId call to detect clicks even when id doesn't change */
+  resetCounter: number;
+
   /** quick check for highlighting */
   isActive: (id: string) => boolean;
 };
@@ -21,7 +24,8 @@ export const useActiveProject = create<ActiveProjectState>()((set, get) => ({
   playActive: false,
   setPlayActive: (active) => set({ playActive: active }),
   activeId: "exhibition-poster",
-  setActiveId: (id) => set({ activeId: id }),
+  resetCounter: 0,
+  setActiveId: (id) => set({ activeId: id, resetCounter: get().resetCounter + 1 }),
 
   isActive: (id) => get().activeId === id,
 }));
