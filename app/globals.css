@@ -28,6 +28,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Source Serif Pro", serif;
+  line-height: 20px;
   overflow: hidden;
 }
 
@@ -41,7 +42,7 @@ body {
 }
 
 .shadow-glow {
-  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 0 25px -10px rgba(0, 0, 0, 0.1), 10px 0 25px -10px rgba(0, 0, 0, 0.1);
 }
 
 div::-webkit-scrollbar {

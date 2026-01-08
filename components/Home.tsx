@@ -31,14 +31,27 @@ export default function Home() {
 
     if (!container || !activeProject) return;
 
-    const containerTop = container.getBoundingClientRect().top;
-    const projectTop = activeProject.getBoundingClientRect().top;
+    const updateY = () => {
+      const containerTop = container.getBoundingClientRect().top;
+      const projectTop = activeProject.getBoundingClientRect().top;
+      y.set(-(projectTop - containerTop));
+    };
 
-    y.set(-(projectTop - containerTop));
-  }, [activeId]);
+    updateY();
+
+    window.addEventListener("resize", updateY);
+    return () => window.removeEventListener("resize", updateY);
+  }, [activeId, y]);
 
   useLayoutEffect(() => {
-    x.set(playActive ? -window.innerWidth : 0);
+    const updateX = () => {
+      x.set(playActive ? -window.innerWidth : 0);
+    };
+
+    updateX();
+
+    window.addEventListener("resize", updateX);
+    return () => window.removeEventListener("resize", updateX);
   }, [playActive, x]);
   return (
     <>

@@ -16,6 +16,8 @@ export default function Project({
   const { loadingDone } = useLoadingDone();
   const { activeId, resetCounter } = useActiveProject();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showNextArrow, setShowNextArrow] = useState(false);
+  const [showPrevArrow, setShowPrevArrow] = useState(false);
 
   // Reset gallery index when project changes or NavBar is clicked (even if activeId doesn't change)
   useEffect(() => {
@@ -29,11 +31,19 @@ export default function Project({
   const nextImage = () => {
     if (flattenedImages.length <= 1) return;
     setCurrentIndex((prev) => (prev + 1) % flattenedImages.length);
+    setShowNextArrow(true);
+    setTimeout(() => {
+      setShowNextArrow(false);
+    }, 700); // 500ms visible + 200ms exit delay
   };
 
   const prevImage = () => {
     if (flattenedImages.length <= 1) return;
     setCurrentIndex((prev) => (prev - 1 + flattenedImages.length) % flattenedImages.length);
+    setShowPrevArrow(true);
+    setTimeout(() => {
+      setShowPrevArrow(false);
+    }, 700); // 500ms visible + 200ms exit delay
   };
 
   const currentImageItem = imagesArray[currentIndex];
@@ -57,7 +67,37 @@ export default function Project({
             key={currentIndex}
             className="absolute top-[20px] left-[20px] text-[#1c1c1c] text-sm z-20"
           >
-            <span>
+            <span className="relative">
+              <AnimatePresence>
+                {showNextArrow && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ 
+                      duration: 0.2,
+                      exit: { delay: 0.2 }
+                    } as any}
+                    className="absolute -top-3 left-1 text-xs text-[#1c1c1c]"
+                  >
+                    ▲
+                  </motion.span>
+                )}
+                {showPrevArrow && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ 
+                      duration: 0.2,
+                      exit: { delay: 0.2 }
+                    } as any}
+                    className="absolute -bottom-3 left-1 text-xs text-[#1c1c1c]"
+                  >
+                    ▼
+                  </motion.span>
+                )}
+              </AnimatePresence>
               {String(currentIndex + 1).padStart(2, '0')}/{String(imagesArray.length).padStart(2, '0')}
             </span>
           </div>

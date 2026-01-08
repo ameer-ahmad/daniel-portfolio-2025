@@ -87,14 +87,14 @@ export default function NavBar() {
                     <path
                       d="M8 2L2 8"
                       stroke="#1C1C1C"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
                     <path
                       d="M2 2L8 8"
                       stroke="#1C1C1C"
-                      stroke-width="2"
-                      stroke-linecap="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                     />
                   </motion.svg>
               </motion.span>
@@ -153,15 +153,15 @@ export default function NavBar() {
           <div className="flex justify-between items-center gap-[40px] pr-[8px] mb-[2px]">
             <motion.span
               whileHover="hovered"
-              initial="initial"
-              variants={{
-                initial: { gap: '2px' },
-                hovered: {
-                  gap: '4px',
-                  transition: { duration: 0.25, ease: "easeOut" },
-                },
+              initial={{ opacity: 1 }}
+              animate={{ opacity: playActive ? 0.38 : 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
               }}
-              className="header-text cursor-pointer flex items-center gap-[2px]"
+              className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
               onClick={() => setPlayActive(false)}
             >
               Work
@@ -169,10 +169,11 @@ export default function NavBar() {
               initial={{ opacity: 0, width: 6, height: 6 }}
               animate={{ opacity: playActive ? 0 : 1 }}
               variants={{
-                initial: { width: 6, height: 6 },
+                initial: { width: 6, height: 6, x: 0 },
                 hovered: {
                   width: 4,
                   height: 4,
+                  x: 1,
                   transition: { duration: 0.25, ease: "easeOut" },
                 },
               }}
@@ -182,19 +183,19 @@ export default function NavBar() {
                 damping: 20,
                 mass: 1,
               }}
-               className="w-[6px] h-[6px] border-[2px] solid #1c1c1c rounded-full block" />
+               className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block" />
             </motion.span>
             <motion.span
               whileHover="hovered"
-              initial="initial"
-              variants={{
-                initial: { gap: '2px' },
-                hovered: {
-                  gap: '4px',
-                  transition: { duration: 0.25, ease: "easeOut" },
-                },
+              initial={{ opacity: 1 }}
+              animate={{ opacity: playActive ? 1 : 0.38 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
               }}
-              className="header-text cursor-pointer flex items-center gap-[2px]"
+              className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
               onClick={() => setPlayActive(true)}
             >
               Play
@@ -202,10 +203,11 @@ export default function NavBar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: playActive ? 1 : 0 }}
               variants={{
-                initial: { width: 6, height: 6 },
+                initial: { width: 6, height: 6, x: 0 },
                 hovered: {
                   width: 4,
                   height: 4,
+                  x: 1,
                   transition: { duration: 0.25, ease: "easeOut" },
                 },
               }}
@@ -215,7 +217,7 @@ export default function NavBar() {
                 damping: 20,
                 mass: 1,
               }}
-               className="w-[6px] h-[6px] border-[2px] solid #1c1c1c rounded-full block" />
+               className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block" />
             </motion.span>
           </div>
         </div>

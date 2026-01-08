@@ -3,31 +3,28 @@
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Play() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showNextArrow, setShowNextArrow] = useState(false);
+  const [showPrevArrow, setShowPrevArrow] = useState(false);
 
   const nextImage = () => {
-    setIsLoading(true);
     setCurrentIndex((prev) => (prev + 1) % playArray.length);
-   
+    setShowNextArrow(true);
+    setTimeout(() => {
+      setShowNextArrow(false);
+    }, 700); // 500ms visible + 200ms exit delay
   };
 
   const prevImage = () => {
-    setIsLoading(true);
     setCurrentIndex((prev) => (prev - 1 + playArray.length) % playArray.length);
+    setShowPrevArrow(true);
+    setTimeout(() => {
+      setShowPrevArrow(false);
+    }, 700); // 500ms visible + 200ms exit delay
   };
-
-  useEffect(() => {
-    if (isLoading) {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading, currentIndex]);
 
 
   const currentItem = playArray[currentIndex];
@@ -36,33 +33,6 @@ export default function Play() {
     <div className="relative p-[80px] w-full h-full flex items-center justify-center">
       <div className="relative w-full h-full">
       <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center z-20"
-            >
-              <div className="flex gap-0.5">
-                {[0, 1, 2].map((index) => (
-                  <motion.div
-                    key={index}
-                    className="w-1 h-1 rounded-full bg-white"
-                    animate={{
-                      opacity: [1, 0.38, 1, 0.38, 1],
-                    }}
-                    transition={{
-                      duration: 1.2,
-                      repeat: Infinity,
-                      delay: index * 0.2,
-                      ease: "easeInOut",
-                    }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          ) : (
             <motion.div
               key={currentIndex}
               initial={{ opacity: 0 }}
@@ -84,7 +54,6 @@ export default function Play() {
                 loading="eager"
               />
             </motion.div>
-          )}
         </AnimatePresence>
 
         <button
@@ -99,22 +68,51 @@ export default function Play() {
         ></button>
       </div>
       <AnimatePresence mode="wait">
-        <motion.div
+        <div
           key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isLoading ? 0 : 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ 
-            duration: 0.3, 
-            delay: isLoading ? 0 : 0 
-          }}
+          
           className="absolute top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
         >
-          <span>
+          <span className="relative">
+            <AnimatePresence>
+              {showNextArrow && (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ 
+                    duration: 0.2,
+                    exit: { delay: 0.2 }
+                  } as any}
+                  className="absolute -top-3 left-1 text-xs text-white"
+                >
+                  ▲
+                </motion.span>
+              )}
+              {showPrevArrow && (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ 
+                    duration: 0.2,
+                    exit: { delay: 0.2 }
+                  } as any}
+                  className="absolute -bottom-3 left-1 text-xs text-white"
+                >
+                  ▼
+                </motion.span>
+              )}
+            </AnimatePresence>
             {String(currentIndex + 1).padStart(2, '0')}/{String(playArray.length).padStart(2, '0')}
           </span>
-          <span>{currentItem.title}</span>
-        </motion.div>
+          <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}  
+          >{currentItem.title}</motion.span>
+        </div>
       </AnimatePresence>
     </div>
   );
