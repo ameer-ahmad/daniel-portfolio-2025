@@ -80,6 +80,7 @@ export default function Play() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   transition={{ 
                     duration: 0.2,
                     exit: { delay: 0.2 }
@@ -94,6 +95,7 @@ export default function Play() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   transition={{ 
                     duration: 0.2,
                     exit: { delay: 0.2 }
