@@ -79,12 +79,8 @@ export default function Play() {
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  transition={{ 
-                    duration: 0.2,
-                    exit: { delay: 0.2 }
-                  } as any}
+                  exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.2 } }}
+                  transition={{ duration: 0.2 }}
                   className="absolute -top-3 left-1 text-xs text-white"
                 >
                   ▲
@@ -92,14 +88,10 @@ export default function Play() {
               )}
               {showPrevArrow && (
                 <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  transition={{ 
-                    duration: 0.2,
-                    exit: { delay: 0.2 }
-                  } as any}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.2 } }}
+                transition={{ duration: 0.2 }}
                   className="absolute -bottom-3 left-1 text-xs text-white"
                 >
                   ▼

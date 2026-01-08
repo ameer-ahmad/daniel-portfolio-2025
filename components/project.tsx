@@ -8,10 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function Project({
-  project, firstProject
+  project,
+  firstProject,
 }: {
   project: ProjectType[keyof ProjectType];
-  firstProject: boolean
+  firstProject: boolean;
 }) {
   const { loadingDone } = useLoadingDone();
   const { activeId, resetCounter } = useActiveProject();
@@ -39,7 +40,9 @@ export default function Project({
 
   const prevImage = () => {
     if (flattenedImages.length <= 1) return;
-    setCurrentIndex((prev) => (prev - 1 + flattenedImages.length) % flattenedImages.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + flattenedImages.length) % flattenedImages.length
+    );
     setShowPrevArrow(true);
     setTimeout(() => {
       setShowPrevArrow(false);
@@ -60,7 +63,8 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className="overflow-y-clip w-[calc(100vw-286px)] h-[-webkit-fill-available] shadow-glow p-[80px] bg-white relative">
+      className="overflow-y-clip w-[calc(100vw-286px)] h-[-webkit-fill-available] shadow-glow p-[80px] bg-white relative"
+    >
       {flattenedImages.length > 1 && (
         <AnimatePresence mode="wait">
           <div
@@ -73,12 +77,11 @@ export default function Project({
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    transition={{ 
-                      duration: 0.2,
-                      exit: { delay: 0.2 }
-                    } as any}
+                    exit={{
+                      opacity: 0,
+                      transition: { delay: 0.2, duration: 0.2 },
+                    }}
+                    transition={{ duration: 0.2 }}
                     className="absolute -top-3 left-1 text-xs text-[#1c1c1c]"
                   >
                     ▲
@@ -88,19 +91,19 @@ export default function Project({
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    transition={{ 
-                      duration: 0.2,
-                      exit: { delay: 0.2 }
-                    } as any}
+                    exit={{
+                      opacity: 0,
+                      transition: { delay: 0.2, duration: 0.2 },
+                    }}
+                    transition={{ duration: 0.2 }}
                     className="absolute -bottom-3 left-1 text-xs text-[#1c1c1c]"
                   >
                     ▼
                   </motion.span>
                 )}
               </AnimatePresence>
-              {String(currentIndex + 1).padStart(2, '0')}/{String(imagesArray.length).padStart(2, '0')}
+              {String(currentIndex + 1).padStart(2, "0")}/
+              {String(imagesArray.length).padStart(2, "0")}
             </span>
           </div>
         </AnimatePresence>
@@ -120,7 +123,11 @@ export default function Project({
                 {currentImageItem.map((img, idx) => (
                   <div key={idx} className="relative flex-1">
                     <Image
-                      src={`${process.env.NODE_ENV === 'development' ? '/' : '/daniel-portfolio-2025/'}images${img}`}
+                      src={`${
+                        process.env.NODE_ENV === "development"
+                          ? "/"
+                          : "/daniel-portfolio-2025/"
+                      }images${img}`}
                       alt={`${project.title} - Image ${idx + 1}`}
                       fill
                       sizes="50%"
@@ -132,7 +139,11 @@ export default function Project({
               </div>
             ) : (
               <Image
-                src={`${process.env.NODE_ENV === 'development' ? '/' : '/daniel-portfolio-2025/'}images${currentImageItem}`}
+                src={`${
+                  process.env.NODE_ENV === "development"
+                    ? "/"
+                    : "/daniel-portfolio-2025/"
+                }images${currentImageItem}`}
                 alt={project.title}
                 fill
                 sizes="100%"
