@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export default function FontLoader() {
   useEffect(() => {
-    const basePath = process.env.NODE_ENV === "development" ? "" : "/daniel-portfolio-2025";
+    const basePath = '';
     
     const fontFaces = [
       // Black

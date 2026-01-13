@@ -67,7 +67,7 @@ export default function Play() {
     const basePath =
       process.env.NODE_ENV === "development"
         ? "/images"
-        : "/daniel-portfolio-2025/images";
+        : "/images";
 
     // Helper to normalize src string
     const resolveSrc = (src: string) => `${basePath}${src}`;

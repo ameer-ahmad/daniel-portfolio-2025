@@ -351,7 +351,7 @@ export default function Project({
                         src={`${
                           process.env.NODE_ENV === "development"
                             ? "/"
-                            : "/daniel-portfolio-2025/"
+                            : "/"
                         }images${videoSrc}`}
                         autoPlay
                         loop
@@ -370,7 +370,7 @@ export default function Project({
                   src={`${
                     process.env.NODE_ENV === "development"
                       ? "/"
-                      : "/daniel-portfolio-2025/"
+                      : "/"
                   }images${videoItem.src}`}
                   autoPlay
                   loop
@@ -404,7 +404,7 @@ export default function Project({
                         src={`${
                           process.env.NODE_ENV === "development"
                             ? "/"
-                            : "/daniel-portfolio-2025/"
+                            : "/"
                         }images${imageSrc}`}
                         alt={`${project.title} - Image ${idx + 1}`}
                         fill
@@ -446,7 +446,7 @@ export default function Project({
                         src={`${
                           process.env.NODE_ENV === "development"
                             ? "/"
-                            : "/daniel-portfolio-2025/"
+                            : "/"
                         }images${imageSrc}`}
                         alt={`${project.title} - Image ${idx + 1}`}
                         fill
@@ -466,7 +466,7 @@ export default function Project({
                 src={`${
                   process.env.NODE_ENV === "development"
                     ? "/"
-                    : "/daniel-portfolio-2025/"
+                    : "/"
                 }images${imageItem.src}`}
                 alt={project.title}
                 fill
@@ -479,7 +479,7 @@ export default function Project({
                 src={`${
                   process.env.NODE_ENV === "development"
                     ? "/"
-                    : "/daniel-portfolio-2025/"
+                    : "/"
                 }images${currentImageItem}`}
                 alt={project.title}
                 fill

@@ -337,7 +337,7 @@ export default function NavBar() {
               <ul className="navbar-links">
                 <li>
                   <a
-                    href="mailto:danielshui.design@gmail.com"
+                    href="mailto:danielshui.des@gmail.com"
                     target="_blank"
                     rel="noreferrer"
                     className="squiggle"

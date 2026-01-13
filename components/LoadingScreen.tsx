@@ -49,7 +49,7 @@ export default function LoadingScreen() {
           src={`${
             process.env.NODE_ENV === "development"
               ? "/"
-              : "/daniel-portfolio-2025/"
+              : "/"
           }images/running-loader.gif`}
           alt="Loading"
           width={125}
