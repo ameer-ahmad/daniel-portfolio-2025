@@ -71,285 +71,295 @@ export default function NavBar() {
 
   const initialHeight = getInitialHeight();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: "-100%" }}
-      animate={{ opacity: loadingDone ? 1 : 0, y: loadingDone ? 0 : "-100%" }}
-      transition={{
-        type: "spring",
-        stiffness: 80,
-        damping: 20,
-        mass: 1,
-      }}
-      className="relative z-[999] shadow-glow"
-    >
+    <>
       <motion.div
-        initial={{ height: "60px" }}
-        animate={{ height: isInfoOpen ? initialHeight : "60px" }}
+        initial={{ opacity: 0, y: "-100%" }}
+        animate={{ opacity: loadingDone ? 1 : 0, y: loadingDone ? 0 : "-100%" }}
         transition={{
           type: "spring",
           stiffness: 80,
           damping: 20,
           mass: 1,
         }}
-        className="bg-white text-[#1c1c1c]  px-[20px] overflow-hidden relative z-[999]"
+        className="relative z-[999] shadow-glow"
       >
-        <div className="flex items-center justify-between w-full h-[60px]">
-          <div className="flex items-start gap-[210px] h-[20px] w-full md:w-[485px] mb-[2px] overflow-hidden relative">
-            <span
-              className="header-text w-[217px] cursor-pointer"
-              onClick={resetInfo}
-            >
-              Daniel Shui
-            </span>
-            <motion.div
-              initial={{ top: "-20px" }}
-              animate={{ top: isInfoOpen ? 0 : "-20px" }}
+        <motion.div
+          initial={{ height: "60px" }}
+          animate={{ height: isInfoOpen ? initialHeight : "60px" }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 20,
+            mass: 1,
+          }}
+          className="bg-white text-[#1c1c1c]  px-[20px] overflow-hidden relative z-[999]"
+        >
+          <div className="flex items-center justify-between w-full h-[60px]">
+            <div className="flex items-start gap-[210px] h-[20px] w-full md:w-[485px] mb-[2px] overflow-hidden relative">
+              <span
+                className="header-text w-[217px] cursor-pointer"
+                onClick={resetInfo}
+              >
+                Daniel Shui
+              </span>
+              <motion.div
+                initial={{ top: "-20px" }}
+                animate={{ top: isInfoOpen ? 0 : "-20px" }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+                onHoverStart={windowWidth >= 768 ? () => setIsInfoHovered(true) : undefined}
+                onHoverEnd={windowWidth >= 768 ? () => setIsInfoHovered(false) : undefined}
+                className="flex flex-col absolute right-0"
+              >
+                <span
+                  onClick={toggleInfo}
+                  className="header-text flex items-center gap-[2px] cursor-pointer h-full"
+                >
+                  CLOSE
+                  <motion.svg
+                    animate={{
+                      scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                    }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M8 2L2 8"
+                      stroke="#1C1C1C"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M2 2L8 8"
+                      stroke="#1C1C1C"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </motion.svg>
+                </span>
+                <span
+                  onClick={toggleInfo}
+                  className="header-text flex items-center gap-[2px] cursor-pointer h-full"
+                >
+                  INFO
+                  <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
+                    <motion.span
+                      animate={{
+                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                      }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                    ></motion.span>
+                    <motion.span
+                      animate={{
+                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                      }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                    ></motion.span>
+                    <motion.span
+                      animate={{
+                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                      }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                    ></motion.span>
+                    <motion.span
+                      animate={{
+                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                      }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
+                    ></motion.span>
+                  </motion.span>
+                </span>
+              </motion.div>
+            </div>
+            <div className="hidden justify-between items-center gap-[40px] pr-[8px] mb-[2px] md:flex">
+              <motion.span
+                whileHover="hovered"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: playActive ? 0.38 : 1 }}
+                variants={{
+                  initial: { opacity: 1 },
+                  hovered: { opacity: 1 },
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+                className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
+                onClick={() => setPlayActive(false)}
+              >
+                Work
+                <motion.span
+                  initial={{ opacity: 0, width: 6, height: 6 }}
+                  animate={{ opacity: playActive ? 0 : 1 }}
+                  variants={{
+                    initial: { width: 6, height: 6, x: 0 },
+                    hovered: {
+                      scale: 0.666666666,
+                      transition: { duration: 0.25, ease: "easeInOut" },
+                    },
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
+                />
+              </motion.span>
+              <motion.span
+                whileHover="hovered"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: playActive ? 1 : 0.38 }}
+                variants={{
+                  initial: { opacity: 1 },
+                  hovered: { opacity: 1 },
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+                className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
+                onClick={() => setPlayActive(true)}
+              >
+                Play
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: playActive ? 1 : 0 }}
+                  variants={{
+                    initial: { width: 6, height: 6, x: 0 },
+                    hovered: {
+                      scale: 0.666666666,
+                      transition: { duration: 0.25, ease: "easeInOut" },
+                    },
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
+                />
+              </motion.span>
+            </div>
+          </div>
+          <div className="flex mt-[20px] justify-start gap-[20px] w-full h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
+            <motion.span
+              initial={{
+                color: "rgba(0, 0, 0, 0)",
+                pointerEvents: "none",
+                y: "-20px",
+              }}
+              animate={{
+                color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                pointerEvents: isInfoOpen ? "auto" : "none",
+                y: isInfoOpen ? 0 : "-20px",
+              }}
               transition={{
                 type: "spring",
                 stiffness: 80,
                 damping: 20,
                 mass: 1,
               }}
-              onHoverStart={() => setIsInfoHovered(true)}
-              onHoverEnd={() => setIsInfoHovered(false)}
-              className="flex flex-col absolute right-0"
+              className="w-full md:w-[407px]"
             >
-              <span
-                onClick={toggleInfo}
-                className="header-text flex items-center gap-[2px] cursor-pointer h-full"
-              >
-                CLOSE
-                <motion.svg
-                  animate={{
-                    scale: isInfoHovered ? 0.666666666 : 1,
-                  }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
+              Multidisciplinary designer developing digital and print projects
+              for individuals, businesses, and organizations across various
+              sectors. His practice encompasses UI/UX, typography, brand
+              development, creative direction, editorials, & more. He has worked
+              on projects for clients both big and small, including the Chicago
+              Bulls, Crypto.com Arena, Texas Rangers, Olympics, FIFA, FC
+              Barcelona, & many more.
+              <br />
+              <br />
+              Currently based in the city of Toronto, and is always interested
+              in collaborations with others around the world. Please get in
+              touch for any inquiries or to see additional work.
+            </motion.span>
+            <motion.div
+              initial={{
+                color: "rgba(0, 0, 0, 0)",
+                pointerEvents: "none",
+                y: "-20px",
+              }}
+              animate={{
+                color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                pointerEvents: isInfoOpen ? "auto" : "none",
+                y: isInfoOpen ? 0 : "-20px",
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
+              }}
+              className="flex flex-col gap-[20px] w-full md:w-[265px]"
+            >
+              <span className="">
+                Special thanks to{" "}
+                <a
+                  href="https://ameerahmad.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline squiggle"
                 >
-                  <path
-                    d="M8 2L2 8"
-                    stroke="#1C1C1C"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M2 2L8 8"
-                    stroke="#1C1C1C"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </motion.svg>
+                  Ameer Ahmad
+                </a>
+                , for programming this website. Designed by Daniel Shui. Last
+                updated on <span className="italic">05/07/25.</span>
               </span>
-              <span
-                onClick={toggleInfo}
-                className="header-text flex items-center gap-[2px] cursor-pointer h-full"
-              >
-                INFO
-                <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
-                  <motion.span
-                    animate={{
-                      scale: isInfoHovered ? 0.666666666 : 1,
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
-                  ></motion.span>
-                  <motion.span
-                    animate={{
-                      scale: isInfoHovered ? 0.666666666 : 1,
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
-                  ></motion.span>
-                  <motion.span
-                    animate={{
-                      scale: isInfoHovered ? 0.666666666 : 1,
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
-                  ></motion.span>
-                  <motion.span
-                    animate={{
-                      scale: isInfoHovered ? 0.666666666 : 1,
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
-                  ></motion.span>
-                </motion.span>
-              </span>
+              <ul className="navbar-links">
+                <li>
+                  <a
+                    href="mailto:danielshui.design@gmail.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="squiggle"
+                  >
+                    Email
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.are.na/daniel-shui-40niceg9sse/channels"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="squiggle"
+                  >
+                    Are.na
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/daniel.shui/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="squiggle"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              </ul>
             </motion.div>
           </div>
-          <div className="hidden justify-between items-center gap-[40px] pr-[8px] mb-[2px] md:flex">
-            <motion.span
-              whileHover="hovered"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: playActive ? 0.38 : 1 }}
-              variants={{
-                initial: { opacity: 1 },
-                hovered: { opacity: 1 },
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 20,
-                mass: 1,
-              }}
-              className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
-              onClick={() => setPlayActive(false)}
-            >
-              Work
-              <motion.span
-                initial={{ opacity: 0, width: 6, height: 6 }}
-                animate={{ opacity: playActive ? 0 : 1 }}
-                variants={{
-                  initial: { width: 6, height: 6, x: 0 },
-                  hovered: {
-                    scale: 0.666666666,
-                    transition: { duration: 0.25, ease: "easeInOut" },
-                  },
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
-              />
-            </motion.span>
-            <motion.span
-              whileHover="hovered"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: playActive ? 1 : 0.38 }}
-              variants={{
-                initial: { opacity: 1 },
-                hovered: { opacity: 1 },
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 20,
-                mass: 1,
-              }}
-              className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
-              onClick={() => setPlayActive(true)}
-            >
-              Play
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: playActive ? 1 : 0 }}
-                variants={{
-                  initial: { width: 6, height: 6, x: 0 },
-                  hovered: {
-                    scale: 0.666666666,
-                    transition: { duration: 0.25, ease: "easeInOut" },
-                  },
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
-              />
-            </motion.span>
-          </div>
-        </div>
-        <div className="flex mt-[20px] justify-start gap-[20px] w-full h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
-          <motion.span
-            initial={{
-              color: "rgba(0, 0, 0, 0)",
-              pointerEvents: "none",
-              y: "-20px",
-            }}
-            animate={{
-              color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
-              pointerEvents: isInfoOpen ? "auto" : "none",
-              y: isInfoOpen ? 0 : "-20px",
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 20,
-              mass: 1,
-            }}
-            className="w-full md:w-[407px]"
-          >
-            Multidisciplinary designer developing digital and print projects for individuals, businesses, and organizations across various sectors. His practice encompasses UI/UX, typography, brand development, creative direction, editorials, & more. He has worked on projects for clients both big and small, including the Chicago Bulls, Crypto.com Arena, Texas Rangers, Olympics, FIFA, FC Barcelona, & many more.
-            <br />
-            <br />
-            Currently based in the city of Toronto, and is always interested in collaborations with others around the world. Please get in touch for any inquiries or to see additional work.
-          </motion.span>
-          <motion.div
-            initial={{
-              color: "rgba(0, 0, 0, 0)",
-              pointerEvents: "none",
-              y: "-20px",
-            }}
-            animate={{
-              color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
-              pointerEvents: isInfoOpen ? "auto" : "none",
-              y: isInfoOpen ? 0 : "-20px",
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 20,
-              mass: 1,
-            }}
-            className="flex flex-col gap-[20px] w-full md:w-[265px]"
-          >
-            <span className="">
-              Special thanks to{" "}
-              <a
-                href="https://ameerahmad.com"
-                target="_blank"
-                rel="noreferrer"
-                className="underline squiggle"
-              >
-                Ameer Ahmad
-              </a>
-              , for programming this website. Designed by Daniel Shui. Last
-              updated on <span className="italic">05/07/25.</span>
-            </span>
-            <ul className="navbar-links">
-              <li>
-                <a
-                  href="mailto:danielshui.design@gmail.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="squiggle"
-                >
-                  Email
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.are.na/daniel-shui-40niceg9sse/channels"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="squiggle"
-                >
-                  Are.na
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.instagram.com/daniel.shui/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="squiggle"
-                >
-                  Instagram
-                </a>
-              </li>
-            </ul>
-          </motion.div>
-        </div>
+        </motion.div>
       </motion.div>
       {/* Mobile Work/Play/Info/Index Toggle - Bottom Left */}
       <motion.div
@@ -378,7 +388,7 @@ export default function NavBar() {
               damping: 20,
               mass: 1,
             }}
-            className="header-text z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
+            className="header-text pb-[2px] pr-[2px] z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
             onClick={() => setPlayActive(false)}
           >
             Work
@@ -397,7 +407,7 @@ export default function NavBar() {
               damping: 20,
               mass: 1,
             }}
-            className="header-text z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
+            className="header-text pb-[2px] pl-[2px] z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
             onClick={() => setPlayActive(true)}
           >
             Play
@@ -574,77 +584,87 @@ export default function NavBar() {
                 </span>
               </motion.div>
             </div>
-
           </motion.span>
         </div>
         {/* Detached toolbars to avoid button overflow clipping */}
         <AnimatePresence>
-          {isProjectInfoOpen && ((playActive && activePlayItem) || (!playActive && activeProject)) && (
-            <>
-              <motion.div
-                key="project-info-toolbar"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex flex-col gap-[20px] italic">
-                  {playActive && activePlayItem ? (
-                    <>
-                      <span className="header-text not-italic !capitalize">
-                        {activePlayItem.title}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <span
-                        className="header-text italic !capitalize"
-                        dangerouslySetInnerHTML={{
-                          __html: activeProject?.subtitle || activeProject?.title || "",
-                        }}
-                      />
-                      <span
-                        className="!not-italic"
-                        dangerouslySetInnerHTML={{ __html: activeProject?.desc || "" }}
-                      />
-                      {activeProject?.date && (
-                        <span className="mt-[10px]">{activeProject.date}</span>
-                      )}
-                      {activeProject?.details && (
-                        <span className="">{activeProject.details}</span>
-                      )}
-                      {activeProject?.extra && (
+          {isProjectInfoOpen &&
+            ((playActive && activePlayItem) ||
+              (!playActive && activeProject)) && (
+              <>
+                <motion.div
+                  key="project-info-toolbar"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex flex-col gap-[20px] italic">
+                    {playActive && activePlayItem ? (
+                      <>
+                        <span className="header-text not-italic !capitalize">
+                          {activePlayItem.title}
+                        </span>
+                      </>
+                    ) : (
+                      <>
                         <span
-                          className="mt-[10px] not-italic"
-                          dangerouslySetInnerHTML={{ __html: activeProject.extra }}
+                          className="header-text italic !capitalize"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              activeProject?.subtitle ||
+                              activeProject?.title ||
+                              "",
+                          }}
                         />
-                      )}
-                    </>
-                  )}
-                </div>
-              </motion.div>
-              <motion.div
-                key="project-info-arrow"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className="arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
-              ></motion.div>
-            </>
-          )}
+                        <span
+                          className="!not-italic"
+                          dangerouslySetInnerHTML={{
+                            __html: activeProject?.desc || "",
+                          }}
+                        />
+                        {activeProject?.date && (
+                          <span className="mt-[10px]">
+                            {activeProject.date}
+                          </span>
+                        )}
+                        {activeProject?.details && (
+                          <span className="">{activeProject.details}</span>
+                        )}
+                        {activeProject?.extra && (
+                          <span
+                            className="mt-[10px] not-italic"
+                            dangerouslySetInnerHTML={{
+                              __html: activeProject.extra,
+                            }}
+                          />
+                        )}
+                      </>
+                    )}
+                  </div>
+                </motion.div>
+                <motion.div
+                  key="project-info-arrow"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className="arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
+                ></motion.div>
+              </>
+            )}
         </AnimatePresence>
         <AnimatePresence>
           {isIndexOpen && (
@@ -660,130 +680,138 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                className="absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto"
+                className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto ${isIndexOpen ? "pointer-events-auto" : "pointer-events-none"}`}
                 onClick={(e) => e.stopPropagation()}
               >
-            <div className="flex flex-col gap-[20px]">
-              <span className="header-text !capitalize">Index</span>
-              {playActive ? (
-                playArray.map((playItem, index) => (
-                  <motion.div
-                    key={playItem.id}
-                    initial={{ x: 0, opacity: 0.36 }}
-                    animate={{
-                      opacity: currentPlayIndex === index ? 1 : 0.36,
-                      x: currentPlayIndex === index ? 6 : 0,
-                    }}
-                    whileHover={{ x: 6 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 80,
-                      damping: 20,
-                      mass: 1,
-                    }}
-                    className={`${
-                      currentPlayIndex === index ? "opacity-[1]" : "opacity-[0.36]"
-                    } cursor-pointer italic`}
-                    onClick={() => {
-                      setCurrentPlayIndex(index);
-                      setIsIndexOpen(false);
-                    }}
-                  >
-                    <div className="flex items-center gap-[8px] relative">
-                      <motion.div
-                        className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: currentPlayIndex === index ? 1 : 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 80,
-                          damping: 20,
-                          mass: 1,
-                        }}
-                      />
-                      <motion.span
-                        initial={{ x: 0 }}
-                        animate={{ x: currentPlayIndex === index ? 12 : 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 80,
-                          damping: 20,
-                          mass: 1,
-                        }}
-                        className="font-[600] not-italic"
-                      >
-                        {playItem.id < 10 ? "0" : ""}
-                        {playItem.id}
-                      </motion.span>
-                    </div>
-                    <div>
-                      <span className="title">{playItem.title}</span>
-                    </div>
-                  </motion.div>
-                ))
-              ) : (
-                Object.keys(projects).map((project) => (
-                  <motion.div
-                    key={project}
-                    initial={{ x: 0, opacity: 0.36 }}
-                    animate={{
-                      opacity: activeId === project ? 1 : 0.36,
-                      x: activeId === project ? 6 : 0,
-                    }}
-                    whileHover={{ x: 6 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 80,
-                      damping: 20,
-                      mass: 1,
-                    }}
-                    className={`${
-                      activeId === project ? "opacity-[1]" : "opacity-[0.36]"
-                    } cursor-pointer italic`}
-                    onClick={() => {
-                      setActiveId(project);
-                      setIsIndexOpen(false);
-                    }}
-                  >
-                    <div className="flex items-center gap-[8px] relative">
-                      <motion.div
-                        className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: activeId === project ? 1 : 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 80,
-                          damping: 20,
-                          mass: 1,
-                        }}
-                      />
-                      <motion.span
-                        initial={{ x: 0 }}
-                        animate={{ x: activeId === project ? 12 : 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 80,
-                          damping: 20,
-                          mass: 1,
-                        }}
-                        className="font-[600] not-italic"
-                      >
-                        {projects[project].id < 10 ? "0" : ""}
-                        {projects[project].id}
-                      </motion.span>
-                    </div>
-                    <div>
-                      <span
-                        className="title"
-                        dangerouslySetInnerHTML={{
-                          __html: projects[project].title,
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                ))
-              )}
-            </div>
+                <div className="flex flex-col gap-[20px]">
+                  <span className="header-text !capitalize">Index</span>
+                  {playActive
+                    ? playArray.map((playItem, index) => (
+                        <motion.div
+                          key={playItem.id}
+                          initial={{ x: 0, opacity: 0.36 }}
+                          animate={{
+                            opacity: currentPlayIndex === index ? 1 : 0.36,
+                            x: currentPlayIndex === index ? 6 : 0,
+                          }}
+                          whileHover={{ x: 6 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 20,
+                            mass: 1,
+                          }}
+                          className={`${
+                            currentPlayIndex === index
+                              ? "opacity-[1]"
+                              : "opacity-[0.36]"
+                          } cursor-pointer italic`}
+                          onClick={() => {
+                            setCurrentPlayIndex(index);
+                            setIsIndexOpen(false);
+                          }}
+                        >
+                          <div className="flex items-center gap-[8px] relative">
+                            <motion.div
+                              className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
+                              initial={{ opacity: 0 }}
+                              animate={{
+                                opacity: currentPlayIndex === index ? 1 : 0,
+                              }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 80,
+                                damping: 20,
+                                mass: 1,
+                              }}
+                            />
+                            <motion.span
+                              initial={{ x: 0 }}
+                              animate={{
+                                x: currentPlayIndex === index ? 12 : 0,
+                              }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 80,
+                                damping: 20,
+                                mass: 1,
+                              }}
+                              className="font-[600] not-italic"
+                            >
+                              {playItem.id < 10 ? "0" : ""}
+                              {playItem.id}
+                            </motion.span>
+                          </div>
+                          <div>
+                            <span className="title">{playItem.title}</span>
+                          </div>
+                        </motion.div>
+                      ))
+                    : Object.keys(projects).map((project) => (
+                        <motion.div
+                          key={project}
+                          initial={{ x: 0, opacity: 0.36 }}
+                          animate={{
+                            opacity: activeId === project ? 1 : 0.36,
+                            x: activeId === project ? 6 : 0,
+                          }}
+                          whileHover={{ x: 6 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 20,
+                            mass: 1,
+                          }}
+                          className={`${
+                            activeId === project
+                              ? "opacity-[1]"
+                              : "opacity-[0.36]"
+                          } cursor-pointer italic`}
+                          onClick={() => {
+                            setActiveId(project);
+                            setIsIndexOpen(false);
+                          }}
+                        >
+                          <div className="flex items-center gap-[8px] relative">
+                            <motion.div
+                              className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
+                              initial={{ opacity: 0 }}
+                              animate={{
+                                opacity: activeId === project ? 1 : 0,
+                              }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 80,
+                                damping: 20,
+                                mass: 1,
+                              }}
+                            />
+                            <motion.span
+                              initial={{ x: 0 }}
+                              animate={{ x: activeId === project ? 12 : 0 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 80,
+                                damping: 20,
+                                mass: 1,
+                              }}
+                              className="font-[600] not-italic"
+                            >
+                              {projects[project].id < 10 ? "0" : ""}
+                              {projects[project].id}
+                            </motion.span>
+                          </div>
+                          <div>
+                            <span
+                              className="title"
+                              dangerouslySetInnerHTML={{
+                                __html: projects[project].title,
+                              }}
+                            />
+                          </div>
+                        </motion.div>
+                      ))}
+                </div>
               </motion.div>
               <motion.div
                 key="index-arrow"
@@ -802,6 +830,6 @@ export default function NavBar() {
           )}
         </AnimatePresence>
       </motion.div>
-    </motion.div>
+    </>
   );
 }

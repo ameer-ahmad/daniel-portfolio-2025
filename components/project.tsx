@@ -256,7 +256,7 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className="overflow-y-clip w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-[calc(100vh-60px)] shadow-glow  px-[40px] pt-[71.9px] pb-[151.9px] xl:p-[80px] lg:p-[40px] bg-white relative"
+      className="overflow-y-clip w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] shadow-glow  px-[20px] pt-[71.9px] pb-[151.9px] xl:p-[80px] lg:p-[40px] bg-white relative"
     >
       {flattenedImages.length > 1 && (
         <>
