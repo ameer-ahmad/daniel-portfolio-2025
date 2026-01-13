@@ -397,7 +397,7 @@ export default function NavBar() {
               damping: 20,
               mass: 1,
             }}
-            className="header-text pb-[2px] pr-[2px] z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
+            className="header-text pb-[2px] pr-[2px] z-[2] flex justify-center items-center h-[50px] w-1/2 cursor-pointer flex items-center gap-[6px]"
             onClick={() => setPlayActive(false)}
           >
             Work
@@ -416,7 +416,7 @@ export default function NavBar() {
               damping: 20,
               mass: 1,
             }}
-            className="header-text pb-[2px] pl-[2px] z-[2] flex justify-center items-center h-[52px] w-1/2 cursor-pointer flex items-center gap-[6px]"
+            className="header-text pb-[2px] pl-[2px] z-[2] flex justify-center items-center h-[50px] w-1/2 cursor-pointer flex items-center gap-[6px]"
             onClick={() => setPlayActive(true)}
           >
             Play
