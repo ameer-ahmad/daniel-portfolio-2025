@@ -10,18 +10,24 @@ import { MediaItem } from "@/data/projects";
 export default function Play() {
   const { currentPlayIndex, setCurrentPlayIndex } = useMobileUI();
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   // Sync local state with store
   useEffect(() => {
     setCurrentIndex(currentPlayIndex);
   }, [currentPlayIndex]);
   const [showNextArrow, setShowNextArrow] = useState(false);
   const [showPrevArrow, setShowPrevArrow] = useState(false);
-  const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">("up");
-  const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">("down");
+  const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">(
+    "up"
+  );
+  const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">(
+    "down"
+  );
 
   // Resolve the primary media to display for the current play item
-  const normalizeImageItem = (img: { src: string; aspectRatio?: string } | string): MediaItem => {
+  const normalizeImageItem = (
+    img: { src: string; aspectRatio?: string } | string
+  ): MediaItem => {
     if (typeof img === "string") return img;
     return { type: "image", src: img.src, aspectRatio: img.aspectRatio };
   };
@@ -29,12 +35,21 @@ export default function Play() {
   const getPrimaryMedia = (media?: MediaItem[]): MediaItem | null => {
     if (!media || media.length === 0) return null;
     const first = media[0];
-    if (Array.isArray(first)) return first[0] ? normalizeImageItem(first[0]) : null;
-    if (typeof first === "object" && "type" in first && first.type === "images") {
+    if (Array.isArray(first))
+      return first[0] ? normalizeImageItem(first[0]) : null;
+    if (
+      typeof first === "object" &&
+      "type" in first &&
+      first.type === "images"
+    ) {
       const firstSrc = first.srcs[0];
       return firstSrc ? normalizeImageItem(firstSrc) : null;
     }
-    if (typeof first === "object" && "type" in first && first.type === "videos") {
+    if (
+      typeof first === "object" &&
+      "type" in first &&
+      first.type === "videos"
+    ) {
       const src = first.srcs[0];
       if (!src) return null;
       return {
@@ -50,13 +65,20 @@ export default function Play() {
 
   const renderMedia = (item: MediaItem) => {
     const basePath =
-      process.env.NODE_ENV === "development" ? "/images" : "/daniel-portfolio-2025/images";
+      process.env.NODE_ENV === "development"
+        ? "/images"
+        : "/daniel-portfolio-2025/images";
 
     // Helper to normalize src string
     const resolveSrc = (src: string) => `${basePath}${src}`;
 
     // Video object
-    if (typeof item === "object" && !Array.isArray(item) && "type" in item && item.type === "video") {
+    if (
+      typeof item === "object" &&
+      !Array.isArray(item) &&
+      "type" in item &&
+      item.type === "video"
+    ) {
       return (
         <video
           src={resolveSrc(item.src)}
@@ -70,7 +92,12 @@ export default function Play() {
     }
 
     // Image object
-    if (typeof item === "object" && !Array.isArray(item) && "type" in item && item.type === "image") {
+    if (
+      typeof item === "object" &&
+      !Array.isArray(item) &&
+      "type" in item &&
+      item.type === "image"
+    ) {
       return (
         <Image
           src={resolveSrc(item.src)}
@@ -112,7 +139,8 @@ export default function Play() {
 
     // Fallback for videos/images with srcs arrays: choose first available
     if (typeof item === "object" && "type" in item && item.type === "videos") {
-      const src = typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
+      const src =
+        typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
       if (!src) return null;
       return (
         <video
@@ -127,7 +155,8 @@ export default function Play() {
     }
 
     if (typeof item === "object" && "type" in item && item.type === "images") {
-      const src = typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
+      const src =
+        typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
       if (!src) return null;
       return (
         <Image
@@ -181,17 +210,17 @@ export default function Play() {
   return (
     <div className="relative p-[80px] w-full h-full flex items-center justify-center">
       <div className="relative w-full h-full">
-      <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-full h-full"
-            >
-              {primaryMedia && renderMedia(primaryMedia)}
-            </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative w-full h-full"
+          >
+            {primaryMedia && renderMedia(primaryMedia)}
+          </motion.div>
         </AnimatePresence>
       </div>
       <button
@@ -207,7 +236,7 @@ export default function Play() {
       <AnimatePresence mode="wait">
         <div
           key={currentIndex}
-          className="absolute top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
+          className="absolute hidden md:block top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
         >
           <span className="relative font-[600]">
             <AnimatePresence>
@@ -215,36 +244,56 @@ export default function Play() {
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.2 } }}
+                  exit={{
+                    opacity: 0,
+                    transition: { delay: 0.2, duration: 0.2 },
+                  }}
                   transition={{ duration: 0.2 }}
-                  className={`absolute ${nextArrowDirection === "up" ? "-top-3" : "-bottom-3"} left-1 text-xs text-white`}
+                  className={`absolute ${
+                    nextArrowDirection === "up" ? "-top-3" : "-bottom-3"
+                  } left-1 text-xs text-white`}
                 >
                   {nextArrowDirection === "up" ? "▲" : "▼"}
                 </motion.span>
               )}
               {showPrevArrow && (
                 <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.2 } }}
-                transition={{ duration: 0.2 }}
-                  className={`absolute ${prevArrowDirection === "up" ? "-top-3" : "-bottom-3"} left-1 text-xs text-white`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{
+                    opacity: 0,
+                    transition: { delay: 0.2, duration: 0.2 },
+                  }}
+                  transition={{ duration: 0.2 }}
+                  className={`absolute ${
+                    prevArrowDirection === "up" ? "-top-3" : "-bottom-3"
+                  } left-1 text-xs text-white`}
                 >
                   {prevArrowDirection === "up" ? "▲" : "▼"}
                 </motion.span>
               )}
             </AnimatePresence>
-            {String(currentIndex + 1).padStart(2, '0')}/{String(playArray.length).padStart(2, '0')}
+            {String(currentIndex + 1).padStart(2, "0")}/
+            {String(playArray.length).padStart(2, "0")}
           </span>
           <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }} 
-          dangerouslySetInnerHTML={{ __html: currentItem.title }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            dangerouslySetInnerHTML={{ __html: currentItem.title }}
           ></motion.span>
         </div>
       </AnimatePresence>
+      <div
+        key={currentIndex}
+        className="absolute block md:hidden top-[20px] bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20"
+      >
+        <span className="relative font-[600] pb-[2px] text-[#1c1c1c]/[0.38]">
+          {String(currentIndex + 1).padStart(2, "0")}/
+          {String(playArray.length).padStart(2, "0")}
+        </span>
+      </div>
     </div>
   );
 }

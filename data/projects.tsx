@@ -30,7 +30,7 @@ export const projects: ProjectType = {
       "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
       "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
-    desc: 'Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, “Neon Roadhouse”.',
+    desc: "Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, “Neon Roadhouse”.",
     images: [
       {
         type: "videos",
@@ -40,7 +40,15 @@ export const projects: ProjectType = {
         ],
       },
       { type: "video", src: "/rangers-loader.mp4", aspectRatio: "1283:849" },
-      { type: "images", srcs: [{ src: "/cutout-01.png", aspectRatio: "201:508" }, {src: "/cutout-02.png", aspectRatio: "246:509"}, {src: "/cutout-03.png", aspectRatio: "411:509"}, {src: "/cutout-04.png", aspectRatio: "305:509"}] },
+      {
+        type: "images",
+        srcs: [
+          { src: "/cutout-01.png", aspectRatio: "201:508" },
+          { src: "/cutout-02.png", aspectRatio: "246:509" },
+          { src: "/cutout-03.png", aspectRatio: "411:509" },
+          { src: "/cutout-04.png", aspectRatio: "305:509" },
+        ],
+      },
       {
         type: "images",
         srcs: [
@@ -59,9 +67,15 @@ export const projects: ProjectType = {
     id: 2,
     title:
       "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
-    subtitle: "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
+    subtitle:
+      "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
     desc: "Analog to Digital is the culmination of work produced for my graphic design bachelor’s thesis. It compiles a year’s worth of essays, research, experiments, and final work, which seeks to reintroduce physical experimentation into today’s overwhelmingly software-driven design processes. My projects specifically focus on my interest in typography, with each emphasizing materiality, unexpected play, and form. This was done to create letterforms that weren’t just meant to be read but also experienced and seen.<br /><br />Each copy was hand-bound and includes a manually typeset corrugated cover, a nod back to the contents in the book. The majority of the book was printed through RISO, with different papers and inks used to distinguish the stages within it.",
-    images: [{type: "image", src: "/covers.jpg"}, {type: "image", src: "/analog-to-digital-1-2.jpg"}, {type: "image", src: "/analog-to-digital-1-1.jpg"}, {type: "image", src: "/analog-to-digital-1.jpg"}],
+    images: [
+      { type: "image", src: "/covers.jpg" },
+      { type: "image", src: "/analog-to-digital-1-2.jpg" },
+      { type: "image", src: "/analog-to-digital-1-1.jpg" },
+      { type: "image", src: "/analog-to-digital-1.jpg" },
+    ],
     date: "May 2024",
     details: "14 x 21 cm<br />268 pages",
     extra: "",
@@ -71,7 +85,8 @@ export const projects: ProjectType = {
     title:
       "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
     subtitle:
-      "In this international cultural exchange, students from OCAD and Hongik University collaborated in Seoul in honour of the sixtieth anniversary of diplomatic relations between South Korea and Canada. The exhibition shows the final works of a week-long intensive workshop, site-visits related to Korean culture, and the celebration of Hangul Day.<br /><br />Taking advantage of the angular construction found throughout the Korean Hangul alphabet, the letterform graphic is created through light beams. Using spotlights, I cast light on surfaces from different angles to create organic letterforms reminiscent of traditional Korean calligraphy (서예), representing the cultural focus of the exhibition. The poster is printed on black paper using multiple layers of white RISO ink.",
+      "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
+    desc: "In this international cultural exchange, students from OCAD and Hongik University collaborated in Seoul in honour of the sixtieth anniversary of diplomatic relations between South Korea and Canada. The exhibition shows the final works of a week-long intensive workshop, site-visits related to Korean culture, and the celebration of Hangul Day.<br /><br />Taking advantage of the angular construction found throughout the Korean Hangul alphabet, the letterform graphic is created through light beams. Using spotlights, I cast light on surfaces from different angles to create organic letterforms reminiscent of traditional Korean calligraphy (서예), representing the cultural focus of the exhibition. The poster is printed on black paper using multiple layers of white RISO ink.",
     images: [
       "/korean-poster.png",
       ["/korean-poster-2.png", "/korean-poster-3.png"],

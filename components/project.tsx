@@ -309,7 +309,7 @@ export default function Project({
             key={currentIndex}
             className="absolute block md:hidden top-[20px] bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20"
           >
-            <span className="relative font-[600] text-[#1c1c1c]/[0.38]">
+            <span className="relative font-[600] pb-[2px] text-[#1c1c1c]/[0.38]">
               {String(currentIndex + 1).padStart(2, "0")}/
               {String(flattenedImages.length).padStart(2, "0")}
             </span>
