@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
+import { MediaItem } from "@/data/projects";
 
 export default function Play() {
   const { currentPlayIndex, setCurrentPlayIndex } = useMobileUI();
@@ -19,14 +20,139 @@ export default function Play() {
   const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">("up");
   const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">("down");
 
+  // Resolve the primary media to display for the current play item
+  const normalizeImageItem = (img: { src: string; aspectRatio?: string } | string): MediaItem => {
+    if (typeof img === "string") return img;
+    return { type: "image", src: img.src, aspectRatio: img.aspectRatio };
+  };
+
+  const getPrimaryMedia = (media?: MediaItem[]): MediaItem | null => {
+    if (!media || media.length === 0) return null;
+    const first = media[0];
+    if (Array.isArray(first)) return first[0] ? normalizeImageItem(first[0]) : null;
+    if (typeof first === "object" && "type" in first && first.type === "images") {
+      const firstSrc = first.srcs[0];
+      return firstSrc ? normalizeImageItem(firstSrc) : null;
+    }
+    if (typeof first === "object" && "type" in first && first.type === "videos") {
+      const src = first.srcs[0];
+      if (!src) return null;
+      return {
+        type: "video",
+        src: typeof src === "string" ? src : src.src,
+        aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
+      };
+    }
+    if (typeof first === "object" && "type" in first) return first;
+    if (typeof first === "string") return normalizeImageItem(first);
+    return normalizeImageItem(first);
+  };
+
+  const renderMedia = (item: MediaItem) => {
+    const basePath =
+      process.env.NODE_ENV === "development" ? "/images" : "/daniel-portfolio-2025/images";
+
+    // Helper to normalize src string
+    const resolveSrc = (src: string) => `${basePath}${src}`;
+
+    // Video object
+    if (typeof item === "object" && !Array.isArray(item) && "type" in item && item.type === "video") {
+      return (
+        <video
+          src={resolveSrc(item.src)}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+      );
+    }
+
+    // Image object
+    if (typeof item === "object" && !Array.isArray(item) && "type" in item && item.type === "image") {
+      return (
+        <Image
+          src={resolveSrc(item.src)}
+          alt={item.src}
+          fill
+          className="object-contain"
+          priority
+        />
+      );
+    }
+
+    // Array of images (take first)
+    if (Array.isArray(item)) {
+      const src = typeof item[0] === "string" ? item[0] : item[0]?.src;
+      if (!src) return null;
+      return (
+        <Image
+          src={resolveSrc(src)}
+          alt={src}
+          fill
+          className="object-contain"
+          priority
+        />
+      );
+    }
+
+    // Fallback string image
+    if (typeof item === "string") {
+      return (
+        <Image
+          src={resolveSrc(item)}
+          alt={item}
+          fill
+          className="object-contain"
+          priority
+        />
+      );
+    }
+
+    // Fallback for videos/images with srcs arrays: choose first available
+    if (typeof item === "object" && "type" in item && item.type === "videos") {
+      const src = typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
+      if (!src) return null;
+      return (
+        <video
+          src={resolveSrc(src)}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+      );
+    }
+
+    if (typeof item === "object" && "type" in item && item.type === "images") {
+      const src = typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
+      if (!src) return null;
+      return (
+        <Image
+          src={resolveSrc(src)}
+          alt={src}
+          fill
+          className="object-contain"
+          priority
+        />
+      );
+    }
+
+    return null;
+  };
+
   const nextImage = () => {
     setCurrentIndex((prev) => {
       const isLastImage = prev === playArray.length - 1;
       setNextArrowDirection(isLastImage ? "down" : "up");
       const newIndex = (prev + 1) % playArray.length;
-      setCurrentPlayIndex(newIndex);
       return newIndex;
     });
+    // Calculate newIndex outside updater to avoid calling setCurrentPlayIndex during render
+    const newIndex = (currentIndex + 1) % playArray.length;
+    setCurrentPlayIndex(newIndex);
     setShowNextArrow(true);
     setTimeout(() => {
       setShowNextArrow(false);
@@ -38,17 +164,19 @@ export default function Play() {
       const isFirstImage = prev === 0;
       setPrevArrowDirection(isFirstImage ? "up" : "down");
       const newIndex = (prev - 1 + playArray.length) % playArray.length;
-      setCurrentPlayIndex(newIndex);
       return newIndex;
     });
+    // Calculate newIndex outside updater to avoid calling setCurrentPlayIndex during render
+    const newIndex = (currentIndex - 1 + playArray.length) % playArray.length;
+    setCurrentPlayIndex(newIndex);
     setShowPrevArrow(true);
     setTimeout(() => {
       setShowPrevArrow(false);
     }, 700); // 500ms visible + 200ms exit delay
   };
 
-
   const currentItem = playArray[currentIndex];
+  const primaryMedia = getPrimaryMedia(currentItem.images);
 
   return (
     <div className="relative p-[80px] w-full h-full flex items-center justify-center">
@@ -62,18 +190,7 @@ export default function Play() {
               transition={{ duration: 0.3 }}
               className="relative w-full h-full"
             >
-              <Image
-                src={`${
-                  process.env.NODE_ENV === "development"
-                    ? "/"
-                    : "/daniel-portfolio-2025/"
-                }images${currentItem.image}`}
-                alt={currentItem.title}
-                fill
-                className="object-contain"
-                priority={true}
-                loading="eager"
-              />
+              {primaryMedia && renderMedia(primaryMedia)}
             </motion.div>
         </AnimatePresence>
       </div>
@@ -123,8 +240,9 @@ export default function Play() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}  
-          >{currentItem.title}</motion.span>
+          transition={{ duration: 0.3 }} 
+          dangerouslySetInnerHTML={{ __html: currentItem.title }}
+          ></motion.span>
         </div>
       </AnimatePresence>
     </div>

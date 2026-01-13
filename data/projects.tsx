@@ -27,10 +27,10 @@ export const projects: ProjectType = {
   "texas-rangers": {
     id: 1,
     title:
-      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
+      "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
-      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
-    desc: 'Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, "Neon Roadhouse".',
+      "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+    desc: 'Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, “Neon Roadhouse”.',
     images: [
       {
         type: "videos",
@@ -59,11 +59,11 @@ export const projects: ProjectType = {
     id: 2,
     title:
       "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
-    subtitle: "",
-    desc: "",
-    images: [],
-    date: "",
-    details: "",
+    subtitle: "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
+    desc: "Analog to Digital is the culmination of work produced for my graphic design bachelor’s thesis. It compiles a year’s worth of essays, research, experiments, and final work, which seeks to reintroduce physical experimentation into today’s overwhelmingly software-driven design processes. My projects specifically focus on my interest in typography, with each emphasizing materiality, unexpected play, and form. This was done to create letterforms that weren’t just meant to be read but also experienced and seen.<br /><br />Each copy was hand-bound and includes a manually typeset corrugated cover, a nod back to the contents in the book. The majority of the book was printed through RISO, with different papers and inks used to distinguish the stages within it.",
+    images: [{type: "image", src: "/covers.jpg"}, {type: "image", src: "/analog-to-digital-1-2.jpg"}, {type: "image", src: "/analog-to-digital-1-1.jpg"}, {type: "image", src: "/analog-to-digital-1.jpg"}],
+    date: "May 2024",
+    details: "14 x 21 cm<br />268 pages",
     extra: "",
   },
   "exhibition-poster": {
@@ -71,8 +71,7 @@ export const projects: ProjectType = {
     title:
       "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
     subtitle:
-      "Pluriversal Typography in Local and Global Contexts, <span class='not-italic capitalize'>Exhibition Poster Design</span>",
-    desc: "In this international cultural exchange, students from OCAD and Hongik University collaborated in Seoul in honour of the sixtieth anniversary of diplomatic relations between South Korea and Canada. The exhibition shows the final works of a week-long intensive workshop, site-visits related to Korean culture, and the celebration of Hangul Day.<br /><br />Taking advantage of the angular construction found throughout the Korean Hangul alphabet, the letterform graphic is created through light beams. Using spotlights, I cast light on surfaces from different angles to create organic letterforms reminiscent of traditional Korean calligraphy (서예), representing the cultural focus of the exhibition. The poster is printed on black paper using RISO.",
+      "In this international cultural exchange, students from OCAD and Hongik University collaborated in Seoul in honour of the sixtieth anniversary of diplomatic relations between South Korea and Canada. The exhibition shows the final works of a week-long intensive workshop, site-visits related to Korean culture, and the celebration of Hangul Day.<br /><br />Taking advantage of the angular construction found throughout the Korean Hangul alphabet, the letterform graphic is created through light beams. Using spotlights, I cast light on surfaces from different angles to create organic letterforms reminiscent of traditional Korean calligraphy (서예), representing the cultural focus of the exhibition. The poster is printed on black paper using multiple layers of white RISO ink.",
     images: [
       "/korean-poster.png",
       ["/korean-poster-2.png", "/korean-poster-3.png"],
@@ -103,14 +102,14 @@ export const projects: ProjectType = {
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
     subtitle:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
-    desc: "The Science Olympiad is one of the largest STEM competitions in the USA, uniting students, teachers, and volunteers across the 50 states in their passion for science. In anticipation of their 40th annual event at Michigan State University, I designed an experimental concept poster.<br /><br />For this project, the idea was to create visually interesting letterforms by combining analog and digital design proccesses, an idea I was exploring concurrently in my thesis project. This method of designing and its unique results reflected the observational and experimental nature of science itself.<br /><br />The “S and O” came to form through playing with the effect and reaction cycle different methods of shaping had on liquid substrates. In the end, this project was showcased at Swash & Serif, Toronto’s only annual typographic and lettering exhibition.",
+    desc: "The Science Olympiad is one of the largest STEM competitions in the USA, uniting students, teachers, and volunteers across the 50 states in their passion for science. In anticipation of their 40th annual event at Michigan State University, I designed an experimental concept poster.<br /><br />For this project, the idea was to create visually interesting letterforms by combining analog and digital design processes, an idea I was exploring concurrently in my thesis project. This method of designing and its unique results reflected the observational and experimental nature of science itself.<br /><br />The “S and O” were created through experimentation with different cause-and-effect reactions on liquid substrates, leading to some organic forms. In the end, this project was showcased at Swash & Serif, Toronto’s only annual typographic and lettering exhibition.",
     images: [
       { type: "image", src: "/so-poster.jpg" },
       { type: "image", src: "/s-horizontal.png" },
       { type: "image", src: "/o-vertical.png" },
     ],
     date: "April 2024",
-    details: "64.8 x 83.8 cm",
+    details: "28 x 43 cm",
     extra:
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },

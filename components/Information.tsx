@@ -89,7 +89,7 @@ export default function Information({
           dangerouslySetInnerHTML={{ __html: project.desc }}
         />
         {project.date && <span className="mt-[20px]">{project.date}</span>}
-        {project.details && <span className="">{project.details}</span>}
+        {project.details && <span className="" dangerouslySetInnerHTML={{ __html: project.details }}></span>}
         {project.extra && (
           <span
             className="mt-[20px] not-italic"

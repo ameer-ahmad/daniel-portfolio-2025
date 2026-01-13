@@ -279,18 +279,10 @@ export default function NavBar() {
             }}
             className="w-full md:w-[407px]"
           >
-            Toronto-based multidisciplinary designer developing digital and
-            print projects for individuals, businesses, and organizations across
-            various sectors. With a keen eye for details and a passion for
-            experimentation + aesthetics, he specializes in crafting distinctive
-            and cohesive visual experiences.
+            Multidisciplinary designer developing digital and print projects for individuals, businesses, and organizations across various sectors. His practice encompasses UI/UX, typography, brand development, creative direction, editorials, & more. He has worked on projects for clients both big and small, including the Chicago Bulls, Crypto.com Arena, Texas Rangers, Olympics, FIFA, FC Barcelona, & many more.
             <br />
             <br />
-            His practice encompasses editorial/layout design, typography, brand
-            development, creative direction, UI/UX, & more. He has worked on
-            projects for clients both big and small, including the Chicago
-            Bulls, Crypto.com Arena, Texas Rangers, Olympics, FIFA, FC
-            Barcelona, & many more.
+            Currently based in the city of Toronto, and is always interested in collaborations with others around the world. Please get in touch for any inquiries or to see additional work.
           </motion.span>
           <motion.div
             initial={{
