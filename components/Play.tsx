@@ -3,22 +3,14 @@
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
-import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
+import { useState } from "react";
 
 export default function Play() {
-  const { playActive } = useActiveProject();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showNextArrow, setShowNextArrow] = useState(false);
   const [showPrevArrow, setShowPrevArrow] = useState(false);
   const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">("up");
   const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">("down");
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [cursorVisible, setCursorVisible] = useState(false);
-  const [cursorSymbol, setCursorSymbol] = useState("◀");
-  const [windowWidth, setWindowWidth] = useState(0);
-  const prevButtonRef = useRef<HTMLButtonElement>(null);
-  const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const nextImage = () => {
     setCurrentIndex((prev) => {
@@ -44,60 +36,6 @@ export default function Play() {
     }, 700); // 500ms visible + 200ms exit delay
   };
 
-  useEffect(() => {
-    const updateWindowWidth = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    updateWindowWidth();
-    window.addEventListener("resize", updateWindowWidth);
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseEnterPrev = () => {
-      window.addEventListener("mousemove", handleMouseMove);
-      setCursorVisible(true);
-      setCursorSymbol("◀");
-    };
-
-    const handleMouseEnterNext = () => {
-      window.addEventListener("mousemove", handleMouseMove);
-      setCursorVisible(true);
-      setCursorSymbol("▶");
-    };
-
-    const handleMouseLeave = () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      setCursorVisible(false);
-    };
-
-    const prevButton = prevButtonRef.current;
-    const nextButton = nextButtonRef.current;
-
-    if (prevButton) {
-      prevButton.addEventListener("mouseenter", handleMouseEnterPrev);
-      prevButton.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    if (nextButton) {
-      nextButton.addEventListener("mouseenter", handleMouseEnterNext);
-      nextButton.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      window.removeEventListener("resize", updateWindowWidth);
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (prevButton) {
-        prevButton.removeEventListener("mouseenter", handleMouseEnterPrev);
-        prevButton.removeEventListener("mouseleave", handleMouseLeave);
-      }
-      if (nextButton) {
-        nextButton.removeEventListener("mouseenter", handleMouseEnterNext);
-        nextButton.removeEventListener("mouseleave", handleMouseLeave);
-      }
-    };
-  }, []);
 
   const currentItem = playArray[currentIndex];
 
@@ -127,31 +65,17 @@ export default function Play() {
               />
             </motion.div>
         </AnimatePresence>
-
-        <button
-          ref={prevButtonRef}
-          onClick={prevImage}
-          className="absolute left-0 top-0 w-1/2 h-full z-10 cursor-prev-play"
-          aria-label="Previous image"
-        ></button>
-        <button
-          ref={nextButtonRef}
-          onClick={nextImage}
-          className="absolute right-0 top-0 w-1/2 h-full z-10 cursor-next-play"
-          aria-label="Next image"
-        ></button>
       </div>
-      {cursorVisible && (
-        <div
-          className="custom-cursor-play visible"
-          style={{
-            left: `${cursorPos.x + (playActive ? windowWidth : 0)}px`,
-            top: `${cursorPos.y}px`,
-          }}
-        >
-          {cursorSymbol}
-        </div>
-      )}
+      <button
+        onClick={prevImage}
+        className="absolute left-0 top-0 w-1/2 h-full z-10 cursor-prev-play"
+        aria-label="Previous image"
+      ></button>
+      <button
+        onClick={nextImage}
+        className="absolute right-0 top-0 w-1/2 h-full z-10 cursor-next-play"
+        aria-label="Next image"
+      ></button>
       <AnimatePresence mode="wait">
         <div
           key={currentIndex}

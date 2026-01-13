@@ -70,7 +70,7 @@ export default function Index() {
           >
             <div className="flex items-center gap-[8px] relative">
               <motion.div
-                className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-0"
+                className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isActive(project) ? 1 : 0 }}
                 transition={{

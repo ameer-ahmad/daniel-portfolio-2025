@@ -1,10 +1,21 @@
+export type VideoItem = 
+  | string
+  | { src: string; aspectRatio?: string };
+
+export type MediaItem =
+  | string
+  | string[]
+  | { type: "image"; src: string }
+  | { type: "video"; src: string }
+  | { type: "videos"; srcs: VideoItem[] };
+
 export type ProjectType = {
   [key: string]: {
     id: number;
     title: string;
     subtitle: string;
     desc: string;
-    images?: (string | string[])[];
+    images?: MediaItem[];
     video?: string;
     date?: string;
     details?: string;
@@ -57,8 +68,8 @@ export const projects: ProjectType = {
       "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
     subtitle:
       "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
-    desc: "Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, “Neon Roadhouse”.",
-    images: [],
+    desc: "Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, \"Neon Roadhouse\".",
+    images: [{ type: "videos", srcs: [{src: "/rangers-home.mp4", aspectRatio: "960:619"}, {src: "/mobile-rangers.mp4", aspectRatio: "285:619"}] }, { type: "video", src: "/rangers-loader.mp4" }, { type: "image", src: "/player-components.png" }, { type: "image", src: "/rangers-components-1.jpg" }, {type: "image", src: "/rangers-components-2.jpg"}, {type: "image", src: "/all-for-texas.jpg"}],
     date: "July 2025",
     details: "Website Series",
     extra: "",

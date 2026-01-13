@@ -56,9 +56,7 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <motion.div 
-      style={{ x: xSpring }}
-      className="flex w-[200vw]">
+      <motion.div style={{ x: xSpring }} className="flex w-[200vw]">
         <div className="flex">
           <Index />
           <div className="w-full h-full relative">
@@ -70,7 +68,7 @@ export default function Home() {
               {Object.keys(projects).map((project, i) => (
                 <div
                   key={project}
-                  className="w-full h-full flex overflow-y-clip border-t-[1px] border-white"
+                  className="w-full h-full flex overflow-y-clip"
                   id={project}
                 >
                   <Information project={projects[project]} />
