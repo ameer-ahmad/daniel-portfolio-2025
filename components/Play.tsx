@@ -208,7 +208,7 @@ export default function Play() {
   const primaryMedia = getPrimaryMedia(currentItem.images);
 
   return (
-    <div className="relative p-[80px] w-full h-full flex items-center justify-center">
+    <div className="relative px-[20px] pt-[66px] pb-[102px] xl:p-[80px] lg:p-[40px] w-full h-full flex items-center justify-center">
       <div className="relative w-full h-full">
         <AnimatePresence mode="wait">
           <motion.div

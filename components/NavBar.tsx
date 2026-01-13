@@ -65,7 +65,7 @@ export default function NavBar() {
 
   const getInitialHeight = () => {
     if (windowWidth === 0) return "339px"; // SSR fallback
-    if (windowWidth < 768) return "524px"; // Tablet
+    if (windowWidth < 768) return "auto"; // Mobile - fit content
     return "339px"; // Desktop
   };
 
@@ -269,7 +269,7 @@ export default function NavBar() {
               </motion.span>
             </div>
           </div>
-          <div className="flex mt-[20px] justify-start gap-[20px] w-full h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
+          <div className="flex mt-[20px] mb-[20px] md:mb-0 justify-start gap-[20px] w-full h-auto md:h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
             <motion.span
               initial={{
                 color: "rgba(0, 0, 0, 0)",
@@ -615,7 +615,7 @@ export default function NavBar() {
                   className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="flex flex-col gap-[20px] italic">
+                  <div className="flex flex-col italic">
                     {playActive && activePlayItem ? (
                       <>
                         <span
@@ -637,22 +637,22 @@ export default function NavBar() {
                           }}
                         />
                         <span
-                          className="!not-italic"
+                          className="!not-italic mt-[20px]"
                           dangerouslySetInnerHTML={{
                             __html: activeProject?.desc || "",
                           }}
                         />
                         {activeProject?.date && (
-                          <span className="mt-[10px]">
+                          <span className="mt-[20px]">
                             {activeProject.date}
                           </span>
                         )}
                         {activeProject?.details && (
-                          <span className="">{activeProject.details}</span>
+                          <span className="" dangerouslySetInnerHTML={{ __html: activeProject.details }}></span>
                         )}
                         {activeProject?.extra && (
                           <span
-                            className="mt-[10px] not-italic"
+                            className="mt-[20px] not-italic"
                             dangerouslySetInnerHTML={{
                               __html: activeProject.extra,
                             }}
