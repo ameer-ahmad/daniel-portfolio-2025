@@ -34,10 +34,10 @@ export default function LoadingScreen() {
 
   return (
     <motion.div
-      initial={{ opacity: 1 }}
-      animate={{ opacity: showContent ? 0 : 1 }}
+      initial={{ opacity: 1, pointerEvents: "all" }}
+      animate={{ opacity: showContent ? 0 : 1, pointerEvents: showContent ? "none" : "all" }}
       transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-      className="w-screen h-screen pointer-events-none bg-white z-[9999] absolute top-0 left-0 flex justify-center items-center"
+      className="w-screen h-screen bg-white z-[9999] absolute top-0 left-0 flex justify-center items-center"
     >
       <motion.div
         initial={{ opacity: 0 }}

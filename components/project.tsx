@@ -135,7 +135,7 @@ export default function Project({
       animate={{ opacity: loadingDone ? 1 : 0, x: loadingDone ? 0 : "-160px" }}
       transition={{
         type: "spring",
-        stiffness: 40,
+        stiffness: 80,
         damping: 20,
         mass: 1,
       }}

@@ -25,13 +25,13 @@ export default function Index() {
       transition={{
         x: {
           type: "spring",
-          stiffness: 40,
+          stiffness: 80,
           damping: 20,
           mass: 1,
         },
         opacity: {
           type: "spring",
-          stiffness: 40,
+          stiffness: 80,
           damping: 20,
           mass: 1,
         },

@@ -28,7 +28,7 @@ export default function NavBar() {
       animate={{ opacity: loadingDone ? 1 : 0, y: loadingDone ? 0 : "-100%" }}
       transition={{
         type: "spring",
-        stiffness: 40,
+        stiffness: 80,
         damping: 20,
         mass: 1,
       }}

@@ -60,7 +60,7 @@ export const projects: ProjectType = {
     date: "January 2024",
     details: "20 x 44 cm",
     extra:
-      "Exhibited in part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
+      "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
   "texas-rangers": {
     id: 4,
@@ -100,11 +100,11 @@ export const projects: ProjectType = {
     id: 7,
     title:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
-    subtitle: "",
-    desc: "",
-    images: [],
-    date: "",
-    details: "",
-    extra: "",
+    subtitle: "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
+    desc: "The Science Olympiad is one of the largest STEM competitions in the USA, uniting students, teachers, and volunteers across the 50 states in their passion for science. In anticipation of their 40th annual event at Michigan State University, I designed an experimental concept poster.<br /><br />For this project, the idea was to create visually interesting letterforms by combining analog and digital design proccesses, an idea I was exploring concurrently in my thesis project. This method of designing and its unique results reflected the observational and experimental nature of science itself.<br /><br />The “S and O” came to form through playing with the effect and reaction cycle different methods of shaping had on liquid substrates. In the end, this project was showcased at Swash & Serif, Toronto’s only annual typographic and lettering exhibition.",
+    images: [{type: "image", src: "/so-poster.jpg"}, {type: "image", src: "/s-horizontal.png"}, {type: "image", src: "/o-vertical.png"}],
+    date: "April 2024",
+    details: "64.8 x 83.8 cm",
+    extra: "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
 };
