@@ -81,7 +81,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <div className="flex w-screen h-[calc(100vh-60px)] bg-black">
+        <div className="flex w-screen h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] bg-black">
           <Play />
         </div>
       </motion.div>
