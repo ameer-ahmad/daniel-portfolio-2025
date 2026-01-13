@@ -16,10 +16,10 @@ export default function NavBar() {
     if (playActive) {
       setPlayActive(false);
       setTimeout(() => {
-        setActiveId("exhibition-poster");
+        setActiveId("texas-rangers");
       }, 800);
     } else {
-      setActiveId("exhibition-poster");
+      setActiveId("texas-rangers");
     }
   };
   return (

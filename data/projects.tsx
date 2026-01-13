@@ -1,6 +1,4 @@
-export type VideoItem = 
-  | string
-  | { src: string; aspectRatio?: string };
+export type VideoItem = string | { src: string; aspectRatio?: string };
 
 export type MediaItem =
   | string
@@ -24,15 +22,29 @@ export type ProjectType = {
 };
 
 export const projects: ProjectType = {
-  "chicago-bulls": {
+  "texas-rangers": {
     id: 1,
     title:
-      "Chicago Bulls 2025-26, <span class='lowercase not-italic'>renewal websites</span>",
-    subtitle: "",
-    desc: "",
-    images: [],
-    date: "",
-    details: "",
+      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
+    subtitle:
+      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
+    desc: 'Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, "Neon Roadhouse".',
+    images: [
+      {
+        type: "videos",
+        srcs: [
+          { src: "/rangers-home.mp4", aspectRatio: "960:619" },
+          { src: "/mobile-rangers.mp4", aspectRatio: "285:619" },
+        ],
+      },
+      { type: "video", src: "/rangers-loader.mp4" },
+      { type: "image", src: "/player-components.png" },
+      ["/rangers-components-1.1.jpg", "/rangers-components-1.jpg"],
+      { type: "image", src: "/rangers-components-2.jpg" },
+      { type: "image", src: "/all-for-texas.jpg" },
+    ],
+    date: "July 2025",
+    details: "Website Series",
     extra: "",
   },
   "analog-digital": {
@@ -62,49 +74,33 @@ export const projects: ProjectType = {
     extra:
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
-  "texas-rangers": {
+  exran: {
     id: 4,
     title:
-      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
-    subtitle:
-      "Texas Rangers 2026, <span class='lowercase not-italic'>websites series</span>",
-    desc: "Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, \"Neon Roadhouse\".",
-    images: [{ type: "videos", srcs: [{src: "/rangers-home.mp4", aspectRatio: "960:619"}, {src: "/mobile-rangers.mp4", aspectRatio: "285:619"}] }, { type: "video", src: "/rangers-loader.mp4" }, { type: "image", src: "/player-components.png" }, { type: "image", src: "/rangers-components-1.jpg" }, {type: "image", src: "/rangers-components-2.jpg"}, {type: "image", src: "/all-for-texas.jpg"}],
-    date: "July 2025",
-    details: "Website Series",
-    extra: "",
-  },
-  "double-sided-poster": {
-    id: 5,
-    title:
-      "How can materiality/craft be applied to create type that challenges the ubiquitous nature of digital design, <span class='lowercase not-italic'>double-sided poster</span>",
-    subtitle: "",
-    desc: "",
-    images: [],
-    date: "",
-    details: "",
-    extra: "",
-  },
-  exran: {
-    id: 6,
-    title:
       "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
-    subtitle: "",
-    desc: "",
-    images: [],
-    date: "",
-    details: "",
+    subtitle:
+      "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
+    desc: "Exran is a contemporary neo-grotesque sans-serif typeface built for versatility. It is unique, featuring contrasting stroke widths, distinctive terminals, and lowered ascenders/descenders throughout its letterforms. This typeface seeks to excel whether on screen or print, body copy or header.<br /><br /><ol class='numbered-list'><li>Curved terminals always end at a 20° angle with the exception of the lowercase “a”.</li><li>Specific lowercase letterforms (a, b, d, g, m, n, p, q, r, and u) have their overhanging terminals tapered.</li><li>Each letterform has a noticeable and consistent amount of stroke width contrast.</li><li>The lowercase “a” does not have its round terminal angled because of a stylistic choice to preserve its natural/organic shape.</li><li>Crossbars of the lower-case letters “a” and “e” are aligned.</li></ol>",
+    images: [{type: "image", src: "/exran.jpg"}, {type: "image", src: "/exran-window.jpg"}],
+    date: "Ongoing",
+    details: "Typeface",
     extra: "",
   },
   olympiad: {
-    id: 7,
+    id: 5,
     title:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
-    subtitle: "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
+    subtitle:
+      "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
     desc: "The Science Olympiad is one of the largest STEM competitions in the USA, uniting students, teachers, and volunteers across the 50 states in their passion for science. In anticipation of their 40th annual event at Michigan State University, I designed an experimental concept poster.<br /><br />For this project, the idea was to create visually interesting letterforms by combining analog and digital design proccesses, an idea I was exploring concurrently in my thesis project. This method of designing and its unique results reflected the observational and experimental nature of science itself.<br /><br />The “S and O” came to form through playing with the effect and reaction cycle different methods of shaping had on liquid substrates. In the end, this project was showcased at Swash & Serif, Toronto’s only annual typographic and lettering exhibition.",
-    images: [{type: "image", src: "/so-poster.jpg"}, {type: "image", src: "/s-horizontal.png"}, {type: "image", src: "/o-vertical.png"}],
+    images: [
+      { type: "image", src: "/so-poster.jpg" },
+      { type: "image", src: "/s-horizontal.png" },
+      { type: "image", src: "/o-vertical.png" },
+    ],
     date: "April 2024",
     details: "64.8 x 83.8 cm",
-    extra: "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
+    extra:
+      "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
 };

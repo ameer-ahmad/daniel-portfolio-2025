@@ -241,7 +241,7 @@ export default function Project({
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               </div>
             ) : isImageArray ? (

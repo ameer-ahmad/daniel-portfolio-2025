@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 type ActiveProjectState = {
   /** store just the id/slug; components can look up the full project object */
-  activeId: string | "exhibition-poster";
+  activeId: string;
 
   playActive: boolean;
 
@@ -23,7 +23,7 @@ type ActiveProjectState = {
 export const useActiveProject = create<ActiveProjectState>()((set, get) => ({
   playActive: false,
   setPlayActive: (active) => set({ playActive: active }),
-  activeId: "exhibition-poster",
+  activeId: "texas-rangers",
   resetCounter: 0,
   setActiveId: (id) => set({ activeId: id, resetCounter: get().resetCounter + 1 }),
 
