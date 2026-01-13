@@ -21,14 +21,12 @@ export default function Information({
           stiffness: 40,
           damping: 20,
           mass: 1,
-          duration: 0.8,
         },
         opacity: {
           type: "spring",
           stiffness: 40,
           damping: 20,
           mass: 1,
-          duration: 0.8,
         },
         width: {
           type: "spring",

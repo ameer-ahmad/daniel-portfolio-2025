@@ -28,6 +28,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Source Serif Pro", serif;
+  font-size: 14px;
   line-height: 20px;
   overflow: hidden;
 }
@@ -67,6 +68,7 @@ div::-webkit-scrollbar {
 
 .navbar-links li a {
   text-decoration: underline;
+  text-underline-offset: 2.25px;
 }
 
 .squiggle:hover {
@@ -76,4 +78,39 @@ div::-webkit-scrollbar {
     background-size: 20px;
     border-bottom: 0;
     text-decoration: none;
+}
+
+.cursor-prev-play,
+.cursor-next-play,
+.cursor-prev-project,
+.cursor-next-project {
+    cursor: none;
+}
+
+.custom-cursor-play {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    font-size: 24px;
+    color: white;
+    line-height: 1;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    white-space: nowrap;
+}
+
+.custom-cursor-project {
+    position: absolute;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    font-size: 24px;
+    color: white;
+    line-height: 1;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    white-space: nowrap;
 }

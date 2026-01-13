@@ -28,14 +28,12 @@ export default function Index() {
           stiffness: 40,
           damping: 20,
           mass: 1,
-          duration: 0.8,
         },
         opacity: {
           type: "spring",
           stiffness: 40,
           damping: 20,
           mass: 1,
-          duration: 0.8,
         },
         width: {
           type: "spring",
@@ -57,7 +55,8 @@ export default function Index() {
       <span className="header-text !capitalize">Index</span>
         {Object.keys(projects).map((project) => (
           <motion.div
-            initial={{ x: 0 }}
+            initial={{ x: 0, opacity: 0.36 }}
+            animate={{ opacity: isActive(project) ? 1 : 0.36, x: isActive(project) ? 6 : 0 }}
             whileHover={{ x: 6 }}
             transition={{
               type: "spring",
@@ -69,9 +68,29 @@ export default function Index() {
             className={`${isActive(project) ? "opacity-[1]" : "opacity-[0.36]"} cursor-pointer italic`}
             onClick={() => setActiveId(project)}
           >
-            <ul>
-              <li className="font-bold not-italic">{projects[project].id < 10 ? '0' : ''}{projects[project].id}</li>
-            </ul>
+            <div className="flex items-center gap-[8px] relative">
+              <motion.div
+                className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isActive(project) ? 1 : 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+              />
+              <motion.span
+              initial={{ x: 0 }}
+              animate={{ x: isActive(project) ? 12 : 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 1,
+              }}
+              className="font-[600] not-italic">{projects[project].id < 10 ? '0' : ''}{projects[project].id}</motion.span>
+            </div>
             <div>
               <span className="title" dangerouslySetInnerHTML={{ __html: projects[project].title }} />
             </div>

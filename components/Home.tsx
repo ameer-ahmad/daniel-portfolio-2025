@@ -70,7 +70,7 @@ export default function Home() {
               {Object.keys(projects).map((project, i) => (
                 <div
                   key={project}
-                  className="w-full h-full flex overflow-y-clip"
+                  className="w-full h-full flex overflow-y-clip border-t-[1px] border-white"
                   id={project}
                 >
                   <Information project={projects[project]} />

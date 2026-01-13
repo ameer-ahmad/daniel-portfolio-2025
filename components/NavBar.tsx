@@ -6,6 +6,7 @@ import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 export default function NavBar() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [isInfoHovered, setIsInfoHovered] = useState(false);
   const { loadingDone } = useLoadingDone();
   const { setPlayActive, setActiveId, playActive } = useActiveProject();
   const toggleInfo = () => {
@@ -61,93 +62,76 @@ export default function NavBar() {
                 damping: 20,
                 mass: 1,
               }}
+              onHoverStart={() => setIsInfoHovered(true)}
+              onHoverEnd={() => setIsInfoHovered(false)}
               className="flex flex-col absolute right-0"
             >
-              <motion.span
-                whileHover="hovered"
-                initial="initial"
+              <span
                 onClick={toggleInfo}
                 className="header-text flex items-center gap-[2px] cursor-pointer h-full"
               >
                 CLOSE
-                  <motion.svg
-                    variants={{
-                      initial: { scale: 1 },
-                      hovered: {
-                        scale: 0.666666666,
-                        transition: { duration: 0.25, ease: "easeOut" },
-                      },
-                    }}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                  >
-                    <path
-                      d="M8 2L2 8"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M2 2L8 8"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </motion.svg>
-              </motion.span>
-              <motion.span
-                whileHover="hovered"
-                initial="initial"
+                <motion.svg
+                  animate={{
+                    scale: isInfoHovered ? 0.666666666 : 1,
+                  }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    d="M8 2L2 8"
+                    stroke="#1C1C1C"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M2 2L8 8"
+                    stroke="#1C1C1C"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </motion.svg>
+              </span>
+              <span
                 onClick={toggleInfo}
                 className="header-text flex items-center gap-[2px] cursor-pointer h-full"
               >
                 INFO
                 <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
                   <motion.span
-                    variants={{
-                      initial: { scale: 1 },
-                      hovered: {
-                        scale: 0.666666666,
-                        transition: { duration: 0.25, ease: "easeOut" },
-                      },
+                    animate={{
+                      scale: isInfoHovered ? 0.666666666 : 1,
                     }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                   ></motion.span>
                   <motion.span
-                    variants={{
-                      initial: { scale: 1 },
-                      hovered: {
-                        scale: 0.666666666,
-                        transition: { duration: 0.25, ease: "easeOut" },
-                      },
+                    animate={{
+                      scale: isInfoHovered ? 0.666666666 : 1,
                     }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                   ></motion.span>
                   <motion.span
-                    variants={{
-                      initial: { scale: 1 },
-                      hovered: {
-                        scale: 0.666666666,
-                        transition: { duration: 0.25, ease: "easeOut" },
-                      },
+                    animate={{
+                      scale: isInfoHovered ? 0.666666666 : 1,
                     }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                   ></motion.span>
                   <motion.span
-                    variants={{
-                      initial: { scale: 1 },
-                      hovered: {
-                        scale: 0.666666666,
-                        transition: { duration: 0.25, ease: "easeOut" },
-                      },
+                    animate={{
+                      scale: isInfoHovered ? 0.666666666 : 1,
                     }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                   ></motion.span>
                 </motion.span>
-              </motion.span>
+              </span>
             </motion.div>
           </div>
           <div className="flex justify-between items-center gap-[40px] pr-[8px] mb-[2px]">
@@ -155,6 +139,10 @@ export default function NavBar() {
               whileHover="hovered"
               initial={{ opacity: 1 }}
               animate={{ opacity: playActive ? 0.38 : 1 }}
+              variants={{
+                initial: { opacity: 1 },
+                hovered: { opacity: 1 },
+              }}
               transition={{
                 type: "spring",
                 stiffness: 80,
@@ -166,29 +154,32 @@ export default function NavBar() {
             >
               Work
               <motion.span
-              initial={{ opacity: 0, width: 6, height: 6 }}
-              animate={{ opacity: playActive ? 0 : 1 }}
-              variants={{
-                initial: { width: 6, height: 6, x: 0 },
-                hovered: {
-                  width: 4,
-                  height: 4,
-                  x: 1,
-                  transition: { duration: 0.25, ease: "easeOut" },
-                },
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 20,
-                mass: 1,
-              }}
-               className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block" />
+                initial={{ opacity: 0, width: 6, height: 6 }}
+                animate={{ opacity: playActive ? 0 : 1 }}
+                variants={{
+                  initial: { width: 6, height: 6, x: 0 },
+                  hovered: {
+                    scale: 0.666666666,
+                    transition: { duration: 0.25, ease: "easeInOut" },
+                  },
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+                className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
+              />
             </motion.span>
             <motion.span
               whileHover="hovered"
               initial={{ opacity: 1 }}
               animate={{ opacity: playActive ? 1 : 0.38 }}
+              variants={{
+                initial: { opacity: 1 },
+                hovered: { opacity: 1 },
+              }}
               transition={{
                 type: "spring",
                 stiffness: 80,
@@ -200,24 +191,23 @@ export default function NavBar() {
             >
               Play
               <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: playActive ? 1 : 0 }}
-              variants={{
-                initial: { width: 6, height: 6, x: 0 },
-                hovered: {
-                  width: 4,
-                  height: 4,
-                  x: 1,
-                  transition: { duration: 0.25, ease: "easeOut" },
-                },
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 80,
-                damping: 20,
-                mass: 1,
-              }}
-               className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block" />
+                initial={{ opacity: 0 }}
+                animate={{ opacity: playActive ? 1 : 0 }}
+                variants={{
+                  initial: { width: 6, height: 6, x: 0 },
+                  hovered: {
+                    scale: 0.666666666,
+                    transition: { duration: 0.25, ease: "easeInOut" },
+                  },
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }}
+                className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
+              />
             </motion.span>
           </div>
         </div>
@@ -317,7 +307,6 @@ export default function NavBar() {
                   Instagram
                 </a>
               </li>
-              <li>Resume</li>
             </ul>
           </motion.div>
         </div>
