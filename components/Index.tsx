@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 
 export default function Index() {
   const { activeId, setActiveId, isActive } = useActiveProject();
   const { loadingDone } = useLoadingDone();
+  const [windowWidth, setWindowWidth] = useState(0);
+
   useEffect(() => {
     if (!activeId && Object.keys(projects).length > 0) {
       setActiveId(Object.keys(projects)[0]);
@@ -16,12 +18,35 @@ export default function Index() {
     }
   }, []);
 
+  useEffect(() => {
+    // Set initial width
+    setWindowWidth(window.innerWidth);
+
+    // Handle resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Define responsive widths based on breakpoints
+  const getInitialWidth = () => {
+    if (windowWidth === 0) return "143px"; // SSR fallback
+    if (windowWidth < 768) return "0px";
+    if (windowWidth < 1024) return "100px"; // Tablet
+    return "143px"; // Desktop
+  };
+
+
+  const initialWidth = getInitialWidth();
 
   return (
     <motion.div
-      initial={{ width: "143px", x: "-40px", opacity: 0, minWidth: "143px" }}
-      animate={{ x: loadingDone ? 0 : "-40px", opacity: loadingDone ? 1 : 0 }}
-      whileHover={{ width: "346px", minWidth: "346px" }}
+      initial={{ width: initialWidth, x: "-40px", opacity: 0, minWidth: initialWidth }}
+      animate={{ x: loadingDone ? 0 : "-40px", opacity: loadingDone ? 1 : 0, width: initialWidth, minWidth: initialWidth }}
+      whileHover={{ width: '346px', minWidth: '346px' }}
       transition={{
         x: {
           type: "spring",
@@ -48,7 +73,7 @@ export default function Index() {
           mass: 1,
         },
       }}
-      className="p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
+      className="p-[0px] md:p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
     >
       
       <div className="flex flex-col gap-[20px] pr-[20px] min-w-[300px] box-content">

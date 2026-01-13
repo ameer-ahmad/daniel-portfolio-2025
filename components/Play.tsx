@@ -3,10 +3,17 @@
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
 
 export default function Play() {
+  const { currentPlayIndex, setCurrentPlayIndex } = useMobileUI();
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Sync local state with store
+  useEffect(() => {
+    setCurrentIndex(currentPlayIndex);
+  }, [currentPlayIndex]);
   const [showNextArrow, setShowNextArrow] = useState(false);
   const [showPrevArrow, setShowPrevArrow] = useState(false);
   const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">("up");
@@ -16,7 +23,9 @@ export default function Play() {
     setCurrentIndex((prev) => {
       const isLastImage = prev === playArray.length - 1;
       setNextArrowDirection(isLastImage ? "down" : "up");
-      return (prev + 1) % playArray.length;
+      const newIndex = (prev + 1) % playArray.length;
+      setCurrentPlayIndex(newIndex);
+      return newIndex;
     });
     setShowNextArrow(true);
     setTimeout(() => {
@@ -28,7 +37,9 @@ export default function Play() {
     setCurrentIndex((prev) => {
       const isFirstImage = prev === 0;
       setPrevArrowDirection(isFirstImage ? "up" : "down");
-      return (prev - 1 + playArray.length) % playArray.length;
+      const newIndex = (prev - 1 + playArray.length) % playArray.length;
+      setCurrentPlayIndex(newIndex);
+      return newIndex;
     });
     setShowPrevArrow(true);
     setTimeout(() => {

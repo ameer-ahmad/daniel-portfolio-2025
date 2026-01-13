@@ -6,6 +6,7 @@ import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { MediaItem } from "@/data/projects";
 
 export default function Project({
   project,
@@ -25,15 +26,92 @@ export default function Project({
   const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">(
     "down"
   );
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Reset gallery index when project changes or NavBar is clicked (even if activeId doesn't change)
   useEffect(() => {
     setCurrentIndex(0);
   }, [activeId, resetCounter]);
 
-  // Flatten images array - handle both strings and arrays of strings
+  // Mobile detection
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    setIsMobile(window.innerWidth < 768);
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Flatten images array for mobile - each item in arrays becomes a separate slide
   const imagesArray = project.images || [];
-  const flattenedImages = imagesArray;
+
+  const flattenForMobile = (items: MediaItem[]): MediaItem[] => {
+    if (!isMobile) return items;
+
+    const flattened: MediaItem[] = [];
+
+    items.forEach((item) => {
+      // Handle videos type with multiple srcs
+      if (
+        typeof item === "object" &&
+        !Array.isArray(item) &&
+        "type" in item &&
+        item.type === "videos"
+      ) {
+        item.srcs.forEach((src) => {
+          flattened.push({
+            type: "video",
+            src: typeof src === "string" ? src : src.src,
+            aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
+          });
+        });
+      }
+      // Handle images type with multiple srcs
+      else if (
+        typeof item === "object" &&
+        !Array.isArray(item) &&
+        "type" in item &&
+        item.type === "images"
+      ) {
+        item.srcs.forEach((src) => {
+          flattened.push({
+            type: "image",
+            src: typeof src === "string" ? src : src.src,
+            aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
+          });
+        });
+      }
+      // Handle arrays of images
+      else if (Array.isArray(item)) {
+        item.forEach((img) => {
+          // Convert ImageItem to MediaItem format
+          if (typeof img === "string") {
+            flattened.push(img);
+          } else {
+            flattened.push({
+              type: "image",
+              src: img.src,
+              aspectRatio: img.aspectRatio,
+            });
+          }
+        });
+      }
+      // Keep single items as-is
+      else {
+        flattened.push(item);
+      }
+    });
+
+    return flattened;
+  };
+
+  const flattenedImages = flattenForMobile(imagesArray);
 
   const nextImage = () => {
     if (flattenedImages.length <= 1) return;
@@ -61,10 +139,12 @@ export default function Project({
     }, 700); // 500ms visible + 200ms exit delay
   };
 
-
-  const currentImageItem = imagesArray[currentIndex];
+  const currentImageItem = flattenedImages[currentIndex];
   const isImageArray =
-    Array.isArray(currentImageItem) && typeof currentImageItem[0] === "string";
+    Array.isArray(currentImageItem) &&
+    (typeof currentImageItem[0] === "string" ||
+      (typeof currentImageItem[0] === "object" &&
+        "src" in currentImageItem[0]));
   const isVideoObject =
     typeof currentImageItem === "object" &&
     !Array.isArray(currentImageItem) &&
@@ -80,6 +160,11 @@ export default function Project({
     !Array.isArray(currentImageItem) &&
     "type" in currentImageItem &&
     currentImageItem.type === "image";
+  const isImagesObject =
+    typeof currentImageItem === "object" &&
+    !Array.isArray(currentImageItem) &&
+    "type" in currentImageItem &&
+    currentImageItem.type === "images";
 
   // Type guards for TypeScript
   const videoItem = isVideoObject
@@ -92,7 +177,13 @@ export default function Project({
       })
     : null;
   const imageItem = isImageObject
-    ? (currentImageItem as { type: "image"; src: string })
+    ? (currentImageItem as { type: "image"; src: string; aspectRatio?: string })
+    : null;
+  const imagesItem = isImagesObject
+    ? (currentImageItem as {
+        type: "images";
+        srcs: (string | { src: string; aspectRatio?: string })[];
+      })
     : null;
 
   // Helper function to parse aspect ratio and calculate flex value
@@ -129,6 +220,32 @@ export default function Project({
     return (thisRatio / totalRatio) * allVideos.length;
   };
 
+  // Calculate flex values for images based on aspect ratios (same logic as videos)
+  const getImageFlexValue = (
+    imageItem: string | { src: string; aspectRatio?: string },
+    allImages: (string | { src: string; aspectRatio?: string })[]
+  ): number => {
+    const aspectRatio =
+      typeof imageItem === "string" ? undefined : imageItem.aspectRatio;
+    const thisRatio = getAspectRatioValue(aspectRatio);
+
+    // If no aspect ratios specified, default to equal width
+    const hasAnyAspectRatios = allImages.some(
+      (img) => typeof img !== "string" && img.aspectRatio
+    );
+    if (!hasAnyAspectRatios) return 1;
+
+    // Calculate relative flex based on aspect ratios
+    const totalRatio = allImages.reduce((sum, img) => {
+      const ratio =
+        typeof img === "string" ? 1 : getAspectRatioValue(img.aspectRatio);
+      return sum + ratio;
+    }, 0);
+
+    // Return proportional flex value (normalize to reasonable range)
+    return (thisRatio / totalRatio) * allImages.length;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: "-160px" }}
@@ -139,54 +256,65 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className="overflow-y-clip w-[calc(100vw-286px)] h-[-webkit-fill-available] shadow-glow p-[80px] bg-white relative"
+      className="overflow-y-clip w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-[-webkit-fill-available] shadow-glow  px-[40px] pt-[71.9px] pb-[151.9px] xl:p-[80px] lg:p-[40px] bg-white relative"
     >
       {flattenedImages.length > 1 && (
-        <AnimatePresence mode="wait">
+        <>
+          <AnimatePresence mode="wait">
+            <div
+              key={currentIndex}
+              className="absolute hidden md:block top-[20px] left-[20px] text-[#1c1c1c] text-sm z-20"
+            >
+              <span className="relative font-[600]">
+                <AnimatePresence>
+                  {showNextArrow && (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{
+                        opacity: 0,
+                        transition: { delay: 0.2, duration: 0.2 },
+                      }}
+                      transition={{ duration: 0.2 }}
+                      className={`absolute ${
+                        nextArrowDirection === "up" ? "-top-3" : "-bottom-3"
+                      } left-1 text-xs text-[#1c1c1c]`}
+                    >
+                      {nextArrowDirection === "up" ? "▲" : "▼"}
+                    </motion.span>
+                  )}
+                  {showPrevArrow && (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{
+                        opacity: 0,
+                        transition: { delay: 0.2, duration: 0.2 },
+                      }}
+                      transition={{ duration: 0.2 }}
+                      className={`absolute ${
+                        prevArrowDirection === "up" ? "-top-3" : "-bottom-3"
+                      } left-1 text-xs text-[#1c1c1c]`}
+                    >
+                      {prevArrowDirection === "up" ? "▲" : "▼"}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                {String(currentIndex + 1).padStart(2, "0")}/
+                {String(flattenedImages.length).padStart(2, "0")}
+              </span>
+            </div>
+          </AnimatePresence>
           <div
             key={currentIndex}
-            className="absolute top-[20px] left-[20px] text-[#1c1c1c] text-sm z-20"
+            className="absolute block md:hidden top-[20px] bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20"
           >
-            <span className="relative font-[600]">
-              <AnimatePresence>
-                {showNextArrow && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{
-                      opacity: 0,
-                      transition: { delay: 0.2, duration: 0.2 },
-                    }}
-                    transition={{ duration: 0.2 }}
-                    className={`absolute ${
-                      nextArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                    } left-1 text-xs text-[#1c1c1c]`}
-                  >
-                    {nextArrowDirection === "up" ? "▲" : "▼"}
-                  </motion.span>
-                )}
-                {showPrevArrow && (
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{
-                      opacity: 0,
-                      transition: { delay: 0.2, duration: 0.2 },
-                    }}
-                    transition={{ duration: 0.2 }}
-                    className={`absolute ${
-                      prevArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                    } left-1 text-xs text-[#1c1c1c]`}
-                  >
-                    {prevArrowDirection === "up" ? "▲" : "▼"}
-                  </motion.span>
-                )}
-              </AnimatePresence>
+            <span className="relative font-[600] text-[#1c1c1c]/[0.38]">
               {String(currentIndex + 1).padStart(2, "0")}/
-              {String(imagesArray.length).padStart(2, "0")}
+              {String(flattenedImages.length).padStart(2, "0")}
             </span>
           </div>
-        </AnimatePresence>
+        </>
       )}
       <div className="w-full h-full relative">
         <AnimatePresence mode="wait">
@@ -199,7 +327,7 @@ export default function Project({
             className="relative w-full h-full"
           >
             {isVideosObject && videosItem ? (
-              <div className="w-full h-full flex gap-[40px]">
+              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
                 {videosItem.srcs.map((videoItem, idx) => {
                   const videoSrc =
                     typeof videoItem === "string" ? videoItem : videoItem.src;
@@ -207,6 +335,12 @@ export default function Project({
                     videoItem,
                     videosItem.srcs
                   );
+                  const isTwoItems = videosItem.srcs.length === 2;
+                  const objectPosition = isTwoItems
+                    ? idx === 0
+                      ? "right center"
+                      : "left center"
+                    : "center";
                   return (
                     <div
                       key={idx}
@@ -224,6 +358,7 @@ export default function Project({
                         muted
                         playsInline
                         className="absolute inset-0 w-full h-full object-contain"
+                        style={{ objectPosition }}
                       />
                     </div>
                   );
@@ -244,24 +379,87 @@ export default function Project({
                   className="absolute inset-0 w-full h-full object-contain"
                 />
               </div>
+            ) : isImagesObject && imagesItem ? (
+              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
+                {imagesItem.srcs.map((imageItem, idx) => {
+                  const imageSrc =
+                    typeof imageItem === "string" ? imageItem : imageItem.src;
+                  const flexValue = getImageFlexValue(
+                    imageItem,
+                    imagesItem.srcs
+                  );
+                  const isTwoItems = imagesItem.srcs.length === 2;
+                  const objectPosition = isTwoItems
+                    ? idx === 0
+                      ? "right center"
+                      : "left center"
+                    : "center";
+                  return (
+                    <div
+                      key={idx}
+                      className="relative"
+                      style={{ flex: flexValue }}
+                    >
+                      <Image
+                        src={`${
+                          process.env.NODE_ENV === "development"
+                            ? "/"
+                            : "/daniel-portfolio-2025/"
+                        }images${imageSrc}`}
+                        alt={`${project.title} - Image ${idx + 1}`}
+                        fill
+                        sizes="50%"
+                        className="object-contain"
+                        style={{ objectPosition }}
+                        priority={
+                          firstProject && currentIndex === 0 && idx === 0
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             ) : isImageArray ? (
-              <div className="w-full h-full flex gap-[40px]">
-                {currentImageItem.map((img, idx) => (
-                  <div key={idx} className="relative flex-1">
-                    <Image
-                      src={`${
-                        process.env.NODE_ENV === "development"
-                          ? "/"
-                          : "/daniel-portfolio-2025/"
-                      }images${img}`}
-                      alt={`${project.title} - Image ${idx + 1}`}
-                      fill
-                      sizes="50%"
-                      className="object-contain"
-                      priority={firstProject && currentIndex === 0 && idx === 0}
-                    />
-                  </div>
-                ))}
+              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
+                {currentImageItem.map((img, idx) => {
+                  const imageSrc = typeof img === "string" ? img : img.src;
+                  const flexValue = getImageFlexValue(
+                    img,
+                    currentImageItem as (
+                      | string
+                      | { src: string; aspectRatio?: string }
+                    )[]
+                  );
+                  const isTwoItems = currentImageItem.length === 2;
+                  const objectPosition = isTwoItems
+                    ? idx === 0
+                      ? "right center"
+                      : "left center"
+                    : "center";
+                  return (
+                    <div
+                      key={idx}
+                      className="relative"
+                      style={{ flex: flexValue }}
+                    >
+                      <Image
+                        src={`${
+                          process.env.NODE_ENV === "development"
+                            ? "/"
+                            : "/daniel-portfolio-2025/"
+                        }images${imageSrc}`}
+                        alt={`${project.title} - Image ${idx + 1}`}
+                        fill
+                        sizes="50%"
+                        className="object-contain"
+                        style={{ objectPosition }}
+                        priority={
+                          firstProject && currentIndex === 0 && idx === 0
+                        }
+                      />
+                    </div>
+                  );
+                })}
               </div>
             ) : isImageObject && imageItem ? (
               <Image

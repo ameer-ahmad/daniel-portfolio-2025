@@ -1,10 +1,12 @@
 export type VideoItem = string | { src: string; aspectRatio?: string };
+export type ImageItem = string | { src: string; aspectRatio?: string };
 
 export type MediaItem =
   | string
-  | string[]
-  | { type: "image"; src: string }
-  | { type: "video"; src: string }
+  | ImageItem[]
+  | { type: "image"; src: string; aspectRatio?: string }
+  | { type: "images"; srcs: ImageItem[] }
+  | { type: "video"; src: string; aspectRatio?: string }
   | { type: "videos"; srcs: VideoItem[] };
 
 export type ProjectType = {
@@ -37,9 +39,15 @@ export const projects: ProjectType = {
           { src: "/mobile-rangers.mp4", aspectRatio: "285:619" },
         ],
       },
-      { type: "video", src: "/rangers-loader.mp4" },
-      { type: "image", src: "/player-components.png" },
-      ["/rangers-components-1.1.jpg", "/rangers-components-1.jpg"],
+      { type: "video", src: "/rangers-loader.mp4", aspectRatio: "1283:849" },
+      { type: "images", srcs: [{ src: "/cutout-01.png", aspectRatio: "201:508" }, {src: "/cutout-02.png", aspectRatio: "246:509"}, {src: "/cutout-03.png", aspectRatio: "411:509"}, {src: "/cutout-04.png", aspectRatio: "305:509"}] },
+      {
+        type: "images",
+        srcs: [
+          { src: "/rangers-components-1.1.jpg", aspectRatio: "671:471" },
+          { src: "/rangers-components-1.jpg", aspectRatio: "571:897" },
+        ],
+      },
       { type: "image", src: "/rangers-components-2.jpg" },
       { type: "image", src: "/all-for-texas.jpg" },
     ],
@@ -81,8 +89,11 @@ export const projects: ProjectType = {
     subtitle:
       "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
     desc: "Exran is a contemporary neo-grotesque sans-serif typeface built for versatility. It is unique, featuring contrasting stroke widths, distinctive terminals, and lowered ascenders/descenders throughout its letterforms. This typeface seeks to excel whether on screen or print, body copy or header.<br /><br /><ol class='numbered-list'><li>Curved terminals always end at a 20° angle with the exception of the lowercase “a”.</li><li>Specific lowercase letterforms (a, b, d, g, m, n, p, q, r, and u) have their overhanging terminals tapered.</li><li>Each letterform has a noticeable and consistent amount of stroke width contrast.</li><li>The lowercase “a” does not have its round terminal angled because of a stylistic choice to preserve its natural/organic shape.</li><li>Crossbars of the lower-case letters “a” and “e” are aligned.</li></ol>",
-    images: [{type: "image", src: "/exran.jpg"}, {type: "image", src: "/exran-window.jpg"}],
-    date: "Ongoing",
+    images: [
+      { type: "image", src: "/exran.jpg" },
+      { type: "image", src: "/exran-window.jpg" },
+    ],
+    date: "2023-Ongoing",
     details: "Typeface",
     extra: "",
   },

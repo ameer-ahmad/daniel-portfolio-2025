@@ -26,11 +26,11 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
   font-family: "Source Serif Pro", serif;
   font-size: 14px;
   line-height: 20px;
   overflow: hidden;
+  color: #1c1c1c;
 }
 
 .header-text {
@@ -40,10 +40,15 @@ body {
   line-height: 20px;
   letter-spacing: 0.7px;
   text-transform: uppercase;
+  color: #1c1c1c;
 }
 
 .shadow-glow {
   box-shadow: -10px 0 25px -10px rgba(0, 0, 0, 0.1), 10px 0 25px -10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-glow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) inset;
 }
 
 div::-webkit-scrollbar {
@@ -91,11 +96,11 @@ div::-webkit-scrollbar {
 }
 
 .cursor-prev-play {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='14' fill='%23000' text-anchor='middle' font-family='serif'%3E%E2%97%80%3C/text%3E%3C/svg%3E") 12 12, auto;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='14' fill='%23fff' text-anchor='middle' font-family='serif'%3E%E2%97%80%3C/text%3E%3C/svg%3E") 12 12, auto;
 }
 
 .cursor-next-play {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='14' fill='%23000' text-anchor='middle' font-family='serif'%3E%E2%96%B6%3C/text%3E%3C/svg%3E") 12 12, auto;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='14' fill='%23fff' text-anchor='middle' font-family='serif'%3E%E2%96%B6%3C/text%3E%3C/svg%3E") 12 12, auto;
 }
 
 .cursor-prev-project {
@@ -104,4 +109,12 @@ div::-webkit-scrollbar {
 
 .cursor-next-project {
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext x='12' y='18' font-size='14' fill='%23000' text-anchor='middle' font-family='serif'%3E%E2%96%B6%3C/text%3E%3C/svg%3E") 12 12, auto;
+}
+
+.arrow {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    50% 100%
+  );
 }
