@@ -111,8 +111,12 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                onHoverStart={windowWidth >= 768 ? () => setIsInfoHovered(true) : undefined}
-                onHoverEnd={windowWidth >= 768 ? () => setIsInfoHovered(false) : undefined}
+                onHoverStart={
+                  windowWidth >= 768 ? () => setIsInfoHovered(true) : undefined
+                }
+                onHoverEnd={
+                  windowWidth >= 768 ? () => setIsInfoHovered(false) : undefined
+                }
                 className="flex flex-col absolute right-0"
               >
                 <span
@@ -122,7 +126,8 @@ export default function NavBar() {
                   CLOSE
                   <motion.svg
                     animate={{
-                      scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                      scale:
+                        windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
                     }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     xmlns="http://www.w3.org/2000/svg"
@@ -153,28 +158,32 @@ export default function NavBar() {
                   <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
                     <motion.span
                       animate={{
-                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                        scale:
+                          windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
                       }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                     ></motion.span>
                     <motion.span
                       animate={{
-                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                        scale:
+                          windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
                       }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                     ></motion.span>
                     <motion.span
                       animate={{
-                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                        scale:
+                          windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
                       }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                     ></motion.span>
                     <motion.span
                       animate={{
-                        scale: windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
+                        scale:
+                          windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
                       }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
@@ -609,9 +618,12 @@ export default function NavBar() {
                   <div className="flex flex-col gap-[20px] italic">
                     {playActive && activePlayItem ? (
                       <>
-                        <span className="header-text not-italic !capitalize">
-                          {activePlayItem.title}
-                        </span>
+                        <span
+                          className="header-text not-italic !capitalize"
+                          dangerouslySetInnerHTML={{
+                            __html: activePlayItem.title,
+                          }}
+                        />
                       </>
                     ) : (
                       <>
@@ -680,7 +692,9 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto ${isIndexOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+                className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto ${
+                  isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
+                }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex flex-col gap-[20px]">
@@ -743,7 +757,12 @@ export default function NavBar() {
                             </motion.span>
                           </div>
                           <div>
-                            <span className="title">{playItem.title}</span>
+                            <span
+                              className="title"
+                              dangerouslySetInnerHTML={{
+                                __html: playItem.title,
+                              }}
+                            ></span>
                           </div>
                         </motion.div>
                       ))
