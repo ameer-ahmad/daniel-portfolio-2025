@@ -50,13 +50,13 @@ export const projects: ProjectType = {
         ],
       },
       {
-        type: "image",
-        src: "/rangers-components-1.1.jpg",
+        type: "images",
+        srcs: [
+          { src: "/rangers-components-1.1.jpg", aspectRatio: "671:471" },
+          { src: "/rangers-components-1.jpg", aspectRatio: "571:897" },
+        ],
       },
-      {
-        type: "image",
-        src: "/rangers-components-1.jpg",
-      },
+      
       { type: "image", src: "/rangers-components-2.jpg" },
       { type: "image", src: "/all-for-texas.jpg" },
     ],

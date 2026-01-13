@@ -236,7 +236,7 @@ export default function Play() {
       <AnimatePresence mode="wait">
         <div
           key={currentIndex}
-          className="absolute hidden md:block top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
+          className="absolute hidden md:flex top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
         >
           <span className="relative font-[600]">
             <AnimatePresence>
@@ -282,6 +282,7 @@ export default function Play() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             dangerouslySetInnerHTML={{ __html: currentItem.title }}
+            className="text-right"
           ></motion.span>
         </div>
       </AnimatePresence>
