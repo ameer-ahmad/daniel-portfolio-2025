@@ -40,7 +40,7 @@ export default function Home() {
     }
     animationTimeoutRef.current = setTimeout(() => {
       isAnimating.current = false;
-    }, 800);
+    }, 50);
   };
 
   useLayoutEffect(() => {
