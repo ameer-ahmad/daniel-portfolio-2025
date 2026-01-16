@@ -6,7 +6,7 @@ import Project from "@/components/project";
 import { projects } from "@/data/projects";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import Play from "@/components/Play";
 
@@ -28,6 +28,20 @@ export default function Home() {
   const touchStartY = useRef<number | null>(null);
   const initialY = useRef<number>(0);
   const finalDeltaY = useRef<number>(0);
+  const isAnimating = useRef<boolean>(false);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Helper function to set animation flag with auto-clear
+  const startAnimation = () => {
+    isAnimating.current = true;
+    // Clear animation flag after spring animation completes (stiffness 80, damping 20 typically takes ~500-700ms)
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+    }
+    animationTimeoutRef.current = setTimeout(() => {
+      isAnimating.current = false;
+    }, 800);
+  };
 
   useLayoutEffect(() => {
     const container = document.getElementById("ProjectsContainer");
@@ -35,7 +49,7 @@ export default function Home() {
 
     if (!container || !activeProject) return;
 
-    const updateY = () => {
+    const updateY = (shouldAnimate: boolean = false) => {
       // Use requestAnimationFrame to ensure DOM has updated after orientation change
       requestAnimationFrame(() => {
         const container = document.getElementById("ProjectsContainer");
@@ -45,27 +59,33 @@ export default function Home() {
         
         const containerTop = container.getBoundingClientRect().top;
         const projectTop = activeProject.getBoundingClientRect().top;
+        if (shouldAnimate) {
+          startAnimation();
+        }
         y.set(-(projectTop - containerTop));
       });
     };
 
     const handleOrientationChange = () => {
       // Small delay to ensure viewport has updated after orientation change
-      setTimeout(updateY, 100);
+      setTimeout(() => updateY(false), 100);
     };
 
-    // Initial update
+    // Initial update - don't set isAnimating for initial load
     requestAnimationFrame(() => {
       const containerTop = container.getBoundingClientRect().top;
       const projectTop = activeProject.getBoundingClientRect().top;
       y.set(-(projectTop - containerTop));
     });
 
-    window.addEventListener("resize", updateY);
+    // When activeId changes, it's a programmatic change, so animate
+    updateY(true);
+
+    window.addEventListener("resize", () => updateY(false));
     window.addEventListener("orientationchange", handleOrientationChange);
     
     return () => {
-      window.removeEventListener("resize", updateY);
+      window.removeEventListener("resize", () => updateY(false));
       window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, [activeId, y]);
@@ -108,11 +128,20 @@ export default function Home() {
               className="relative"
               id="ProjectsContainer"
               onTouchStart={(e) => {
+                // Prevent touch if animation is in progress
+                if (isAnimating.current) {
+                  e.preventDefault();
+                  touchStartY.current = null;
+                  finalDeltaY.current = 0;
+                  return;
+                }
                 touchStartY.current = e.touches[0].clientY;
                 initialY.current = y.get();
+                finalDeltaY.current = 0;
               }}
               onTouchMove={(e) => {
-                if (touchStartY.current === null) return;
+                // Prevent touch if animation is in progress
+                if (isAnimating.current || touchStartY.current === null) return;
                 const currentY = e.touches[0].clientY;
                 const deltaY = currentY - touchStartY.current;
                 finalDeltaY.current = deltaY;
@@ -133,6 +162,12 @@ export default function Home() {
                 y.set(initialY.current + deltaY);
               }}
               onTouchEnd={() => {
+                // Prevent touch end if animation is in progress
+                if (isAnimating.current) {
+                  touchStartY.current = null;
+                  return;
+                }
+                
                 const deltaY = finalDeltaY.current;
                 const screenHeight = window.innerHeight;
                 const scrollPercentage = Math.abs(deltaY) / screenHeight;
@@ -159,6 +194,7 @@ export default function Home() {
                     if (currentProject) {
                       const containerTop = container.getBoundingClientRect().top;
                       const projectTop = currentProject.getBoundingClientRect().top;
+                      startAnimation();
                       y.set(-(projectTop - containerTop));
                     }
                     return;
@@ -178,6 +214,7 @@ export default function Home() {
                     
                     const targetProjectKey = projectKeys[targetIndex];
                     if (targetProjectKey && targetProjectKey !== activeId) {
+                      startAnimation();
                       setActiveId(targetProjectKey);
                     } else {
                       // Snap back to current project
@@ -185,6 +222,7 @@ export default function Home() {
                       if (currentProject) {
                         const containerTop = container.getBoundingClientRect().top;
                         const projectTop = currentProject.getBoundingClientRect().top;
+                        startAnimation();
                         y.set(-(projectTop - containerTop));
                       }
                     }
@@ -194,6 +232,7 @@ export default function Home() {
                     if (currentProject) {
                       const containerTop = container.getBoundingClientRect().top;
                       const projectTop = currentProject.getBoundingClientRect().top;
+                      startAnimation();
                       y.set(-(projectTop - containerTop));
                     }
                   }

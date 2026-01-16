@@ -42,10 +42,11 @@ export default function RootLayout({
       <body className={`antialiased !bg-white touch-none`}>
         <FontLoader />
         <NavBar />
-        {children}
-        <div className="mobile-landscape-only header-text">
-          For best mobile experience, please switch device to portrait
-          orientation.{" "}
+        <div className="all-content">{children}</div>
+
+        <div className="mobile-landscape-only">
+          For the best mobile experience, please switch device to portrait
+          orientation.
         </div>
       </body>
     </html>
