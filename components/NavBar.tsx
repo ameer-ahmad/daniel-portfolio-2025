@@ -38,6 +38,8 @@ export default function NavBar() {
     toggleIndex();
   };
   const toggleInfo = () => {
+    setIsIndexOpen(false);
+    setIsProjectInfoOpen(false);
     setIsInfoOpen(!isInfoOpen);
   };
   const resetInfo = () => {
@@ -269,7 +271,7 @@ export default function NavBar() {
               </motion.span>
             </div>
           </div>
-          <div className="flex mt-[20px] mb-[20px] md:mb-0 justify-start gap-[20px] w-full h-auto md:h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
+          <div className="flex mt-[20px] mb-[40px] md:mb-0 justify-start gap-[20px] w-full h-auto md:h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
             <motion.span
               initial={{
                 color: "rgba(0, 0, 0, 0)",
@@ -380,7 +382,7 @@ export default function NavBar() {
           damping: 20,
           mass: 1,
         }}
-        className="fixed justify-between w-[calc(100vw-40px)] bottom-[20px] left-[20px] z-[999] md:hidden flex items-center gap-[4px]"
+        className="fixed justify-between w-[calc(100vw-40px)] bottom-[20px] left-[20px] z-[998] md:hidden flex items-center gap-[4px]"
       >
         <div className="flex items-center relative gap-[4px] bg-white border border-[#E3E3E3] rounded-full w-full max-w-[264px] p-[4px]">
           <motion.span
