@@ -398,7 +398,11 @@ export default function NavBar() {
               mass: 1,
             }}
             className="header-text pb-[2px] pr-[2px] z-[2] flex justify-center items-center h-[50px] w-1/2 cursor-pointer flex items-center gap-[6px]"
-            onClick={() => setPlayActive(false)}
+            onClick={() => {
+              setIsIndexOpen(false);
+              setIsProjectInfoOpen(false);
+              setPlayActive(false);
+            }}
           >
             Work
           </motion.span>
@@ -417,7 +421,11 @@ export default function NavBar() {
               mass: 1,
             }}
             className="header-text pb-[2px] pl-[2px] z-[2] flex justify-center items-center h-[50px] w-1/2 cursor-pointer flex items-center gap-[6px]"
-            onClick={() => setPlayActive(true)}
+            onClick={() => {
+              setIsIndexOpen(false);
+              setIsProjectInfoOpen(false);
+              setPlayActive(true);
+            }}
           >
             Play
           </motion.span>
@@ -612,7 +620,7 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto"
+                  className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col italic">
@@ -648,7 +656,12 @@ export default function NavBar() {
                           </span>
                         )}
                         {activeProject?.details && (
-                          <span className="" dangerouslySetInnerHTML={{ __html: activeProject.details }}></span>
+                          <span
+                            className=""
+                            dangerouslySetInnerHTML={{
+                              __html: activeProject.details,
+                            }}
+                          ></span>
                         )}
                         {activeProject?.extra && (
                           <span
@@ -678,176 +691,168 @@ export default function NavBar() {
               </>
             )}
         </AnimatePresence>
-        <AnimatePresence>
-          {isIndexOpen && (
-            <>
-              <motion.div
-                key="index-toolbar"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[60vh] overflow-y-auto ${
-                  isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex flex-col gap-[20px]">
-                  <span className="header-text !capitalize">Index</span>
-                  {playActive
-                    ? playArray.map((playItem, index) => (
+          <motion.div
+            key="index-toolbar"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
+            exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 :   0 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            }}
+            className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${
+              isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col gap-[20px]">
+              <span className="header-text !capitalize">Index</span>
+              {playActive
+                ? playArray.map((playItem, index) => (
+                    <motion.div
+                      key={playItem.id}
+                      initial={{ x: 0, opacity: 0.36 }}
+                      animate={{
+                        opacity: currentPlayIndex === index ? 1 : 0.36,
+                        x: currentPlayIndex === index ? 6 : 0,
+                      }}
+                      whileHover={{ x: 6 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                      className={`${
+                        currentPlayIndex === index
+                          ? "opacity-[1]"
+                          : "opacity-[0.36]"
+                      } cursor-pointer italic`}
+                      onClick={() => {
+                        setCurrentPlayIndex(index);
+                        setIsIndexOpen(false);
+                      }}
+                    >
+                      <div className="flex items-center gap-[8px] relative">
                         <motion.div
-                          key={playItem.id}
-                          initial={{ x: 0, opacity: 0.36 }}
+                          className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
+                          initial={{ opacity: 0 }}
                           animate={{
-                            opacity: currentPlayIndex === index ? 1 : 0.36,
-                            x: currentPlayIndex === index ? 6 : 0,
+                            opacity: currentPlayIndex === index ? 1 : 0,
                           }}
-                          whileHover={{ x: 6 }}
                           transition={{
                             type: "spring",
                             stiffness: 80,
                             damping: 20,
                             mass: 1,
                           }}
-                          className={`${
-                            currentPlayIndex === index
-                              ? "opacity-[1]"
-                              : "opacity-[0.36]"
-                          } cursor-pointer italic`}
-                          onClick={() => {
-                            setCurrentPlayIndex(index);
-                            setIsIndexOpen(false);
-                          }}
-                        >
-                          <div className="flex items-center gap-[8px] relative">
-                            <motion.div
-                              className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                              initial={{ opacity: 0 }}
-                              animate={{
-                                opacity: currentPlayIndex === index ? 1 : 0,
-                              }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 80,
-                                damping: 20,
-                                mass: 1,
-                              }}
-                            />
-                            <motion.span
-                              initial={{ x: 0 }}
-                              animate={{
-                                x: currentPlayIndex === index ? 12 : 0,
-                              }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 80,
-                                damping: 20,
-                                mass: 1,
-                              }}
-                              className="font-[600] not-italic"
-                            >
-                              {playItem.id < 10 ? "0" : ""}
-                              {playItem.id}
-                            </motion.span>
-                          </div>
-                          <div>
-                            <span
-                              className="title"
-                              dangerouslySetInnerHTML={{
-                                __html: playItem.title,
-                              }}
-                            ></span>
-                          </div>
-                        </motion.div>
-                      ))
-                    : Object.keys(projects).map((project) => (
-                        <motion.div
-                          key={project}
-                          initial={{ x: 0, opacity: 0.36 }}
+                        />
+                        <motion.span
+                          initial={{ x: 0 }}
                           animate={{
-                            opacity: activeId === project ? 1 : 0.36,
-                            x: activeId === project ? 6 : 0,
+                            x: currentPlayIndex === index ? 12 : 0,
                           }}
-                          whileHover={{ x: 6 }}
                           transition={{
                             type: "spring",
                             stiffness: 80,
                             damping: 20,
                             mass: 1,
                           }}
-                          className={`${
-                            activeId === project
-                              ? "opacity-[1]"
-                              : "opacity-[0.36]"
-                          } cursor-pointer italic`}
-                          onClick={() => {
-                            setActiveId(project);
-                            setIsIndexOpen(false);
-                          }}
+                          className="font-[600] not-italic"
                         >
-                          <div className="flex items-center gap-[8px] relative">
-                            <motion.div
-                              className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                              initial={{ opacity: 0 }}
-                              animate={{
-                                opacity: activeId === project ? 1 : 0,
-                              }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 80,
-                                damping: 20,
-                                mass: 1,
-                              }}
-                            />
-                            <motion.span
-                              initial={{ x: 0 }}
-                              animate={{ x: activeId === project ? 12 : 0 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 80,
-                                damping: 20,
-                                mass: 1,
-                              }}
-                              className="font-[600] not-italic"
-                            >
-                              {projects[project].id < 10 ? "0" : ""}
-                              {projects[project].id}
-                            </motion.span>
-                          </div>
-                          <div>
-                            <span
-                              className="title"
-                              dangerouslySetInnerHTML={{
-                                __html: projects[project].title,
-                              }}
-                            />
-                          </div>
-                        </motion.div>
-                      ))}
-                </div>
-              </motion.div>
-              <motion.div
-                key="index-arrow"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 20,
-                  mass: 1,
-                }}
-                className="arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
-              ></motion.div>
-            </>
-          )}
-        </AnimatePresence>
+                          {playItem.id < 10 ? "0" : ""}
+                          {playItem.id}
+                        </motion.span>
+                      </div>
+                      <div>
+                        <span
+                          className="title"
+                          dangerouslySetInnerHTML={{
+                            __html: playItem.title,
+                          }}
+                        ></span>
+                      </div>
+                    </motion.div>
+                  ))
+                : Object.keys(projects).map((project) => (
+                    <motion.div
+                      key={project}
+                      initial={{ x: 0, opacity: 0.36 }}
+                      animate={{
+                        opacity: activeId === project ? 1 : 0.36,
+                        x: activeId === project ? 6 : 0,
+                      }}
+                      whileHover={{ x: 6 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                      className={`${
+                        activeId === project ? "opacity-[1]" : "opacity-[0.36]"
+                      } cursor-pointer italic`}
+                      onClick={() => {
+                        setActiveId(project);
+                        setIsIndexOpen(false);
+                      }}
+                    >
+                      <div className="flex items-center gap-[8px] relative">
+                        <motion.div
+                          className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
+                          initial={{ opacity: 0 }}
+                          animate={{
+                            opacity: activeId === project ? 1 : 0,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 20,
+                            mass: 1,
+                          }}
+                        />
+                        <motion.span
+                          initial={{ x: 0 }}
+                          animate={{ x: activeId === project ? 12 : 0 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 20,
+                            mass: 1,
+                          }}
+                          className="font-[600] not-italic"
+                        >
+                          {projects[project].id < 10 ? "0" : ""}
+                          {projects[project].id}
+                        </motion.span>
+                      </div>
+                      <div>
+                        <span
+                          className="title"
+                          dangerouslySetInnerHTML={{
+                            __html: projects[project].title,
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
+            </div>
+          </motion.div>
+          <motion.div
+            key="index-arrow"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
+            exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 : 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            }}
+            className="arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
+          ></motion.div>
       </motion.div>
     </>
   );

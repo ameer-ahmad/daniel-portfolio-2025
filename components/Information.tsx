@@ -77,7 +77,7 @@ export default function Information({
           mass: 1,
         },
       }}
-      className="p-[0px] md:p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
+      className="p-[0px] md:p-[20px] h-[calc(100vh-60px)] bg-white text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
     >
       <div className="flex flex-col pr-[20px] min-w-[407px] box-content italic">
         <span
