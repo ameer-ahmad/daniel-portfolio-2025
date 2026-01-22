@@ -31,6 +31,31 @@ export default function Home() {
   const isAnimating = useRef<boolean>(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+
+    window.addEventListener("pageshow", resetScroll);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") resetScroll();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("pageshow", resetScroll);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   // Helper function to set animation flag with auto-clear
   const startAnimation = () => {
     isAnimating.current = true;
