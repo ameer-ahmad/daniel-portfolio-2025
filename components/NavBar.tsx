@@ -340,7 +340,6 @@ export default function NavBar() {
                 <li>
                   <a
                     href="mailto:danielshui.des@gmail.com"
-                    target="_blank"
                     rel="noreferrer"
                     className="squiggle"
                   >
