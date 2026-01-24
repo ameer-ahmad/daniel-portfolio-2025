@@ -827,7 +827,7 @@ export default function NavBar() {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col gap-[20px]">
-            <span className={`header-text !capitalize ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}>Index</span>
+            <span className={`header-text !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}>Index</span>
             {playActive
               ? playArray.map((playItem, index) => (
                 <motion.div
@@ -847,7 +847,7 @@ export default function NavBar() {
                   className={`${currentPlayIndex === index
                     ? "opacity-[1]"
                     : "opacity-[0.36]"
-                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                    } cursor-pointer ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
                   onClick={() => {
                     setCurrentPlayIndex(index);
                     setIsIndexOpen(false);

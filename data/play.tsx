@@ -14,7 +14,7 @@ export const playArray: PlayType[] = [
   },
   {
     id: 2,
-    title: "NASC GEAR, unused clothing brand concepts",
+    title: "<span class='italic'>NASC GEAR</span>, unused clothing brand concepts",
     images: [{ type: "image", src: "/nasc.png" }],
   },
   

@@ -282,7 +282,7 @@ export default function Home() {
                     </clipPath>
                   </defs>
                 </svg>
-                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the end, thanks for viewing!</p>
+                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the top, swipe down for more!</p>
               </div>
 
               {Object.keys(projects).map((project, i) => (
@@ -300,8 +300,8 @@ export default function Home() {
               ))}
 
               {/* End boundary message */}
-              <div className="w-full h-[180px] bg-[#f8f8f8] md:hidden flex flex-col items-center pt-[29px] gap-[4px] justify-start boundary-message-bottom">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <div className="w-full h-[180px] bg-[#f8f8f8] md:hidden flex flex-col items-center gap-[4px] justify-start boundary-message-bottom">
+                <svg className="mt-[29px]" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                   <g opacity="0.38" clipPath="url(#clip0_1639_7800)">
                     <path d="M13.5888 15.553C17.2078 13.0187 18.087 8.03028 15.5527 4.41132C13.0193 0.792366 8.03073 -0.0867748 4.41173 2.44825M13.5888 15.553C9.96983 18.0864 4.9805 17.2073 2.44704 13.5883C-0.0864171 9.96935 0.792734 4.98088 4.41173 2.44825M13.5888 15.553L4.41173 2.44825" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M15.0619 3.77881C12.046 8.49529 8.25585 11.1495 2.021 12.9102" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
