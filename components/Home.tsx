@@ -288,7 +288,7 @@ export default function Home() {
               {Object.keys(projects).map((project, i) => (
                 <div
                   key={project}
-                  className="w-full h-full flex overflow-y-clip"
+                  className="w-full h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex overflow-y-clip"
                   id={project}
                 >
                   <Information project={projects[project]} />
