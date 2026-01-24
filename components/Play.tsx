@@ -3,7 +3,7 @@
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
 import { MediaItem } from "@/data/projects";
 
@@ -23,6 +23,10 @@ export default function Play() {
   const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">(
     "down"
   );
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+  const touchEndYRef = useRef<number | null>(null);
 
   // Resolve the primary media to display for the current play item
   const normalizeImageItem = (
@@ -204,12 +208,55 @@ export default function Play() {
     }, 700); // 500ms visible + 200ms exit delay
   };
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    const touch = event.touches[0];
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+    touchEndXRef.current = null;
+    touchEndYRef.current = null;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
+    const touch = event.touches[0];
+    touchEndXRef.current = touch.clientX;
+    touchEndYRef.current = touch.clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (
+      touchStartXRef.current === null ||
+      touchStartYRef.current === null ||
+      touchEndXRef.current === null ||
+      touchEndYRef.current === null
+    ) {
+      return;
+    }
+
+    const deltaX = touchStartXRef.current - touchEndXRef.current;
+    const deltaY = touchStartYRef.current - touchEndYRef.current;
+    const swipeThreshold = 50;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+      if (deltaX > 0) {
+        nextImage();
+      } else {
+        prevImage();
+      }
+    }
+  };
+
   const currentItem = playArray[currentIndex];
   const primaryMedia = getPrimaryMedia(currentItem.images);
 
   return (
     <div className="relative px-[20px] pt-[66px] pb-[102px] xl:p-[80px] lg:p-[40px] w-full h-full flex items-center justify-center">
-      <div className="relative w-full h-full">
+      <div
+        className="relative w-full h-full touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -225,11 +272,19 @@ export default function Play() {
       </div>
       <button
         onClick={prevImage}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         className="absolute left-0 top-0 w-1/2 h-full z-10 cursor-prev-play"
         aria-label="Previous image"
       ></button>
       <button
         onClick={nextImage}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         className="absolute right-0 top-0 w-1/2 h-full z-10 cursor-next-play"
         aria-label="Next image"
       ></button>

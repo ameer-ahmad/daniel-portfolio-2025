@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MediaItem } from "@/data/projects";
 
 export default function Project({
@@ -28,6 +28,10 @@ export default function Project({
   );
   const [windowWidth, setWindowWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+  const touchEndYRef = useRef<number | null>(null);
 
   // Reset gallery index when project changes or NavBar is clicked (even if activeId doesn't change)
   useEffect(() => {
@@ -246,6 +250,46 @@ export default function Project({
     return (thisRatio / totalRatio) * allImages.length;
   };
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    if (!isMobile) return;
+    const touch = event.touches[0];
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+    touchEndXRef.current = null;
+    touchEndYRef.current = null;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
+    if (!isMobile) return;
+    const touch = event.touches[0];
+    touchEndXRef.current = touch.clientX;
+    touchEndYRef.current = touch.clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile) return;
+    if (
+      touchStartXRef.current === null ||
+      touchStartYRef.current === null ||
+      touchEndXRef.current === null ||
+      touchEndYRef.current === null
+    ) {
+      return;
+    }
+
+    const deltaX = touchStartXRef.current - touchEndXRef.current;
+    const deltaY = touchStartYRef.current - touchEndYRef.current;
+    const swipeThreshold = 50;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
+      if (deltaX > 0) {
+        nextImage();
+      } else {
+        prevImage();
+      }
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: "-160px" }}
@@ -316,7 +360,13 @@ export default function Project({
           </div>
         </>
       )}
-      <div className="w-full h-full relative">
+      <div
+        className="w-full h-full relative touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -495,11 +545,19 @@ export default function Project({
         <>
           <button
             onClick={prevImage}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
             className="absolute left-0 top-0 w-1/2 h-full z-10 cursor-prev-project"
             aria-label="Previous image"
           ></button>
           <button
             onClick={nextImage}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
             className="absolute right-0 top-0 w-1/2 h-full z-10 cursor-next-project"
             aria-label="Next image"
           ></button>

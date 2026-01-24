@@ -83,7 +83,7 @@ export default function NavBar() {
           damping: 20,
           mass: 1,
         }}
-        className="relative z-[999] shadow-glow"
+        className="relative z-[999] shadow-glow w-screen"
       >
         <motion.div
           initial={{ height: "60px" }}
@@ -141,13 +141,13 @@ export default function NavBar() {
                     <path
                       d="M8 2L2 8"
                       stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                     <path
                       d="M2 2L8 8"
                       stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                   </motion.svg>
@@ -384,11 +384,20 @@ export default function NavBar() {
         }}
         className="fixed justify-between w-[calc(100vw-40px)] bottom-[20px] left-[20px] z-[998] md:hidden flex items-center gap-[4px]"
       >
-        <div className="flex items-center relative gap-[4px] bg-white border border-[#E3E3E3] rounded-full w-full max-w-[264px] p-[4px]">
+        <motion.div
+          initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
+          animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 20,
+            mass: 1,
+          }}
+          className="flex items-center relative gap-[4px] rounded-full w-full max-w-[375px] p-[4px]">
           <motion.span
             whileHover="hovered"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: playActive ? 0.38 : 1 }}
+            initial={{ opacity: 1, color: "#1c1c1c" }}
+            animate={{ opacity: playActive ? 0.38 : 1, color: playActive ? "#fff" : "#1c1c1c" }}
             variants={{
               initial: { opacity: 1 },
               hovered: { opacity: 1 },
@@ -410,8 +419,8 @@ export default function NavBar() {
           </motion.span>
           <motion.span
             whileHover="hovered"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: playActive ? 1 : 0.38 }}
+            initial={{ opacity: 1, color: "#1c1c1c" }}
+            animate={{ opacity: playActive ? 1 : 0.38, color: playActive ? "#fff" : "#1c1c1c" }}
             variants={{
               initial: { opacity: 1 },
               hovered: { opacity: 1 },
@@ -432,8 +441,8 @@ export default function NavBar() {
             Play
           </motion.span>
           <motion.span
-            initial={{ x: 0 }}
-            animate={{ x: playActive ? "calc(100% + 4px)" : 0 }}
+            initial={{ x: 0, backgroundColor: "#f8f8f8" }}
+            animate={{ x: playActive ? "calc(100% + 4px)" : 0, backgroundColor: playActive ? "#1c1c1c" : "#f8f8f8" }}
             transition={{
               type: "spring",
               stiffness: 80,
@@ -442,9 +451,17 @@ export default function NavBar() {
             }}
             className="absolute left-[4px] top-1/2 -translate-y-1/2 w-[calc(50%-6px)] h-[52px] z-[1] mobile-glow bg-[#f8f8f8] rounded-full"
           />
-        </div>
+        </motion.div>
         <div className="flex items-center gap-[4px]">
           <motion.span
+            initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
+            animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            }}
             className="header-text w-[60px] bg-white h-[60px] border border-[#E3E3E3] rounded-full flex justify-center items-center cursor-pointer relative overflow-hidden"
             onClick={handleProjectInfoToggle}
           >
@@ -468,13 +485,28 @@ export default function NavBar() {
                     viewBox="0 0 18 18"
                     fill="none"
                   >
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M9 9L9 12"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <rect
+                    <motion.rect
+                      initial={{ fill: "#1C1C1C" }}
+                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       x="10"
                       y="5"
                       width="2"
@@ -483,14 +515,21 @@ export default function NavBar() {
                       transform="rotate(90 10 5)"
                       fill="#1C1C1C"
                     />
-                    <rect
+                    <motion.rect
                       x="2"
                       y="2"
                       width="14"
                       height="14"
                       rx="7"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                      strokeWidth="1.5"
                     />
                   </svg>
                 </span>
@@ -502,16 +541,30 @@ export default function NavBar() {
                     viewBox="0 0 18 18"
                     fill="none"
                   >
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M14.0008 13.9998L4.00098 4"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M14.0008 4.00019L4.00098 14"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -520,6 +573,14 @@ export default function NavBar() {
             </div>
           </motion.span>
           <motion.span
+            initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
+            animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              mass: 1,
+            }}
             className="header-text w-[60px] bg-white h-[60px] border border-[#E3E3E3] rounded-full flex justify-center items-center cursor-pointer relative overflow-hidden"
             onClick={handleIndexToggle}
           >
@@ -543,39 +604,81 @@ export default function NavBar() {
                     viewBox="0 0 18 18"
                     fill="none"
                   >
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M15.0002 13.5H7.00024"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M15 9H7"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M7.00024 4.5H15.0002"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <path
+                    <motion.path
+                      initial={{ fill: "#1C1C1C" }}
+                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M2.00024 13.5C2.00024 12.9477 2.44796 12.5 3.00024 12.5C3.55253 12.5 4.00024 12.9477 4.00024 13.5C4.00024 14.0523 3.55253 14.5 3.00024 14.5C2.44796 14.5 2.00024 14.0523 2.00024 13.5Z"
-                      fill="#1C1C1C"
                     />
-                    <rect
+                    <motion.rect
+                      initial={{ fill: "#1C1C1C" }}
+                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       x="2"
                       y="8"
                       width="2"
                       height="2"
                       rx="1"
-                      fill="#1C1C1C"
                     />
-                    <path
+                    <motion.path
+                      initial={{ fill: "#1C1C1C" }}
+                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M2 4.5C2 3.94772 2.44772 3.5 3 3.5C3.55228 3.5 4 3.94772 4 4.5C4 5.05228 3.55228 5.5 3 5.5C2.44772 5.5 2 5.05228 2 4.5Z"
-                      fill="#1C1C1C"
                     />
                   </svg>
                 </span>
@@ -587,16 +690,30 @@ export default function NavBar() {
                     viewBox="0 0 18 18"
                     fill="none"
                   >
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M14.0008 13.9998L4.00098 4"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                    <path
+                    <motion.path
+                      initial={{ stroke: "#1C1C1C" }}
+                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
                       d="M14.0008 4.00019L4.00098 14"
-                      stroke="#1C1C1C"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -622,14 +739,14 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto"
+                  className={`toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#1c1c1c]"}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col italic">
                     {playActive && activePlayItem ? (
                       <>
                         <span
-                          className="header-text not-italic !capitalize"
+                          className={`header-text not-italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
                           dangerouslySetInnerHTML={{
                             __html: activePlayItem.title,
                           }}
@@ -638,7 +755,7 @@ export default function NavBar() {
                     ) : (
                       <>
                         <span
-                          className="header-text italic !capitalize"
+                          className={`header-text italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
                           dangerouslySetInnerHTML={{
                             __html:
                               activeProject?.subtitle ||
@@ -647,19 +764,19 @@ export default function NavBar() {
                           }}
                         />
                         <span
-                          className="!not-italic mt-[20px]"
+                          className={`!not-italic mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
                           dangerouslySetInnerHTML={{
                             __html: activeProject?.desc || "",
                           }}
                         />
                         {activeProject?.date && (
-                          <span className="mt-[20px]">
+                          <span className={`mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}>
                             {activeProject.date}
                           </span>
                         )}
                         {activeProject?.details && (
                           <span
-                            className=""
+                            className={`${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
                             dangerouslySetInnerHTML={{
                               __html: activeProject.details,
                             }}
@@ -667,7 +784,7 @@ export default function NavBar() {
                         )}
                         {activeProject?.extra && (
                           <span
-                            className="mt-[20px] not-italic"
+                            className={`mt-[20px] not-italic ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
                             dangerouslySetInnerHTML={{
                               __html: activeProject.extra,
                             }}
@@ -688,174 +805,172 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className="arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
+                  className={`arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] ${playActive ? "bg-[#1c1c1c]" : "bg-[#fff]"}`}
                 ></motion.div>
               </>
             )}
         </AnimatePresence>
-          <motion.div
-            key="index-toolbar"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
-            exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 :   0 }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 20,
-              mass: 1,
-            }}
-            className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] bg-white shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${
-              isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex flex-col gap-[20px]">
-              <span className="header-text !capitalize">Index</span>
-              {playActive
-                ? playArray.map((playItem, index) => (
+        <motion.div
+          key="index-toolbar"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
+          exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 : 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 20,
+            mass: 1,
+          }}
+          className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
+            } ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#1c1c1c]"}`}
+
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex flex-col gap-[20px]">
+            <span className={`header-text !capitalize ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}>Index</span>
+            {playActive
+              ? playArray.map((playItem, index) => (
+                <motion.div
+                  key={playItem.id}
+                  initial={{ x: 0, opacity: 0.36 }}
+                  animate={{
+                    opacity: currentPlayIndex === index ? 1 : 0.36,
+                    x: currentPlayIndex === index ? 6 : 0,
+                  }}
+                  whileHover={{ x: 6 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className={`${currentPlayIndex === index
+                    ? "opacity-[1]"
+                    : "opacity-[0.36]"
+                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                  onClick={() => {
+                    setCurrentPlayIndex(index);
+                    setIsIndexOpen(false);
+                  }}
+                >
+                  <div className="flex items-center gap-[8px] relative">
                     <motion.div
-                      key={playItem.id}
-                      initial={{ x: 0, opacity: 0.36 }}
+                      className={`w-[4px] h-[4px] rounded-full ${playActive ? "bg-[#fff]" : "bg-[#1c1c1c]"} absolute top-[50%] -translate-y-[50%] left-[3px]`}
+                      initial={{ opacity: 0 }}
                       animate={{
-                        opacity: currentPlayIndex === index ? 1 : 0.36,
-                        x: currentPlayIndex === index ? 6 : 0,
+                        opacity: currentPlayIndex === index ? 1 : 0,
                       }}
-                      whileHover={{ x: 6 }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
                         damping: 20,
                         mass: 1,
                       }}
-                      className={`${
-                        currentPlayIndex === index
-                          ? "opacity-[1]"
-                          : "opacity-[0.36]"
-                      } cursor-pointer italic`}
-                      onClick={() => {
-                        setCurrentPlayIndex(index);
-                        setIsIndexOpen(false);
-                      }}
-                    >
-                      <div className="flex items-center gap-[8px] relative">
-                        <motion.div
-                          className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: currentPlayIndex === index ? 1 : 0,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 80,
-                            damping: 20,
-                            mass: 1,
-                          }}
-                        />
-                        <motion.span
-                          initial={{ x: 0 }}
-                          animate={{
-                            x: currentPlayIndex === index ? 12 : 0,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 80,
-                            damping: 20,
-                            mass: 1,
-                          }}
-                          className="font-[600] not-italic"
-                        >
-                          {playItem.id < 10 ? "0" : ""}
-                          {playItem.id}
-                        </motion.span>
-                      </div>
-                      <div>
-                        <span
-                          className="title"
-                          dangerouslySetInnerHTML={{
-                            __html: playItem.title,
-                          }}
-                        ></span>
-                      </div>
-                    </motion.div>
-                  ))
-                : Object.keys(projects).map((project) => (
-                    <motion.div
-                      key={project}
-                      initial={{ x: 0, opacity: 0.36 }}
+                    />
+                    <motion.span
+                      initial={{ x: 0 }}
                       animate={{
-                        opacity: activeId === project ? 1 : 0.36,
-                        x: activeId === project ? 6 : 0,
+                        x: currentPlayIndex === index ? 12 : 0,
                       }}
-                      whileHover={{ x: 6 }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
                         damping: 20,
                         mass: 1,
                       }}
-                      className={`${
-                        activeId === project ? "opacity-[1]" : "opacity-[0.36]"
-                      } cursor-pointer italic`}
-                      onClick={() => {
-                        setActiveId(project);
-                        setIsIndexOpen(false);
-                      }}
+                      className="font-[600] not-italic"
                     >
-                      <div className="flex items-center gap-[8px] relative">
-                        <motion.div
-                          className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
-                          initial={{ opacity: 0 }}
-                          animate={{
-                            opacity: activeId === project ? 1 : 0,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 80,
-                            damping: 20,
-                            mass: 1,
-                          }}
-                        />
-                        <motion.span
-                          initial={{ x: 0 }}
-                          animate={{ x: activeId === project ? 12 : 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 80,
-                            damping: 20,
-                            mass: 1,
-                          }}
-                          className="font-[600] not-italic"
-                        >
-                          {projects[project].id < 10 ? "0" : ""}
-                          {projects[project].id}
-                        </motion.span>
-                      </div>
-                      <div>
-                        <span
-                          className="title"
-                          dangerouslySetInnerHTML={{
-                            __html: projects[project].title,
-                          }}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
-            </div>
-          </motion.div>
-          <motion.div
-            key="index-arrow"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
-            exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 : 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 80,
-              damping: 20,
-              mass: 1,
-            }}
-            className="arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] bg-white z-[1001]"
-          ></motion.div>
-      </motion.div>
+                      {playItem.id < 10 ? "0" : ""}
+                      {playItem.id}
+                    </motion.span>
+                  </div>
+                  <div>
+                    <span
+                      className={`title ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                      dangerouslySetInnerHTML={{
+                        __html: playItem.title,
+                      }}
+                    ></span>
+                  </div>
+                </motion.div>
+              ))
+              : Object.keys(projects).map((project) => (
+                <motion.div
+                  key={project}
+                  initial={{ x: 0, opacity: 0.36 }}
+                  animate={{
+                    opacity: activeId === project ? 1 : 0.36,
+                    x: activeId === project ? 6 : 0,
+                  }}
+                  whileHover={{ x: 6 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
+                  className={`${activeId === project ? "opacity-[1]" : "opacity-[0.36]"
+                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                  onClick={() => {
+                    setActiveId(project);
+                    setIsIndexOpen(false);
+                  }}
+                >
+                  <div className="flex items-center gap-[8px] relative">
+                    <motion.div
+                      className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: activeId === project ? 1 : 0,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                    />
+                    <motion.span
+                      initial={{ x: 0 }}
+                      animate={{ x: activeId === project ? 12 : 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 80,
+                        damping: 20,
+                        mass: 1,
+                      }}
+                      className="font-[600] not-italic"
+                    >
+                      {projects[project].id < 10 ? "0" : ""}
+                      {projects[project].id}
+                    </motion.span>
+                  </div>
+                  <div>
+                    <span
+                      className={`title ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                      dangerouslySetInnerHTML={{
+                        __html: projects[project].title,
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+          </div>
+        </motion.div>
+        <motion.div
+          key="index-arrow"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: isIndexOpen ? 1 : 0, y: isIndexOpen ? 0 : 10 }}
+          exit={{ opacity: isIndexOpen ? 0 : 1, y: isIndexOpen ? 10 : 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 20,
+            mass: 1,
+          }}
+          className={`arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] ${playActive ? "bg-[#1c1c1c]" : "bg-[#fff]"}`}
+        ></motion.div>
+      </motion.div >
     </>
   );
 }

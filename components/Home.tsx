@@ -79,9 +79,9 @@ export default function Home() {
       requestAnimationFrame(() => {
         const container = document.getElementById("ProjectsContainer");
         const activeProject = document.getElementById(activeId);
-        
+
         if (!container || !activeProject) return;
-        
+
         const containerTop = container.getBoundingClientRect().top;
         const projectTop = activeProject.getBoundingClientRect().top;
         if (shouldAnimate) {
@@ -108,7 +108,7 @@ export default function Home() {
 
     window.addEventListener("resize", () => updateY(false));
     window.addEventListener("orientationchange", handleOrientationChange);
-    
+
     return () => {
       window.removeEventListener("resize", () => updateY(false));
       window.removeEventListener("orientationchange", handleOrientationChange);
@@ -135,7 +135,7 @@ export default function Home() {
 
     window.addEventListener("resize", updateX);
     window.addEventListener("orientationchange", handleOrientationChange);
-    
+
     return () => {
       window.removeEventListener("resize", updateX);
       window.removeEventListener("orientationchange", handleOrientationChange);
@@ -170,21 +170,25 @@ export default function Home() {
                 const currentY = e.touches[0].clientY;
                 const deltaY = currentY - touchStartY.current;
                 finalDeltaY.current = deltaY;
-                
+
                 const projectKeys = Object.keys(projects);
                 const currentIndex = projectKeys.indexOf(activeId);
-                
-                // Prevent scrolling beyond boundaries
+
+                // Calculate new Y position
+                let newY = initialY.current + deltaY;
+
+                // Clamp overscroll at boundaries
                 if (deltaY > 0 && currentIndex === 0) {
-                  // At first project, prevent scrolling up
-                  return;
+                  // At first project, allow scrolling up but limit to 100px
+                  const maxOverscroll = 100;
+                  newY = Math.min(initialY.current + maxOverscroll, newY);
+                } else if (deltaY < 0 && currentIndex === projectKeys.length - 1) {
+                  // At last project, allow scrolling down but limit to 180px
+                  const maxOverscroll = 180;
+                  newY = Math.max(initialY.current - maxOverscroll, newY);
                 }
-                if (deltaY < 0 && currentIndex === projectKeys.length - 1) {
-                  // At last project, prevent scrolling down
-                  return;
-                }
-                
-                y.set(initialY.current + deltaY);
+
+                y.set(newY);
               }}
               onTouchEnd={() => {
                 // Prevent touch end if animation is in progress
@@ -192,28 +196,28 @@ export default function Home() {
                   touchStartY.current = null;
                   return;
                 }
-                
+
                 const deltaY = finalDeltaY.current;
                 const screenHeight = window.innerHeight;
                 const scrollPercentage = Math.abs(deltaY) / screenHeight;
-                
+
                 touchStartY.current = null;
-                
+
                 // Use requestAnimationFrame to ensure DOM has updated
                 requestAnimationFrame(() => {
                   const container = document.getElementById("ProjectsContainer");
                   if (!container) return;
-                  
+
                   const projectKeys = Object.keys(projects);
                   const currentIndex = projectKeys.indexOf(activeId);
-                  
+
                   // Check if we're at boundaries and trying to scroll in that direction
                   const isAtFirstProject = currentIndex === 0;
                   const isAtLastProject = currentIndex === projectKeys.length - 1;
                   const tryingToScrollUp = deltaY > 0;
                   const tryingToScrollDown = deltaY < 0;
-                  
-                  // If at boundary and trying to scroll in that direction, just snap back
+
+                  // If at boundary and trying to scroll in that direction, snap back with spring
                   if ((isAtFirstProject && tryingToScrollUp) || (isAtLastProject && tryingToScrollDown)) {
                     const currentProject = document.getElementById(activeId);
                     if (currentProject) {
@@ -224,11 +228,11 @@ export default function Home() {
                     }
                     return;
                   }
-                  
+
                   // If scrolled more than 20% of screen, move to next/previous project
                   if (scrollPercentage > 0.2) {
                     let targetIndex: number;
-                    
+
                     if (deltaY > 0) {
                       // Dragged down, content moves up, go to previous project (lower index)
                       targetIndex = Math.max(currentIndex - 1, 0);
@@ -236,7 +240,7 @@ export default function Home() {
                       // Dragged up, content moves down, go to next project (higher index)
                       targetIndex = Math.min(currentIndex + 1, projectKeys.length - 1);
                     }
-                    
+
                     const targetProjectKey = projectKeys[targetIndex];
                     if (targetProjectKey && targetProjectKey !== activeId) {
                       startAnimation();
@@ -264,6 +268,23 @@ export default function Home() {
                 });
               }}
             >
+              {/* Beginning boundary message */}
+              <div className="w-full h-[100px] bg-[#f8f8f8] md:hidden flex flex-col gap-[4px] items-center justify-center boundary-message-top">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <g opacity="0.38" clipPath="url(#clip0_1639_7810)">
+                    <path d="M3.75 12.75C3.279 12.6487 2.90925 12.4868 2.5965 12.2265C2.44441 12.0998 2.30523 11.9584 2.181 11.8043C1.5 10.962 1.5 9.7125 1.5 7.209C1.5 4.7055 1.5 3.45525 2.181 2.613C2.30523 2.45889 2.44441 2.31745 2.5965 2.19075C3.4275 1.5 4.659 1.5 7.125 1.5H10.875C13.341 1.5 14.5733 1.5 15.4035 2.19075C15.5555 2.31825 15.694 2.459 15.819 2.613C16.5 3.45525 16.5 4.70625 16.5 7.209C16.5 9.711 16.5 10.962 15.819 11.8043C15.6948 11.9584 15.5556 12.0998 15.4035 12.2265C15.0908 12.4868 14.721 12.6487 14.25 12.75" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" />
+                    <path d="M4.5 9.75H5.49975M5.49975 9.75L6.375 16.5M5.49975 9.75H9M9 9.75H12.5002M9 9.75V16.5M13.5 9.75H12.5002M12.5002 9.75L11.625 16.5M6 7.5C6.04425 6.036 6.9465 6 8.2485 6H9.7515C11.0535 6 11.9565 6.036 12 7.5" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M6 12.375H12M6.333 15H11.667" stroke="#1C1C1C" strokeWidth="1.5" strokeLinejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1639_7810">
+                      <rect width="18" height="18" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the end, thanks for viewing!</p>
+              </div>
+
               {Object.keys(projects).map((project, i) => (
                 <div
                   key={project}
@@ -277,6 +298,23 @@ export default function Home() {
                   />
                 </div>
               ))}
+
+              {/* End boundary message */}
+              <div className="w-full h-[180px] bg-[#f8f8f8] md:hidden flex flex-col items-center pt-[29px] gap-[4px] justify-start boundary-message-bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <g opacity="0.38" clipPath="url(#clip0_1639_7800)">
+                    <path d="M13.5888 15.553C17.2078 13.0187 18.087 8.03028 15.5527 4.41132C13.0193 0.792366 8.03073 -0.0867748 4.41173 2.44825M13.5888 15.553C9.96983 18.0864 4.9805 17.2073 2.44704 13.5883C-0.0864171 9.96935 0.792734 4.98088 4.41173 2.44825M13.5888 15.553L4.41173 2.44825" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M15.0619 3.77881C12.046 8.49529 8.25585 11.1495 2.021 12.9102" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M9.84847 1.04492C10.1789 5.23664 12.5619 8.63961 16.7649 10.9243M1.23535 7.07572C5.06154 8.8196 7.44381 12.2226 8.15257 16.9543" stroke="#1C1C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1639_7800">
+                      <rect width="18" height="18" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the end, thanks for viewing!</p>
+              </div>
             </motion.div>
           </div>
         </div>
