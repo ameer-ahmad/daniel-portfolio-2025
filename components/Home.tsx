@@ -293,7 +293,7 @@ export default function Home() {
                 return (
                 <div
                   key={project}
-                  className="w-full relative h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex "
+                  className="w-full relative h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex md:overflow-y-clip"
                   id={project}
                   style={{ zIndex }}
                 >
