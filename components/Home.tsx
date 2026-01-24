@@ -141,6 +141,8 @@ export default function Home() {
       window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, [playActive, x]);
+  const projectKeys = Object.keys(projects);
+
   return (
     <>
       <LoadingScreen />
@@ -285,11 +287,15 @@ export default function Home() {
                 <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the top, swipe down for more!</p>
               </div>
 
-              {Object.keys(projects).map((project, i) => (
+              {projectKeys.map((project, i) => {
+                const zIndex = projectKeys.length - i;
+
+                return (
                 <div
                   key={project}
-                  className="w-full h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex "
+                  className="w-full relative h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex "
                   id={project}
+                  style={{ zIndex }}
                 >
                   <Information project={projects[project]} />
                   <Project
@@ -297,7 +303,8 @@ export default function Home() {
                     firstProject={i === 0 ? true : false}
                   />
                 </div>
-              ))}
+                );
+              })}
 
               {/* End boundary message */}
               <div className="w-full h-[180px] bg-[#f8f8f8] md:hidden flex flex-col items-center gap-[4px] justify-start boundary-message-bottom">
