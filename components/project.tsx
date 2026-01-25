@@ -300,14 +300,14 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className="overflow-y-clip w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] shadow-glow  px-[20px] pt-[66px] pb-[102px] xl:p-[80px] lg:p-[40px] bg-white relative"
+      className={`overflow-y-clip w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-full shadow-glow  px-[20px] ${firstProject ? "pt-[66px]" : "pt-[126px]"} pb-[102px] xl:p-[80px] xl:pt-[146px] lg:pt-[106px] lg:p-[40px] bg-white relative`}
     >
       {flattenedImages.length > 1 && (
         <>
           <AnimatePresence mode="wait">
             <div
               key={currentIndex}
-              className="absolute hidden md:block top-[20px] left-[20px] text-[#1c1c1c] text-sm z-20"
+              className={`absolute hidden md:block ${firstProject ? "top-[20px]" : "top-[80px]"} left-[20px] text-[#1c1c1c] text-sm z-20`}
             >
               <span className="relative font-[600]">
                 <AnimatePresence>
@@ -351,7 +351,7 @@ export default function Project({
           </AnimatePresence>
           <div
             key={currentIndex}
-            className="absolute block md:hidden top-[20px] bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20"
+            className={`absolute block md:hidden ${firstProject ? "top-[20px]" : "top-[80px]"} bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20`}
           >
             <span className="relative font-[600] pb-[2px] text-[#1c1c1c]/[0.38]">
               {String(currentIndex + 1).padStart(2, "0")}/

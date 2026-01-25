@@ -12,6 +12,7 @@ import Play from "@/components/Play";
 
 export default function Home() {
   const { activeId, playActive, setActiveId } = useActiveProject();
+  const firstProjectHeightOffset = 60;
 
   const y = useMotionValue(0);
   const ySpring = useSpring(y, {
@@ -82,12 +83,13 @@ export default function Home() {
 
         if (!container || !activeProject) return;
 
-        const containerTop = container.getBoundingClientRect().top;
-        const projectTop = activeProject.getBoundingClientRect().top;
         if (shouldAnimate) {
           startAnimation();
         }
-        y.set(-(projectTop - containerTop));
+        const targetY = getProjectY(container, activeId);
+        if (targetY !== null) {
+          y.set(targetY);
+        }
       });
     };
 
@@ -98,9 +100,10 @@ export default function Home() {
 
     // Initial update - don't set isAnimating for initial load
     requestAnimationFrame(() => {
-      const containerTop = container.getBoundingClientRect().top;
-      const projectTop = activeProject.getBoundingClientRect().top;
-      y.set(-(projectTop - containerTop));
+      const targetY = getProjectY(container, activeId);
+      if (targetY !== null) {
+        y.set(targetY);
+      }
     });
 
     // When activeId changes, it's a programmatic change, so animate
@@ -142,6 +145,15 @@ export default function Home() {
     };
   }, [playActive, x]);
   const projectKeys = Object.keys(projects);
+  const getProjectY = (container: HTMLElement, projectId: string) => {
+    const activeProject = document.getElementById(projectId);
+    if (!activeProject) return null;
+    const containerTop = container.getBoundingClientRect().top;
+    const projectTop = activeProject.getBoundingClientRect().top;
+    const index = projectKeys.indexOf(projectId);
+    const stepOffset = index > 0 ? firstProjectHeightOffset : 0;
+    return -(projectTop - containerTop + stepOffset);
+  };
 
   return (
     <>
@@ -222,11 +234,10 @@ export default function Home() {
                   // If at boundary and trying to scroll in that direction, snap back with spring
                   if ((isAtFirstProject && tryingToScrollUp) || (isAtLastProject && tryingToScrollDown)) {
                     const currentProject = document.getElementById(activeId);
-                    if (currentProject) {
-                      const containerTop = container.getBoundingClientRect().top;
-                      const projectTop = currentProject.getBoundingClientRect().top;
+                    const targetY = getProjectY(container, activeId);
+                    if (targetY !== null) {
                       startAnimation();
-                      y.set(-(projectTop - containerTop));
+                      y.set(targetY);
                     }
                     return;
                   }
@@ -250,21 +261,18 @@ export default function Home() {
                     } else {
                       // Snap back to current project
                       const currentProject = document.getElementById(activeId);
-                      if (currentProject) {
-                        const containerTop = container.getBoundingClientRect().top;
-                        const projectTop = currentProject.getBoundingClientRect().top;
+                      const targetY = getProjectY(container, activeId);
+                      if (targetY !== null) {
                         startAnimation();
-                        y.set(-(projectTop - containerTop));
+                        y.set(targetY);
                       }
                     }
                   } else {
                     // Snap back to current project if scrolled less than 20%
-                    const currentProject = document.getElementById(activeId);
-                    if (currentProject) {
-                      const containerTop = container.getBoundingClientRect().top;
-                      const projectTop = currentProject.getBoundingClientRect().top;
+                    const targetY = getProjectY(container, activeId);
+                    if (targetY !== null) {
                       startAnimation();
-                      y.set(-(projectTop - containerTop));
+                      y.set(targetY);
                     }
                   }
                 });
@@ -293,11 +301,11 @@ export default function Home() {
                 return (
                 <div
                   key={project}
-                  className="w-full relative h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] flex md:overflow-y-clip"
+                  className={`w-full relative ${i === 0 ? "h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)]" : "h-[100dvh] md:h-[100dvh]"} flex md:overflow-y-clip`}
                   id={project}
                   style={{ zIndex }}
                 >
-                  <Information project={projects[project]} />
+                  <Information project={projects[project]} firstProject={i === 0 ? true : false} />
                   <Project
                     project={projects[project]}
                     firstProject={i === 0 ? true : false}
