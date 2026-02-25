@@ -301,7 +301,7 @@ export default function Home() {
                 return (
                 <div
                   key={project}
-                  className={`w-full relative ${i === 0 ? "h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)]" : "h-[100dvh] md:h-[100dvh]"} flex md:overflow-y-clip`}
+                  className={`w-full relative ${i === 0 ? "h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)]" : "h-[100dvh] md:h-[100dvh]"} flex clip-content`}
                   id={project}
                   style={{ zIndex }}
                 >
