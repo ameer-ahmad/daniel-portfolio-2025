@@ -300,7 +300,7 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className={`w-screen md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-full shadow-glow  px-[20px] ${firstProject ? "pt-[66px]" : "pt-[126px]"} pb-[102px] xl:p-[80px] xl:pt-[146px] lg:pt-[106px] lg:p-[40px] bg-white relative`}
+      className={`w-screen clip-content md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-full shadow-glow  px-[20px] ${firstProject ? "pt-[66px]" : "pt-[126px]"} pb-[102px] xl:p-[80px] ${firstProject ? "pt-[auto]" : "xl:pt-[146px]"} ${firstProject ? "pt-[auto]" : "lg:pt-[106px]"} lg:p-[40px] bg-white relative`}
     >
       {flattenedImages.length > 1 && (
         <>
