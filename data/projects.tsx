@@ -24,8 +24,25 @@ export type ProjectType = {
 };
 
 export const projects: ProjectType = {
-  "texas-rangers": {
+  "crypto-2026": {
     id: 1,
+    title:
+      "Crypto.com Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
+    subtitle:
+      "Crypto.<span class='lowercase'>com</span> Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
+    desc: "Home of the Lakers, Kings, and Sparks—Crypto Arena is located in the core downtown hub of Los Angeles. This series of websites is for the renewal of the arena’s most premium seats, including lounges, private suites, and the Lexus Club. The design draws from the arena’s sleek branding, while showcasing its team’s star-studded rosters.",
+    images: [
+      { type: "video", src: "/home-recording-crypto.mp4", aspectRatio: "8:5" },
+      { type: "video", src: "/crypto-loader-mobile.mp4", aspectRatio: "71:95" },
+      { type: "video", src: "/crypto-renewal-exp.mp4", aspectRatio: "263:158" },
+      { type: "image", src: "/crypto-sections.jpg" },
+    ],
+    date: "March 2025",
+    details: "Website Series",
+    extra: "",
+  },
+  "texas-rangers": {
+    id: 2,
     title:
       "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
@@ -65,7 +82,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   "analog-digital": {
-    id: 2,
+    id: 3,
     title:
       "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
     subtitle:
@@ -82,7 +99,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   "exhibition-poster": {
-    id: 3,
+    id: 4,
     title:
       "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
     subtitle:
@@ -98,7 +115,7 @@ export const projects: ProjectType = {
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
   exran: {
-    id: 4,
+    id: 5,
     title:
       "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
     subtitle:
@@ -113,7 +130,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   olympiad: {
-    id: 5,
+    id: 6,
     title:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
     subtitle:

@@ -46,10 +46,10 @@ export default function NavBar() {
     if (playActive) {
       setPlayActive(false);
       setTimeout(() => {
-        setActiveId("texas-rangers");
+        setActiveId("crypto-2026");
       }, 800);
     } else {
-      setActiveId("texas-rangers");
+      setActiveId("crypto-2026");
     }
   };
   useEffect(() => {

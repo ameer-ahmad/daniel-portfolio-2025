@@ -23,7 +23,7 @@ type ActiveProjectState = {
 export const useActiveProject = create<ActiveProjectState>()((set, get) => ({
   playActive: false,
   setPlayActive: (active) => set({ playActive: active }),
-  activeId: "texas-rangers",
+  activeId: "crypto-2026",
   resetCounter: 0,
   setActiveId: (id) => set({ activeId: id, resetCounter: get().resetCounter + 1 }),
 
