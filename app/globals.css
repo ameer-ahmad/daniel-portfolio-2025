@@ -24,12 +24,18 @@
   }
 }
 
+mux-player {
+  --controls: none;
+  --media-object-fit: contain;
+  background-color: #ffffff;
+}
+
 body {
   font-family: "Source Serif Pro", serif;
   font-size: 14px;
   line-height: 20px;
   overflow: hidden;
-  color: #1c1c1c;
+  color: #515151;
   background: #ffffff;
   position: fixed;
   top: 0;
@@ -38,22 +44,20 @@ body {
 
 .header-text {
   font-family: "Source Serif Pro", serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  color: #1c1c1c;
+  color: #000000;
 }
 
 .shadow-glow {
   box-shadow:
-    -10px 0 25px -10px rgba(0, 0, 0, 0.1),
-    10px 0 25px -10px rgba(0, 0, 0, 0.1);
+    -10px 0 25px -10px rgba(0, 0, 0, 0.06),
+    10px 0 25px -10px rgba(0, 0, 0, 0.06);
 }
 
 .mobile-glow {
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.06) inset;
 }
 
 div::-webkit-scrollbar {
@@ -90,6 +94,7 @@ div::-webkit-scrollbar {
 .numbered-list li {
   padding-left: 10px;
 }
+
 
 .squiggle:hover {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='rgb(113, 100, 89)' stroke-width='1' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
@@ -154,11 +159,11 @@ div::-webkit-scrollbar {
 }
 
 .boundary-message-top {
-  box-shadow: inset 0 -25px 25px -25px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 -25px 25px -25px rgba(0, 0, 0, 0.06);
 }
 
 .boundary-message-bottom {
-  box-shadow: inset 0 25px 25px -25px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 25px 25px -25px rgba(0, 0, 0, 0.06);
 }
 
 @media screen and (min-width: 767px) {

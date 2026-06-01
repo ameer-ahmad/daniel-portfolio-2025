@@ -5,13 +5,19 @@ import Image from "next/image";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { MediaItem } from "@/data/projects";
+import { useState, useEffect, useRef, useMemo } from "react";
+import {
+  getFlattenedSlides,
+  prefetchSlides,
+} from "@/app/(lib)/mediaSlides";
+import MediaVideo from "@/components/MediaVideo";
 
 export default function Project({
+  projectKey,
   project,
   firstProject,
 }: {
+  projectKey: string;
   project: ProjectType[keyof ProjectType];
   firstProject: boolean;
 }) {
@@ -52,70 +58,17 @@ export default function Project({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Flatten images array for mobile - each item in arrays becomes a separate slide
-  const imagesArray = project.images || [];
+  const flattenedImages = useMemo(
+    () => getFlattenedSlides(project.images ?? [], isMobile),
+    [project.images, isMobile]
+  );
 
-  const flattenForMobile = (items: MediaItem[]): MediaItem[] => {
-    if (!isMobile) return items;
-
-    const flattened: MediaItem[] = [];
-
-    items.forEach((item) => {
-      // Handle videos type with multiple srcs
-      if (
-        typeof item === "object" &&
-        !Array.isArray(item) &&
-        "type" in item &&
-        item.type === "videos"
-      ) {
-        item.srcs.forEach((src) => {
-          flattened.push({
-            type: "video",
-            src: typeof src === "string" ? src : src.src,
-            aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
-          });
-        });
-      }
-      // Handle images type with multiple srcs
-      else if (
-        typeof item === "object" &&
-        !Array.isArray(item) &&
-        "type" in item &&
-        item.type === "images"
-      ) {
-        item.srcs.forEach((src) => {
-          flattened.push({
-            type: "image",
-            src: typeof src === "string" ? src : src.src,
-            aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
-          });
-        });
-      }
-      // Handle arrays of images
-      else if (Array.isArray(item)) {
-        item.forEach((img) => {
-          // Convert ImageItem to MediaItem format
-          if (typeof img === "string") {
-            flattened.push(img);
-          } else {
-            flattened.push({
-              type: "image",
-              src: img.src,
-              aspectRatio: img.aspectRatio,
-            });
-          }
-        });
-      }
-      // Keep single items as-is
-      else {
-        flattened.push(item);
-      }
-    });
-
-    return flattened;
-  };
-
-  const flattenedImages = flattenForMobile(imagesArray);
+  // Tier 2: prefetch remaining slides while user is on this project's first slide
+  useEffect(() => {
+    if (activeId !== projectKey || currentIndex !== 0) return;
+    if (flattenedImages.length <= 1) return;
+    prefetchSlides(flattenedImages.slice(1));
+  }, [activeId, projectKey, currentIndex, flattenedImages]);
 
   const nextImage = () => {
     if (flattenedImages.length <= 1) return;
@@ -172,7 +125,11 @@ export default function Project({
 
   // Type guards for TypeScript
   const videoItem = isVideoObject
-    ? (currentImageItem as { type: "video"; src: string })
+    ? (currentImageItem as {
+        type: "video";
+        src: string;
+        aspectRatio?: string;
+      })
     : null;
   const videosItem = isVideosObject
     ? (currentImageItem as {
@@ -307,9 +264,9 @@ export default function Project({
           <AnimatePresence mode="wait">
             <div
               key={currentIndex}
-              className={`absolute hidden md:block ${firstProject ? "top-[20px]" : "top-[80px]"} left-[20px] text-[#1c1c1c] text-sm z-20`}
+              className={`absolute hidden md:block ${firstProject ? "top-[20px]" : "top-[80px]"} left-[20px] text-[#515151] text-sm z-20`}
             >
-              <span className="relative font-[600]">
+              <span className="relative font-[400] text-[#000000]">
                 <AnimatePresence>
                   {showNextArrow && (
                     <motion.span
@@ -322,7 +279,7 @@ export default function Project({
                       transition={{ duration: 0.2 }}
                       className={`absolute ${
                         nextArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                      } left-1 text-xs text-[#1c1c1c]`}
+                      } left-1 text-xs text-[#515151]`}
                     >
                       {nextArrowDirection === "up" ? "▲" : "▼"}
                     </motion.span>
@@ -338,7 +295,7 @@ export default function Project({
                       transition={{ duration: 0.2 }}
                       className={`absolute ${
                         prevArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                      } left-1 text-xs text-[#1c1c1c]`}
+                      } left-1 text-xs text-[#515151]`}
                     >
                       {prevArrowDirection === "up" ? "▲" : "▼"}
                     </motion.span>
@@ -351,9 +308,9 @@ export default function Project({
           </AnimatePresence>
           <div
             key={currentIndex}
-            className={`absolute block md:hidden ${firstProject ? "top-[20px]" : "top-[80px]"} bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#1c1c1c] text-sm z-20`}
+            className={`absolute block md:hidden ${firstProject ? "top-[20px]" : "top-[80px]"} bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#515151] text-sm z-20`}
           >
-            <span className="relative font-[600] pb-[2px] text-[#1c1c1c]/[0.38]">
+            <span className="relative font-[400] pb-[2px] text-[#000000]/[0.38]">
               {String(currentIndex + 1).padStart(2, "0")}/
               {String(flattenedImages.length).padStart(2, "0")}
             </span>
@@ -367,15 +324,7 @@ export default function Project({
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative w-full h-full"
-          >
+        <div key={currentIndex} className="relative w-full h-full">
             {isVideosObject && videosItem ? (
               <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
                 {videosItem.srcs.map((videoItem, idx) => {
@@ -397,18 +346,14 @@ export default function Project({
                       className="relative"
                       style={{ flex: flexValue }}
                     >
-                      <video
-                        src={`${
-                          process.env.NODE_ENV === "development"
-                            ? "/"
-                            : "/"
-                        }images${videoSrc}`}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-contain"
-                        style={{ objectPosition }}
+                      <MediaVideo
+                        src={videoSrc}
+                        aspectRatio={
+                          typeof videoItem === "string"
+                            ? undefined
+                            : videoItem.aspectRatio
+                        }
+                        objectPosition={objectPosition}
                       />
                     </div>
                   );
@@ -416,17 +361,9 @@ export default function Project({
               </div>
             ) : isVideoObject && videoItem ? (
               <div className="relative w-full h-full">
-                <video
-                  src={`${
-                    process.env.NODE_ENV === "development"
-                      ? "/"
-                      : "/"
-                  }images${videoItem.src}`}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-contain"
+                <MediaVideo
+                  src={videoItem.src}
+                  aspectRatio={videoItem.aspectRatio}
                 />
               </div>
             ) : isImagesObject && imagesItem ? (
@@ -538,8 +475,7 @@ export default function Project({
                 priority={firstProject && currentIndex === 0}
               />
             )}
-          </motion.div>
-        </AnimatePresence>
+        </div>
       </div>
       {flattenedImages.length > 1 && (
         <>

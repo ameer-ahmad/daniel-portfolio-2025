@@ -30,11 +30,11 @@ export const projects: ProjectType = {
       "Crypto.com Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
       "Crypto.<span class='lowercase'>com</span> Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
-    desc: "Home of the Lakers, Kings, and Sparks—Crypto Arena is located in the core downtown hub of Los Angeles. This series of websites is for the renewal of the arena’s most premium seats, including lounges, private suites, and the Lexus Club. The design draws from the arena’s sleek branding, while showcasing its team’s star-studded rosters.",
+    desc: "Home of the Lakers, Kings, and Sparks—Crypto Arena is located in the core downtown hub of Los Angeles. This series of websites is for the renewal of the arena’s most premium seats, including lounges, private suites, and the Lexus Club. The design draws from the arena’s sleek branding, while showcasing its teams’ star-studded rosters.",
     images: [
       { type: "video", src: "/home-recording-crypto.mp4", aspectRatio: "8:5" },
-      { type: "video", src: "/crypto-loader-mobile.mp4", aspectRatio: "71:95" },
-      { type: "video", src: "/crypto-renewal-exp.mp4", aspectRatio: "263:158" },
+      { type: "video", src: "/crypto-loader-mobile.mp4", aspectRatio: "1420:1900" },
+      { type: "video", src: "/crypto-renewal-exp.mp4", aspectRatio: "273:158" },
       { type: "image", src: "/crypto-sections.jpg" },
     ],
     date: "March 2025",
@@ -53,10 +53,10 @@ export const projects: ProjectType = {
         type: "videos",
         srcs: [
           { src: "/rangers-home.mp4", aspectRatio: "960:619" },
-          { src: "/mobile-rangers.mp4", aspectRatio: "285:619" },
+          { src: "/mobile-rangers.mp4", aspectRatio: "284:619" },
         ],
       },
-      { type: "video", src: "/rangers-loader.mp4", aspectRatio: "1283:849" },
+      { type: "video", src: "/rangers-loader.mp4", aspectRatio: "1241:924" },
       {
         type: "images",
         srcs: [

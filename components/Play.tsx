@@ -3,6 +3,7 @@
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import MediaVideo from "@/components/MediaVideo";
 import { useState, useEffect, useRef } from "react";
 import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
 import { MediaItem } from "@/data/projects";
@@ -84,13 +85,10 @@ export default function Play() {
       item.type === "video"
     ) {
       return (
-        <video
-          src={resolveSrc(item.src)}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-contain"
+        <MediaVideo
+          src={item.src}
+          aspectRatio={item.aspectRatio}
+          backgroundColor="#000000"
         />
       );
     }
@@ -146,16 +144,7 @@ export default function Play() {
       const src =
         typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
       if (!src) return null;
-      return (
-        <video
-          src={resolveSrc(src)}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-contain"
-        />
-      );
+      return <MediaVideo src={src} backgroundColor="#000000" />;
     }
 
     if (typeof item === "object" && "type" in item && item.type === "images") {
@@ -257,18 +246,9 @@ export default function Play() {
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative w-full h-full"
-          >
-            {primaryMedia && renderMedia(primaryMedia)}
-          </motion.div>
-        </AnimatePresence>
+        <div key={currentIndex} className="relative w-full h-full">
+          {primaryMedia && renderMedia(primaryMedia)}
+        </div>
       </div>
       <button
         onClick={prevImage}
@@ -291,9 +271,9 @@ export default function Play() {
       <AnimatePresence mode="wait">
         <div
           key={currentIndex}
-          className="absolute hidden md:flex top-0 left-0 text-white text-sm flex justify-between w-full p-[20px]"
+          className="absolute hidden md:flex top-0 left-0 text-black text-sm flex gap-[24px] w-full p-[20px]"
         >
-          <span className="relative font-[600]">
+          <span className="relative font-[400] text-[#000000]">
             <AnimatePresence>
               {showNextArrow && (
                 <motion.span
@@ -306,7 +286,7 @@ export default function Play() {
                   transition={{ duration: 0.2 }}
                   className={`absolute ${
                     nextArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                  } left-1 text-xs text-white`}
+                  } left-1 text-xs text-black`}
                 >
                   {nextArrowDirection === "up" ? "▲" : "▼"}
                 </motion.span>
@@ -322,7 +302,7 @@ export default function Play() {
                   transition={{ duration: 0.2 }}
                   className={`absolute ${
                     prevArrowDirection === "up" ? "-top-3" : "-bottom-3"
-                  } left-1 text-xs text-white`}
+                  } left-1 text-xs text-black`}
                 >
                   {prevArrowDirection === "up" ? "▲" : "▼"}
                 </motion.span>
@@ -343,9 +323,9 @@ export default function Play() {
       </AnimatePresence>
       <div
         key={currentIndex}
-        className="absolute block md:hidden top-[20px] bg-[#1c1c1c] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#fff] text-sm z-20"
+        className="absolute block md:hidden top-[20px] bg-[#1c1c1c] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#000000] text-sm z-20"
       >
-        <span className="relative font-[600] pb-[2px] text-[#fff]/[0.38]">
+        <span className="relative font-[400] pb-[2px] text-[#000000]/[0.38]">
           {String(currentIndex + 1).padStart(2, "0")}/
           {String(playArray.length).padStart(2, "0")}
         </span>

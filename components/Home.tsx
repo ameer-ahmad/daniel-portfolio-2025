@@ -1,17 +1,25 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Index from "@/components/Index";
 import Information from "@/components/Information";
 import Project from "@/components/project";
 import { projects } from "@/data/projects";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
+import { useLayoutEffect, useRef, useEffect, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
-import Play from "@/components/Play";
+
+const Play = dynamic(() => import("@/components/Play"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full" aria-hidden />,
+});
 
 export default function Home() {
   const { activeId, playActive, setActiveId } = useActiveProject();
+  const loadingDone = useLoadingDone((s) => s.loadingDone);
+  const [loadPlay, setLoadPlay] = useState(false);
   const firstProjectHeightOffset = 60;
 
   const y = useMotionValue(0);
@@ -31,6 +39,22 @@ export default function Home() {
   const finalDeltaY = useRef<number>(0);
   const isAnimating = useRef<boolean>(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (playActive) setLoadPlay(true);
+  }, [playActive]);
+
+  useEffect(() => {
+    if (!loadingDone) return;
+
+    const schedule = () => setLoadPlay(true);
+    if (typeof requestIdleCallback === "function") {
+      const id = requestIdleCallback(schedule, { timeout: 4000 });
+      return () => cancelIdleCallback(id);
+    }
+    const t = setTimeout(schedule, 2500);
+    return () => clearTimeout(t);
+  }, [loadingDone]);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -292,7 +316,7 @@ export default function Home() {
                     </clipPath>
                   </defs>
                 </svg>
-                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the top, swipe down for more!</p>
+                <p className="text-[#515151] text-sm opacity-[0.38]">You have reached the top, swipe down for more!</p>
               </div>
 
               {projectKeys.map((project, i) => {
@@ -307,6 +331,7 @@ export default function Home() {
                 >
                   <Information project={projects[project]} firstProject={i === 0 ? true : false} />
                   <Project
+                    projectKey={project}
                     project={projects[project]}
                     firstProject={i === 0 ? true : false}
                   />
@@ -328,13 +353,17 @@ export default function Home() {
                     </clipPath>
                   </defs>
                 </svg>
-                <p className="text-[#1c1c1c] text-sm opacity-[0.38]">You have reached the end, thanks for viewing!</p>
+                <p className="text-[#515151] text-sm opacity-[0.38]">You have reached the end, thanks for viewing!</p>
               </div>
             </motion.div>
           </div>
         </div>
-        <div className="flex w-screen h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)] bg-black play-section">
-          <Play />
+        <div className="flex w-screen h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)]  play-section">
+          {loadPlay ? (
+            <Play />
+          ) : (
+            <div className="w-full h-full" aria-hidden />
+          )}
         </div>
       </motion.div>
     </>

@@ -94,10 +94,10 @@ export default function NavBar() {
             damping: 20,
             mass: 1,
           }}
-          className="bg-white text-[#1c1c1c]  px-[20px] overflow-hidden relative z-[999]"
+          className="bg-white text-[#515151]  px-[20px] overflow-hidden relative z-[999]"
         >
           <div className="flex items-center justify-between w-full h-[60px]">
-            <div className="flex items-start gap-[210px] h-[20px] w-full md:w-[485px] mb-[2px] overflow-hidden relative">
+            <div className="flex items-start gap-[210px] h-[20px] w-full md:w-[461px] mb-[2px] overflow-hidden relative">
               <span
                 className="header-text w-[217px] cursor-pointer"
                 onClick={resetInfo}
@@ -125,8 +125,8 @@ export default function NavBar() {
                   onClick={toggleInfo}
                   className="header-text flex items-center gap-[2px] cursor-pointer h-full"
                 >
-                  CLOSE
-                  <motion.svg
+                  Close
+                  {/* <motion.svg
                     animate={{
                       scale:
                         windowWidth >= 768 && isInfoHovered ? 0.666666666 : 1,
@@ -150,14 +150,14 @@ export default function NavBar() {
                       strokeWidth="1.5"
                       strokeLinecap="round"
                     />
-                  </motion.svg>
+                  </motion.svg> */}
                 </span>
                 <span
                   onClick={toggleInfo}
                   className="header-text flex items-center gap-[2px] cursor-pointer h-full"
                 >
-                  INFO
-                  <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
+                  Info
+                  {/* <motion.span className="grid grid-cols-2 w-[7px] h-[7px] gap-[1px]">
                     <motion.span
                       animate={{
                         scale:
@@ -190,11 +190,11 @@ export default function NavBar() {
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="w-[3px] h-[3px] rounded bg-[#1c1c1c] block"
                     ></motion.span>
-                  </motion.span>
+                  </motion.span> */}
                 </span>
               </motion.div>
             </div>
-            <div className="hidden justify-between items-center gap-[40px] pr-[8px] mb-[2px] md:flex">
+            <div className="hidden justify-between items-center gap-[20px] pr-[8px] mb-[2px] md:flex">
               <motion.span
                 whileHover="hovered"
                 initial={{ opacity: 1 }}
@@ -209,11 +209,11 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
+                className="header-text cursor-pointer"
                 onClick={() => setPlayActive(false)}
               >
                 Work
-                <motion.span
+                {/* <motion.span
                   initial={{ opacity: 0, width: 6, height: 6 }}
                   animate={{ opacity: playActive ? 0 : 1 }}
                   variants={{
@@ -230,8 +230,9 @@ export default function NavBar() {
                     mass: 1,
                   }}
                   className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
-                />
+                /> */}
               </motion.span>
+              <span className="header-text opacity-38">/</span>
               <motion.span
                 whileHover="hovered"
                 initial={{ opacity: 1 }}
@@ -246,11 +247,11 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                className="header-text cursor-pointer w-[56px] flex items-center gap-[2px]"
+                className="header-text cursor-pointer"
                 onClick={() => setPlayActive(true)}
               >
                 Play
-                <motion.span
+                {/* <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: playActive ? 1 : 0 }}
                   variants={{
@@ -267,19 +268,19 @@ export default function NavBar() {
                     mass: 1,
                   }}
                   className="w-[6px] h-[6px] border-[2px] m-[2px] solid #1c1c1c rounded-full block"
-                />
+                /> */}
               </motion.span>
             </div>
           </div>
           <div className="flex mt-[20px] mb-[40px] md:mb-0 justify-start gap-[20px] w-full h-auto md:h-[279px] text-[14px] line-height-[20px] md:flex-row flex-col">
             <motion.span
               initial={{
-                color: "rgba(0, 0, 0, 0)",
+                color: "rgba(81, 81, 81, 0)",
                 pointerEvents: "none",
                 y: "-20px",
               }}
               animate={{
-                color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                color: isInfoOpen ? "rgba(81, 81, 81, 1)" : "rgba(81, 81, 81, 0)",
                 pointerEvents: isInfoOpen ? "auto" : "none",
                 y: isInfoOpen ? 0 : "-20px",
               }}
@@ -306,12 +307,12 @@ export default function NavBar() {
             </motion.span>
             <motion.div
               initial={{
-                color: "rgba(0, 0, 0, 0)",
+                color: "rgba(81, 81, 81, 0)",
                 pointerEvents: "none",
                 y: "-20px",
               }}
               animate={{
-                color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                color: isInfoOpen ? "rgba(81, 81, 81, 1)" : "rgba(81, 81, 81, 0)",
                 pointerEvents: isInfoOpen ? "auto" : "none",
                 y: isInfoOpen ? 0 : "-20px",
               }}
@@ -325,18 +326,45 @@ export default function NavBar() {
             >
               <span className="">
                 Special thanks to{" "}
-                <a
+                <motion.a
+                  initial={{
+                    color: "rgba(0, 0, 0, 0)",
+                    pointerEvents: "none",
+                  }}
+                  animate={{
+                    color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                    pointerEvents: isInfoOpen ? "auto" : "none",
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20,
+                    mass: 1,
+                  }}
                   href="https://ameerahmad.com"
                   target="_blank"
                   rel="noreferrer"
                   className="underline squiggle"
                 >
                   Ameer Ahmad
-                </a>
+                </motion.a>
                 , for programming this website. Designed by Daniel Shui. Last
-                updated on <span className="italic">05/07/25.</span>
+                updated on <span className="italic">05/24/26.</span>
               </span>
-              <ul className="navbar-links">
+              <motion.ul initial={{
+                color: "rgba(0, 0, 0, 0)",
+                pointerEvents: "none",
+              }}
+                animate={{
+                  color: isInfoOpen ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
+                  pointerEvents: isInfoOpen ? "auto" : "none",
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 80,
+                  damping: 20,
+                  mass: 1,
+                }} className="navbar-links">
                 <li>
                   <a
                     href="mailto:danielshui.des@gmail.com"
@@ -366,7 +394,7 @@ export default function NavBar() {
                     Instagram
                   </a>
                 </li>
-              </ul>
+              </motion.ul>
             </motion.div>
           </div>
         </motion.div>
@@ -738,14 +766,14 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className={`toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#1c1c1c]"}`}
+                  className={`toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#515151]"}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col italic">
                     {playActive && activePlayItem ? (
                       <>
                         <span
-                          className={`header-text not-italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
+                          className={`header-text not-italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
                           dangerouslySetInnerHTML={{
                             __html: activePlayItem.title,
                           }}
@@ -754,7 +782,7 @@ export default function NavBar() {
                     ) : (
                       <>
                         <span
-                          className={`header-text italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
+                          className={`header-text italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
                           dangerouslySetInnerHTML={{
                             __html:
                               activeProject?.subtitle ||
@@ -763,19 +791,19 @@ export default function NavBar() {
                           }}
                         />
                         <span
-                          className={`!not-italic mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
+                          className={`!not-italic mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
                           dangerouslySetInnerHTML={{
                             __html: activeProject?.desc || "",
                           }}
                         />
                         {activeProject?.date && (
-                          <span className={`mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}>
+                          <span className={`mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}>
                             {activeProject.date}
                           </span>
                         )}
                         {activeProject?.details && (
                           <span
-                            className={`${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
+                            className={`${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
                             dangerouslySetInnerHTML={{
                               __html: activeProject.details,
                             }}
@@ -783,7 +811,7 @@ export default function NavBar() {
                         )}
                         {activeProject?.extra && (
                           <span
-                            className={`mt-[20px] not-italic ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}
+                            className={`mt-[20px] not-italic ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
                             dangerouslySetInnerHTML={{
                               __html: activeProject.extra,
                             }}
@@ -821,12 +849,12 @@ export default function NavBar() {
             mass: 1,
           }}
           className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
-            } ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#1c1c1c]"}`}
+            } ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#515151]"}`}
 
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col gap-[20px]">
-            <span className={`header-text !capitalize ${playActive ? "!text-[#fff]" : "!text-[#1c1c1c]"}`}>Index</span>
+            <span className={`header-text !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}>Index</span>
             {playActive
               ? playArray.map((playItem, index) => (
                 <motion.div
@@ -846,7 +874,7 @@ export default function NavBar() {
                   className={`${currentPlayIndex === index
                     ? "opacity-[1]"
                     : "opacity-[0.36]"
-                    } cursor-pointer ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                    } cursor-pointer ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
                   onClick={() => {
                     setCurrentPlayIndex(index);
                     setIsIndexOpen(false);
@@ -885,7 +913,7 @@ export default function NavBar() {
                   </div>
                   <div>
                     <span
-                      className={`title ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                      className={`title ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
                       dangerouslySetInnerHTML={{
                         __html: playItem.title,
                       }}
@@ -909,7 +937,7 @@ export default function NavBar() {
                     mass: 1,
                   }}
                   className={`${activeId === project ? "opacity-[1]" : "opacity-[0.36]"
-                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
                   onClick={() => {
                     setActiveId(project);
                     setIsIndexOpen(false);
@@ -946,7 +974,7 @@ export default function NavBar() {
                   </div>
                   <div>
                     <span
-                      className={`title ${playActive ? "text-[#fff]" : "text-[#1c1c1c]"}`}
+                      className={`title ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
                       dangerouslySetInnerHTML={{
                         __html: projects[project].title,
                       }}

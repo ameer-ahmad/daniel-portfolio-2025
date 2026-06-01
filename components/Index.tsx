@@ -14,9 +14,8 @@ export default function Index() {
   useEffect(() => {
     if (!activeId && Object.keys(projects).length > 0) {
       setActiveId(Object.keys(projects)[0]);
-      console.log(activeId);
     }
-  }, []);
+  }, [activeId, setActiveId]);
 
   useEffect(() => {
     // Set initial width
@@ -73,15 +72,15 @@ export default function Index() {
           mass: 1,
         },
       }}
-      className="p-[0px] md:p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#1c1c1c] overflow-x-hidden overflow-y-auto"
+      className="p-[0px] md:p-[20px] h-[calc(100vh-60px)] bg-white shadow-glow text-[#000000] overflow-x-hidden overflow-y-auto"
     >
       
       <div className="flex flex-col gap-[20px] pr-[20px] min-w-[300px] box-content">
       <span className="header-text !capitalize">Index</span>
         {Object.keys(projects).map((project) => (
           <motion.div
-            initial={{ x: 0, opacity: 0.36 }}
-            animate={{ opacity: isActive(project) ? 1 : 0.36, x: isActive(project) ? 6 : 0 }}
+            initial={{ x: 0, opacity: 0.38   }}
+            animate={{ opacity: isActive(project) ? 1 : 0.38, x: isActive(project) ? 6 : 0 }}
             whileHover={{ x: 6 }}
             transition={{
               type: "spring",
@@ -114,7 +113,7 @@ export default function Index() {
                 damping: 20,
                 mass: 1,
               }}
-              className="font-[600] not-italic">{projects[project].id < 10 ? '0' : ''}{projects[project].id}</motion.span>
+              className="font-[400] not-italic">{projects[project].id < 10 ? '0' : ''}{projects[project].id}</motion.span>
             </div>
             <div>
               <span className="title" dangerouslySetInnerHTML={{ __html: projects[project].title }} />
