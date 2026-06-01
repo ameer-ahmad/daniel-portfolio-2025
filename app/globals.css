@@ -24,12 +24,6 @@
   }
 }
 
-mux-player {
-  --controls: none;
-  --media-object-fit: contain;
-  background-color: #ffffff;
-}
-
 body {
   font-family: "Source Serif Pro", serif;
   font-size: 14px;

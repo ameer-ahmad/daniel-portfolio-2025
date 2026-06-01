@@ -1,5 +1,4 @@
 import { MediaItem } from "@/data/projects";
-import { getVideoPrefetchUrls } from "@/app/(lib)/mux";
 
 const prefetchedUrls = new Set<string>();
 
@@ -108,11 +107,8 @@ export function getUrlsFromSlide(slide: MediaItem): string[] {
   }
 
   if (typeof slide === "object" && "type" in slide) {
-    if (slide.type === "image") {
+    if (slide.type === "image" || slide.type === "video") {
       return [resolveMediaUrl(slide.src)];
-    }
-    if (slide.type === "video") {
-      return getVideoPrefetchUrls(slide.src);
     }
     if (slide.type === "images") {
       return slide.srcs.map((src) =>
@@ -120,8 +116,8 @@ export function getUrlsFromSlide(slide: MediaItem): string[] {
       );
     }
     if (slide.type === "videos") {
-      return slide.srcs.flatMap((src) =>
-        getVideoPrefetchUrls(typeof src === "string" ? src : src.src)
+      return slide.srcs.map((src) =>
+        resolveMediaUrl(typeof src === "string" ? src : src.src)
       );
     }
   }

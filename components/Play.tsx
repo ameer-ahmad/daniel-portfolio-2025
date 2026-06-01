@@ -84,13 +84,7 @@ export default function Play() {
       "type" in item &&
       item.type === "video"
     ) {
-      return (
-        <MediaVideo
-          src={item.src}
-          aspectRatio={item.aspectRatio}
-          backgroundColor="#000000"
-        />
-      );
+      return <MediaVideo src={item.src} backgroundColor="#000000" />;
     }
 
     // Image object
