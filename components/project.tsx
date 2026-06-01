@@ -348,11 +348,6 @@ export default function Project({
                     >
                       <MediaVideo
                         src={videoSrc}
-                        aspectRatio={
-                          typeof videoItem === "string"
-                            ? undefined
-                            : videoItem.aspectRatio
-                        }
                         objectPosition={objectPosition}
                       />
                     </div>
@@ -361,10 +356,7 @@ export default function Project({
               </div>
             ) : isVideoObject && videoItem ? (
               <div className="relative w-full h-full">
-                <MediaVideo
-                  src={videoItem.src}
-                  aspectRatio={videoItem.aspectRatio}
-                />
+                <MediaVideo src={videoItem.src} />
               </div>
             ) : isImagesObject && imagesItem ? (
               <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
