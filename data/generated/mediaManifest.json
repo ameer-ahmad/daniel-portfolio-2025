@@ -284,6 +284,60 @@
       ],
       "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAOABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAUGAf/EAB0QAAEFAQEBAQAAAAAAAAAAAAEAAgMEEQUxBkH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJLlQR2LrI5jjD6qGxw6IlDYtcM/FL1pjXmDwNITqD6WWHciB1QKehA2vacxngQsu2TasOlIwlCo/9k="
     },
+    "/images/bulls-hero-mockup.jpg": {
+      "width": 8192,
+      "height": 5462,
+      "variants": [
+        {
+          "url": "/images/opt/bulls-hero-mockup-640.webp",
+          "width": 640
+        },
+        {
+          "url": "/images/opt/bulls-hero-mockup-1024.webp",
+          "width": 1024
+        },
+        {
+          "url": "/images/opt/bulls-hero-mockup-1440.webp",
+          "width": 1440
+        },
+        {
+          "url": "/images/opt/bulls-hero-mockup-1920.webp",
+          "width": 1920
+        },
+        {
+          "url": "/images/opt/bulls-hero-mockup-2560.webp",
+          "width": 2560
+        }
+      ],
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAQABgDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAQCAwUG/8QAHRABAAICAgMAAAAAAAAAAAAAAQACAxEEEhMhUf/EABUBAQEAAAAAAAAAAAAAAAAAAAAC/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAIRQf/aAAwDAQACEQMRAD8A4eMPFXEWrKaoPsj9ORj8fx1Co1rOTTqEnke11hCX/9k="
+    },
+    "/images/bulls-mobile.jpg": {
+      "width": 2112,
+      "height": 1794,
+      "variants": [
+        {
+          "url": "/images/opt/bulls-mobile-640.webp",
+          "width": 640
+        },
+        {
+          "url": "/images/opt/bulls-mobile-1024.webp",
+          "width": 1024
+        },
+        {
+          "url": "/images/opt/bulls-mobile-1440.webp",
+          "width": 1440
+        },
+        {
+          "url": "/images/opt/bulls-mobile-1920.webp",
+          "width": 1920
+        },
+        {
+          "url": "/images/opt/bulls-mobile-2112.webp",
+          "width": 2112
+        }
+      ],
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAUABgDASIAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAAAAUGAgME/8QAIRAAAgICAQQDAAAAAAAAAAAAAQIAAwQREgUTFFEGFTH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAXEQEBAQEAAAAAAAAAAAAAAAAAAQIx/9oADAMBAAIRAxEAPwCzZGbdXeVVdqJGN8mK5vZ4yXvbRdeG9j9lL8Wz7lmKHXL1JW8Zl6s+F1m7IzO21ZCe9ROiitQtelAMSspIopOyJr8Wnly7a79xEIzFag7AiIgf/9k="
+    },
     "/images/chineseposter.jpg": {
       "width": 3840,
       "height": 2160,
@@ -945,6 +999,44 @@
       ],
       "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAASABgDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAIDBAb/xAAdEAACAgMBAQEAAAAAAAAAAAAAAQIRAwQSIiFR/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAECA//EABkRAQADAQEAAAAAAAAAAAAAAAABAhEDEv/aAAwDAQACEQMRAD8A8rDf4VVYy78nGuasyhqNv1JI2elja9ZTeLdMRMVcMp9SsG0teKlSl8Bn4srYW2/1kNsAYS2wAIP/2Q=="
     },
+    "/images/posters/1213797224.jpg": {
+      "width": 1280,
+      "height": 826,
+      "variants": [
+        {
+          "url": "/images/opt/posters/1213797224-640.webp",
+          "width": 640
+        },
+        {
+          "url": "/images/opt/posters/1213797224-1024.webp",
+          "width": 1024
+        },
+        {
+          "url": "/images/opt/posters/1213797224-1280.webp",
+          "width": 1280
+        }
+      ],
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAPABgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABAACBf/EABsQAAIDAQEBAAAAAAAAAAAAAAEDAAIEEjER/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEDBf/EABkRAAMBAQEAAAAAAAAAAAAAAAABAgQSIf/aAAwDAQACEQMRAD8A4mRzroJu49QjNOoO4q4/IqixTyYOcd9Sao0ayt+IG3TrBNSyxEo0pFvZQ7EsdH//2Q=="
+    },
+    "/images/posters/1213797230.jpg": {
+      "width": 1280,
+      "height": 799,
+      "variants": [
+        {
+          "url": "/images/opt/posters/1213797230-640.webp",
+          "width": 640
+        },
+        {
+          "url": "/images/opt/posters/1213797230-1024.webp",
+          "width": 1024
+        },
+        {
+          "url": "/images/opt/posters/1213797230-1280.webp",
+          "width": 1280
+        }
+      ],
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAPABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBv/EABoQAAMBAQEBAAAAAAAAAAAAAAABAgMRMSH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2OMTU9ZaiH4RlopnjKWkz4gFtCmfgC10VTxAB//Z"
+    },
     "/images/rangers-components-1.1.jpg": {
       "width": 4336,
       "height": 3044,
@@ -1296,6 +1388,16 @@
       "url": "/images/posters/1213745454.jpg",
       "width": 1280,
       "height": 954
+    },
+    "1213797224": {
+      "url": "/images/posters/1213797224.jpg",
+      "width": 1280,
+      "height": 826
+    },
+    "1213797230": {
+      "url": "/images/posters/1213797230.jpg",
+      "width": 1280,
+      "height": 799
     }
   }
 }
