@@ -96,6 +96,10 @@ export default function ProjectSlide({
 }: ProjectSlideProps) {
   const alt = plainText(title);
 
+  if (slide == null) {
+    return null;
+  }
+
   if (typeof slide === "string") {
     return <ImageRow items={[slide]} title={alt} priority={priority} />;
   }

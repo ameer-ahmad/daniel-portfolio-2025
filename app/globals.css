@@ -50,6 +50,24 @@ body {
     10px 0 25px -10px rgba(0, 0, 0, 0.06);
 }
 
+/* The projects and information stacks each carry a single glow from md up, so
+   the edge reads as one continuous column instead of one shadow per project. */
+@media screen and (min-width: 768px) {
+  .shadow-glow-desktop {
+    box-shadow:
+      -10px 0 25px -10px rgba(0, 0, 0, 0.06),
+      10px 0 25px -10px rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .shadow-glow-mobile-only {
+    box-shadow:
+      -10px 0 25px -10px rgba(0, 0, 0, 0.06),
+      10px 0 25px -10px rgba(0, 0, 0, 0.06);
+  }
+}
+
 .mobile-glow {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.06) inset;
 }

@@ -79,5 +79,10 @@ export function useMountedSlides(
     });
   }, [desired, slides]);
 
-  return mounted;
+  // Filter synchronously so a shrink of `slides` (e.g. mobile → desktop)
+  // never returns stale out-of-bounds indices before the effect runs.
+  return useMemo(
+    () => mounted.filter((index) => index < slides.length),
+    [mounted, slides.length]
+  );
 }

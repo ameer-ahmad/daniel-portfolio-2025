@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import {
   PREFETCH_PRIORITY,
@@ -13,57 +13,17 @@ import {
 } from "@/app/(lib)/mediaSlides";
 import { projects } from "@/data/projects";
 
-const NAME = "Daniel Shui";
-
 /** The intro choreography runs this long; we never cut it short. */
-const MIN_VISIBLE_MS = 5300;
-/** Time between the curtain starting to lift and `loadingDone`. */
-const EXIT_MS = 900;
+const INTRO_MS = 7750;
 /** Ceiling on waiting for the hero, so a bad connection can never trap the user. */
 const MAX_HERO_WAIT_MS = 9000;
 
-type Phase = "none" | "gif" | "text";
-
-const textContainerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
-  exit: {
-    transition: { staggerChildren: 0.05 },
-  },
-};
-
-// Enters from translate(-2px,4px) scale(.9) blur(6px); exit reverses to the same spot.
-const blurInVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -2,
-    y: 4,
-    scale: 0.9,
-    filter: "blur(6px)",
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-  exit: {
-    opacity: 0,
-    x: -2,
-    y: 4,
-    scale: 0.9,
-    filter: "blur(6px)",
-    transition: { duration: 0.45, ease: "easeIn" },
-  },
-};
-
 export default function LoadingScreen() {
   const setLoadingDone = useLoadingDone((s) => s.setLoadingDone);
-  const [phase, setPhase] = useState<Phase>("none");
+  const [showGif, setShowGif] = useState(false);
+  const [showText, setShowText] = useState(false);
+  const [slideText, setSlideText] = useState(false);
+  const [hideText, setHideText] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
@@ -71,23 +31,10 @@ export default function LoadingScreen() {
     const timers: ReturnType<typeof setTimeout>[] = [];
     let cancelled = false;
 
-    // 1. gif fades in
-    timers.push(setTimeout(() => setPhase("gif"), 400));
-    // 2. gif fades out, then 3. text fades in (AnimatePresence mode="wait")
-    timers.push(setTimeout(() => setPhase("text"), 2000));
-
-    // 4. text fades out, then 5. loading finishes once it has left
-    const beginExit = () => {
-      if (cancelled) return;
-      setPhase("none");
-      timers.push(
-        setTimeout(() => {
-          if (cancelled) return;
-          setLoadingDone(true);
-          setShowContent(true);
-        }, EXIT_MS)
-      );
-    };
+    timers.push(setTimeout(() => setShowGif(true), 1000));
+    timers.push(setTimeout(() => setShowText(true), 4000));
+    timers.push(setTimeout(() => setSlideText(true), 4750));
+    timers.push(setTimeout(() => setHideText(true), 6750));
 
     const heroSlides = getProjectSlides(
       Object.values(projects)[0],
@@ -104,9 +51,14 @@ export default function LoadingScreen() {
 
     void Promise.race([heroReady, ceiling]).then(() => {
       if (cancelled) return;
-      const remaining =
-        MIN_VISIBLE_MS - EXIT_MS - (Date.now() - startedAt);
-      timers.push(setTimeout(beginExit, Math.max(0, remaining)));
+      const remaining = INTRO_MS - (Date.now() - startedAt);
+      timers.push(
+        setTimeout(() => {
+          if (cancelled) return;
+          setLoadingDone(true);
+          setShowContent(true);
+        }, Math.max(0, remaining))
+      );
     });
 
     // Everything else is speculative and queued behind the hero.
@@ -137,51 +89,54 @@ export default function LoadingScreen() {
       transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
       className="w-screen h-dvh md:h-screen bg-white z-[9999] fixed inset-0 flex justify-center items-center"
     >
-      <AnimatePresence mode="wait">
-        {phase === "gif" && (
-          <motion.div
-            key="gif"
-            variants={blurInVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="h-[125px] w-[125px] relative shrink-0"
-          >
-            <Image
-              src="/images/running-loader.gif"
-              alt="Loading"
-              width={125}
-              height={125}
-              unoptimized
-              priority
-              className="absolute top-0 left-0"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showGif ? 1 : 0 }}
+        transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
+        className="h-[125px] w-[125px] flex relative"
+      >
+        <Image
+          src="/images/running-loader.gif"
+          alt="Loading"
+          width={125}
+          height={125}
+          unoptimized
+          priority
+          className="absolute top-0 left-0"
+        />
+        <motion.div
+          initial={{ left: "125px" }}
+          animate={{ left: showText ? 0 : "125px" }}
+          transition={{ type: "spring", stiffness: 80, damping: 20, mass: 2 }}
+          className="absolute top-0"
+        >
+          <span className=" relative header-text w-[125px] h-[125px] bg-white flex items-center justify-center text-[#1c1c1c]">
+            Daniel Shui
+            <motion.div
+              initial={{ left: 0 }}
+              animate={{ left: slideText ? "-125px" : 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                mass: 2,
+              }}
+              className="absolute bottom-0 left-0 w-full h-full bg-white"
             />
-          </motion.div>
-        )}
-
-        {phase === "text" && (
-          <motion.div
-            key="text"
-            variants={textContainerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="header-text flex text-[#515151]"
-            aria-label={NAME}
-          >
-            {NAME.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                variants={blurInVariants}
-                className="whitespace-pre"
-                style={{ display: char === " " ? "inline-block" : "inline" }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </span>
+        </motion.div>
+        <motion.div
+          initial={{ left: "125px" }}
+          animate={{ left: hideText ? 0 : "125px" }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 20,
+            mass: 2,
+          }}
+          className="w-[125px] h-[125px] absolute top-0 bg-white z--2"
+        />
+      </motion.div>
     </motion.div>
   );
 }

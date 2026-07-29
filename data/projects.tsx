@@ -26,8 +26,25 @@ export type ProjectType = {
 };
 
 export const projects: ProjectType = {
-  "crypto-2026": {
+  "bulls-2026": {
     id: 1,
+    title:
+      "Bulls Season Ticket Holder Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+    subtitle:
+      "Bulls Season Ticket Holder Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+    desc: "Yearly renewal campaign for Chicago Bulls season ticket holders. This year’s series spanned seven different website variations for various seat types (not including the non-autorenew versions of each site). ",
+    images: [
+      { type: "video", src: videoSources.bullsRecording, aspectRatio: "739:477" },
+      { type: "video", src: videoSources.bullsLoader, aspectRatio: "610:381" },
+      { type: "image", src: "/bulls-hero-mockup.jpg" },
+      { type: "image", src: "/bulls-mobile.jpg" },
+    ],
+    date: "Feb 2025",
+    details: "Website Series",
+    extra: "",
+  },
+  "crypto-2026": {
+    id: 2,
     title:
       "Crypto.com Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
@@ -44,7 +61,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   "texas-rangers": {
-    id: 2,
+    id: 3,
     title:
       "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
     subtitle:
@@ -84,7 +101,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   "analog-digital": {
-    id: 3,
+    id: 4,
     title:
       "Analog to Digital, <span class='lowercase not-italic'>thesis book</span>",
     subtitle:
@@ -101,7 +118,7 @@ export const projects: ProjectType = {
     extra: "",
   },
   "exhibition-poster": {
-    id: 4,
+    id: 5,
     title:
       "Pluriversal Typography in Local and Global Contexts, <span class='lowercase not-italic'>Exhibition Poster</span>",
     subtitle:
@@ -117,7 +134,7 @@ export const projects: ProjectType = {
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
   olympiad: {
-    id: 5,
+    id: 6,
     title:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
     subtitle:
@@ -134,7 +151,7 @@ export const projects: ProjectType = {
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
   exran: {
-    id: 6,
+    id: 7,
     title:
       "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
     subtitle:

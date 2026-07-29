@@ -79,7 +79,7 @@ export default function Information({
           mass: 1,
         },
       }}
-      className={`p-[0px] ${firstProject ? "md:pt-[20px]" : "md:pt-[80px]"} md:p-[20px] ${firstProject ? "h-[calc(100vh-60px)]": "h-screen"} h-[calc(100vh-60px)] bg-white text-[#515151] overflow-x-hidden overflow-y-auto`}
+      className={`p-[0px] ${firstProject ? "md:pt-[20px]" : "md:pt-[80px]"} md:p-[20px] ${firstProject ? "h-[calc(100dvh-60px)] md:h-[calc(100vh-60px)]" : "h-[100dvh]"} bg-white text-[#515151] overflow-x-hidden overflow-y-auto`}
     >
       <div className="flex flex-col pr-[20px] min-w-[407px] box-content italic">
         <span

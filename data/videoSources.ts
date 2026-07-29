@@ -10,6 +10,7 @@ export const videoSources = {
   rangersMobile: "https://vimeo.com/1213742953",
   rangersLoader: "https://vimeo.com/1213745454",
   touchDesigner: "https://vimeo.com/1213742965",
-  thesisCircuitBoard:
-    "https://vimeo.com/1213742936",
+  thesisCircuitBoard: "https://vimeo.com/1213742936",
+  bullsRecording: "https://vimeo.com/1213797224",
+  bullsLoader: "https://vimeo.com/1213797230",
 } as const;

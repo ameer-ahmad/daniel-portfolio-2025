@@ -70,6 +70,15 @@ export default function Project({
     [project.images, isMobile]
   );
 
+  // Keep the gallery index in range when slide count changes (mobile flatten).
+  useEffect(() => {
+    if (flattenedImages.length === 0) {
+      setCurrentIndex(0);
+      return;
+    }
+    setCurrentIndex((prev) => Math.min(prev, flattenedImages.length - 1));
+  }, [flattenedImages.length]);
+
   // Until the intro finishes, only the project on screen loads anything: every
   // other byte would be competing with the one image the user is waiting for.
   const mountedIndices = useMountedSlides(flattenedImages, currentIndex, {
@@ -170,7 +179,7 @@ export default function Project({
         damping: 20,
         mass: 1,
       }}
-      className={`w-screen clip-content md:w-[calc(100vw-200px)] lg:w-[calc(100vw-286px)] h-full shadow-glow  px-[20px] ${firstProject ? "pt-[66px]" : "pt-[126px]"} pb-[102px] xl:p-[80px] ${firstProject ? "pt-[auto]" : "xl:pt-[146px]"} ${firstProject ? "pt-[auto]" : "lg:pt-[106px]"} lg:p-[40px] bg-white relative`}
+      className={`w-full clip-content h-full shadow-glow-mobile-only  px-[20px] ${firstProject ? "pt-[66px]" : "pt-[126px]"} pb-[102px] xl:p-[80px] ${firstProject ? "pt-[auto]" : "xl:pt-[146px]"} ${firstProject ? "pt-[auto]" : "lg:pt-[106px]"} lg:p-[40px] bg-white relative`}
     >
       {flattenedImages.length > 1 && (
         <>
@@ -238,6 +247,8 @@ export default function Project({
         onTouchCancel={handleTouchEnd}
       >
         {mountedIndices.map((index) => {
+          const slide = flattenedImages[index];
+          if (!slide) return null;
           const isCurrent = index === currentIndex;
           return (
             <div
@@ -251,7 +262,7 @@ export default function Project({
               aria-hidden={!isCurrent}
             >
               <ProjectSlide
-                slide={flattenedImages[index]}
+                slide={slide}
                 title={project.title}
                 active={isCurrent && isActiveProject}
                 priority={firstProject && index === 0}
