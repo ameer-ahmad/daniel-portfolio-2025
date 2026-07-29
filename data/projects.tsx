@@ -116,23 +116,8 @@ export const projects: ProjectType = {
     extra:
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
   },
-  exran: {
-    id: 5,
-    title:
-      "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
-    subtitle:
-      "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
-    desc: "Exran is a contemporary neo-grotesque sans-serif typeface built for versatility. It is unique, featuring contrasting stroke widths, distinctive terminals, and lowered ascenders/descenders throughout its letterforms. This typeface seeks to excel whether on screen or print, body copy or header.<br /><br /><ol class='numbered-list'><li>Curved terminals always end at a 20° angle with the exception of the lowercase “a”.</li><li>Specific lowercase letterforms (a, b, d, g, m, n, p, q, r, and u) have their overhanging terminals tapered.</li><li>Each letterform has a noticeable and consistent amount of stroke width contrast.</li><li>The lowercase “a” does not have its round terminal angled because of a stylistic choice to preserve its natural/organic shape.</li><li>Crossbars of the lower-case letters “a” and “e” are aligned.</li></ol>",
-    images: [
-      { type: "image", src: "/exran.jpg" },
-      { type: "image", src: "/exran-window.jpg" },
-    ],
-    date: "2023-Ongoing",
-    details: "Typeface",
-    extra: "",
-  },
   olympiad: {
-    id: 6,
+    id: 5,
     title:
       "40th Science Olympiad at Michigan State University, <span class='lowercase not-italic'>event poster</span>",
     subtitle:
@@ -147,5 +132,20 @@ export const projects: ProjectType = {
     details: "28 x 43 cm",
     extra:
       "Exhibited as part of <a href='https://swashandserif.ca/shows/eight' target='_blank' rel='noreferrer' class='underline squiggle'>Swash & Serif 8</a>",
+  },
+  exran: {
+    id: 6,
+    title:
+      "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
+    subtitle:
+      "Exran, <span class='lowercase not-italic'><span class='uppercase'>WIP</span> sans serif typeface</span>",
+    desc: "Exran is a contemporary neo-grotesque sans-serif typeface built for versatility. It is unique, featuring contrasting stroke widths, distinctive terminals, and lowered ascenders/descenders throughout its letterforms. This typeface seeks to excel whether on screen or print, body copy or header.<br /><br /><ol class='numbered-list'><li>Curved terminals always end at a 20° angle with the exception of the lowercase “a”.</li><li>Specific lowercase letterforms (a, b, d, g, m, n, p, q, r, and u) have their overhanging terminals tapered.</li><li>Each letterform has a noticeable and consistent amount of stroke width contrast.</li><li>The lowercase “a” does not have its round terminal angled because of a stylistic choice to preserve its natural/organic shape.</li><li>Crossbars of the lower-case letters “a” and “e” are aligned.</li></ol>",
+    images: [
+      { type: "image", src: "/exran.jpg" },
+      { type: "image", src: "/exran-window.jpg" },
+    ],
+    date: "2023-Ongoing",
+    details: "Typeface",
+    extra: "",
   },
 };

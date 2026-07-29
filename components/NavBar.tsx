@@ -418,7 +418,7 @@ export default function NavBar() {
       >
         <motion.div
           initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
-          animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+          animate={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
           transition={{
             type: "spring",
             stiffness: 80,
@@ -429,7 +429,7 @@ export default function NavBar() {
           <motion.span
             whileHover="hovered"
             initial={{ opacity: 1, color: "#1c1c1c" }}
-            animate={{ opacity: playActive ? 0.38 : 1, color: playActive ? "#fff" : "#1c1c1c" }}
+            animate={{ opacity: playActive ? 0.38 : 1, color: "#1c1c1c" }}
             variants={{
               initial: { opacity: 1 },
               hovered: { opacity: 1 },
@@ -452,7 +452,7 @@ export default function NavBar() {
           <motion.span
             whileHover="hovered"
             initial={{ opacity: 1, color: "#1c1c1c" }}
-            animate={{ opacity: playActive ? 1 : 0.38, color: playActive ? "#fff" : "#1c1c1c" }}
+            animate={{ opacity: playActive ? 1 : 0.38, color: "#1c1c1c" }}
             variants={{
               initial: { opacity: 1 },
               hovered: { opacity: 1 },
@@ -474,7 +474,7 @@ export default function NavBar() {
           </motion.span>
           <motion.span
             initial={{ x: 0, backgroundColor: "#f8f8f8" }}
-            animate={{ x: playActive ? "calc(100% + 4px)" : 0, backgroundColor: playActive ? "#1c1c1c" : "#f8f8f8" }}
+            animate={{ x: playActive ? "calc(100% + 4px)" : 0, backgroundColor: "#f8f8f8" }}
             transition={{
               type: "spring",
               stiffness: 80,
@@ -487,7 +487,7 @@ export default function NavBar() {
         <div className="flex items-center gap-[4px]">
           <motion.span
             initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
-            animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+            animate={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
             transition={{
               type: "spring",
               stiffness: 80,
@@ -519,7 +519,7 @@ export default function NavBar() {
                   >
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -532,7 +532,7 @@ export default function NavBar() {
                     />
                     <motion.rect
                       initial={{ fill: "#1C1C1C" }}
-                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ fill: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -554,7 +554,7 @@ export default function NavBar() {
                       height="14"
                       rx="7"
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -575,7 +575,7 @@ export default function NavBar() {
                   >
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -588,7 +588,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -606,7 +606,7 @@ export default function NavBar() {
           </motion.span>
           <motion.span
             initial={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
-            animate={{ backgroundColor: playActive ? "#000" : "#fff", border: playActive ? "1px solid #1c1c1c" : "1px solid #E3E3E3" }}
+            animate={{ backgroundColor: "#fff", border: "1px solid #E3E3E3" }}
             transition={{
               type: "spring",
               stiffness: 80,
@@ -638,7 +638,7 @@ export default function NavBar() {
                   >
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -651,7 +651,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -664,7 +664,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -677,7 +677,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ fill: "#1C1C1C" }}
-                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ fill: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -688,7 +688,7 @@ export default function NavBar() {
                     />
                     <motion.rect
                       initial={{ fill: "#1C1C1C" }}
-                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ fill: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -703,7 +703,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ fill: "#1C1C1C" }}
-                      animate={{ fill: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ fill: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -724,7 +724,7 @@ export default function NavBar() {
                   >
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -737,7 +737,7 @@ export default function NavBar() {
                     />
                     <motion.path
                       initial={{ stroke: "#1C1C1C" }}
-                      animate={{ stroke: playActive ? "#fff" : "#1C1C1c" }}
+                      animate={{ stroke: "#1C1C1c" }}
                       transition={{
                         type: "spring",
                         stiffness: 80,
@@ -771,14 +771,14 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className={`toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#515151]"}`}
+                  className="toolbar toolbar-info absolute bottom-full right-[0px] mb-[20px] w-[calc(100vw-40px)] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto bg-[#fff] text-[#515151]"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex flex-col italic">
                     {playActive && activePlayItem ? (
                       <>
                         <span
-                          className={`header-text not-italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
+                          className="header-text not-italic !capitalize !text-[#515151]"
                           dangerouslySetInnerHTML={{
                             __html: activePlayItem.title,
                           }}
@@ -787,7 +787,7 @@ export default function NavBar() {
                     ) : (
                       <>
                         <span
-                          className={`header-text italic !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
+                          className="header-text italic !capitalize !text-[#515151]"
                           dangerouslySetInnerHTML={{
                             __html:
                               activeProject?.subtitle ||
@@ -796,19 +796,19 @@ export default function NavBar() {
                           }}
                         />
                         <span
-                          className={`!not-italic mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
+                          className="!not-italic mt-[20px] !text-[#515151]"
                           dangerouslySetInnerHTML={{
                             __html: activeProject?.desc || "",
                           }}
                         />
                         {activeProject?.date && (
-                          <span className={`mt-[20px] ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}>
+                          <span className="mt-[20px] !text-[#515151]">
                             {activeProject.date}
                           </span>
                         )}
                         {activeProject?.details && (
                           <span
-                            className={`${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
+                            className="!text-[#515151]"
                             dangerouslySetInnerHTML={{
                               __html: activeProject.details,
                             }}
@@ -816,7 +816,7 @@ export default function NavBar() {
                         )}
                         {activeProject?.extra && (
                           <span
-                            className={`mt-[20px] not-italic ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}
+                            className="mt-[20px] not-italic !text-[#515151]"
                             dangerouslySetInnerHTML={{
                               __html: activeProject.extra,
                             }}
@@ -837,7 +837,7 @@ export default function NavBar() {
                     damping: 20,
                     mass: 1,
                   }}
-                  className={`arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] ${playActive ? "bg-[#1c1c1c]" : "bg-[#fff]"}`}
+                  className="arrow fixed bottom-[96px] right-[114px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] bg-[#fff]"
                 ></motion.div>
               </>
             )}
@@ -854,12 +854,12 @@ export default function NavBar() {
             mass: 1,
           }}
           className={`absolute bottom-full w-[calc(100vw-40px)] right-0 mb-[20px] shadow-glow p-[20px] rounded-[4px] z-[1000] max-h-[calc(100dvh-180px)] overflow-y-auto ${isIndexOpen ? "pointer-events-auto" : "pointer-events-none"
-            } ${playActive ? "bg-[#1c1c1c] text-[#fff]" : "bg-[#fff] text-[#515151]"}`}
+            } bg-[#fff] text-[#515151]`}
 
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col gap-[20px]">
-            <span className={`header-text !capitalize ${playActive ? "!text-[#fff]" : "!text-[#515151]"}`}>Index</span>
+            <span className="header-text !capitalize !text-[#515151]">Index</span>
             {playActive
               ? playArray.map((playItem, index) => (
                 <motion.div
@@ -879,7 +879,7 @@ export default function NavBar() {
                   className={`${currentPlayIndex === index
                     ? "opacity-[1]"
                     : "opacity-[0.36]"
-                    } cursor-pointer ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
+                    } cursor-pointer text-[#515151]`}
                   onClick={() => {
                     setCurrentPlayIndex(index);
                     setIsIndexOpen(false);
@@ -899,7 +899,7 @@ export default function NavBar() {
                 >
                   <div className="flex items-center gap-[8px] relative">
                     <motion.div
-                      className={`w-[4px] h-[4px] rounded-full ${playActive ? "bg-[#fff]" : "bg-[#1c1c1c]"} absolute top-[50%] -translate-y-[50%] left-[3px]`}
+                      className="w-[4px] h-[4px] rounded-full bg-[#1c1c1c] absolute top-[50%] -translate-y-[50%] left-[3px]"
                       initial={{ opacity: 0 }}
                       animate={{
                         opacity: currentPlayIndex === index ? 1 : 0,
@@ -930,7 +930,7 @@ export default function NavBar() {
                   </div>
                   <div>
                     <span
-                      className={`title ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
+                      className="title text-[#515151]"
                       dangerouslySetInnerHTML={{
                         __html: playItem.title,
                       }}
@@ -954,7 +954,7 @@ export default function NavBar() {
                     mass: 1,
                   }}
                   className={`${activeId === project ? "opacity-[1]" : "opacity-[0.36]"
-                    } cursor-pointer italic ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
+                    } cursor-pointer italic text-[#515151]`}
                   onClick={() => {
                     setActiveId(project);
                     setIsIndexOpen(false);
@@ -1003,7 +1003,7 @@ export default function NavBar() {
                   </div>
                   <div>
                     <span
-                      className={`title ${playActive ? "text-[#fff]" : "text-[#515151]"}`}
+                      className="title text-[#515151]"
                       dangerouslySetInnerHTML={{
                         __html: projects[project].title,
                       }}
@@ -1024,7 +1024,7 @@ export default function NavBar() {
             damping: 20,
             mass: 1,
           }}
-          className={`arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] ${playActive ? "bg-[#1c1c1c]" : "bg-[#fff]"}`}
+          className="arrow fixed bottom-[96px] right-[50px] transform translate-x-1/2 w-[12px] h-[6px] z-[1001] bg-[#fff]"
         ></motion.div>
       </motion.div >
     </>

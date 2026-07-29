@@ -13,7 +13,6 @@ import {
 type MediaVideoProps = {
   src: string;
   objectPosition?: string;
-  backgroundColor?: string;
   className?: string;
   /**
    * When false the player is still mounted and buffering, but held paused. This
@@ -33,7 +32,6 @@ const POSTER_FALLBACK_MS = 1500;
 export default function MediaVideo({
   src,
   objectPosition = "center",
-  backgroundColor = "#ffffff",
   className,
   active = true,
   priority = false,
@@ -127,7 +125,7 @@ export default function MediaVideo({
   const showPoster = !hasPlayed && !posterExpired;
 
   return (
-    <div className={wrapperClass} style={{ backgroundColor }}>
+    <div className={wrapperClass} >
       {vimeoEmbedUrl ? (
         <iframe
           ref={iframeRef}
@@ -137,7 +135,6 @@ export default function MediaVideo({
           allowFullScreen
           onLoad={() => setFrameLoaded(true)}
           className="h-full w-full border-0"
-          style={{ backgroundColor }}
         />
       ) : (
         <video
@@ -153,7 +150,6 @@ export default function MediaVideo({
           className="max-h-full max-w-full object-contain"
           style={{
             objectPosition,
-            backgroundColor,
           }}
         />
       )}

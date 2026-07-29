@@ -194,7 +194,6 @@ export default function Play() {
                 title={playArray[index].title}
                 active={isCurrent}
                 priority={isCurrent}
-                videoBackgroundColor="#000000"
               />
             </div>
           );
@@ -273,7 +272,7 @@ export default function Play() {
       </AnimatePresence>
       <div
         key={currentIndex}
-        className="absolute block md:hidden top-[20px] bg-[#1c1c1c] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#000000] text-sm z-20"
+        className="absolute block md:hidden top-[20px] bg-[#f8f8f8] mobile-glow w-[52px] h-[26px] flex justify-center items-center rounded-full p-[4px] left-1/2 -translate-x-1/2 text-[#515151] text-sm z-20"
       >
         <span className="relative font-[400] pb-[2px] text-[#000000]/[0.38]">
           {String(currentIndex + 1).padStart(2, "0")}/
