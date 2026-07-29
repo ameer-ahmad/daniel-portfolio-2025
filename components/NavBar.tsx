@@ -7,6 +7,11 @@ import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
 import { projects } from "@/data/projects";
 import { playArray } from "@/data/play";
+import {
+  PREFETCH_PRIORITY,
+  prefetchProjectHero,
+  prefetchSlides,
+} from "@/app/(lib)/mediaSlides";
 export default function NavBar() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isInfoHovered, setIsInfoHovered] = useState(false);
@@ -879,6 +884,18 @@ export default function NavBar() {
                     setCurrentPlayIndex(index);
                     setIsIndexOpen(false);
                   }}
+                  onHoverStart={() =>
+                    prefetchSlides(
+                      playItem.images ?? [],
+                      PREFETCH_PRIORITY.adjacent
+                    )
+                  }
+                  onTouchStart={() =>
+                    prefetchSlides(
+                      playItem.images ?? [],
+                      PREFETCH_PRIORITY.adjacent
+                    )
+                  }
                 >
                   <div className="flex items-center gap-[8px] relative">
                     <motion.div
@@ -942,6 +959,18 @@ export default function NavBar() {
                     setActiveId(project);
                     setIsIndexOpen(false);
                   }}
+                  onHoverStart={() =>
+                    prefetchProjectHero(
+                      projects[project],
+                      PREFETCH_PRIORITY.adjacent
+                    )
+                  }
+                  onTouchStart={() =>
+                    prefetchProjectHero(
+                      projects[project],
+                      PREFETCH_PRIORITY.adjacent
+                    )
+                  }
                 >
                   <div className="flex items-center gap-[8px] relative">
                     <motion.div

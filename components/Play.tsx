@@ -2,20 +2,59 @@
 
 import { playArray } from "@/data/play";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import MediaVideo from "@/components/MediaVideo";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useMobileUI } from "@/app/(lib)/stores/useMobileUI";
 import { MediaItem } from "@/data/projects";
+import {
+  PREFETCH_PRIORITY,
+  prefetchSlide,
+  prefetchSlides,
+} from "@/app/(lib)/mediaSlides";
+import { useMountedSlides } from "@/app/(lib)/useMountedSlides";
+import ProjectSlide from "@/components/ProjectSlide";
+
+function normalizeImageItem(
+  img: { src: string; aspectRatio?: string } | string
+): MediaItem {
+  if (typeof img === "string") return img;
+  return { type: "image", src: img.src, aspectRatio: img.aspectRatio };
+}
+
+/** Each Play entry shows a single piece of media: the first one it declares. */
+function getPrimaryMedia(media?: MediaItem[]): MediaItem | null {
+  if (!media || media.length === 0) return null;
+  const first = media[0];
+
+  if (Array.isArray(first)) {
+    return first[0] ? normalizeImageItem(first[0]) : null;
+  }
+
+  if (typeof first === "string") return normalizeImageItem(first);
+
+  if ("type" in first) {
+    if (first.type === "images") {
+      const firstSrc = first.srcs[0];
+      return firstSrc ? normalizeImageItem(firstSrc) : null;
+    }
+    if (first.type === "videos") {
+      const src = first.srcs[0];
+      if (!src) return null;
+      return {
+        type: "video",
+        src: typeof src === "string" ? src : src.src,
+        aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
+      };
+    }
+    return first;
+  }
+
+  return null;
+}
 
 export default function Play() {
   const { currentPlayIndex, setCurrentPlayIndex } = useMobileUI();
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Sync local state with store
-  useEffect(() => {
-    setCurrentIndex(currentPlayIndex);
-  }, [currentPlayIndex]);
+  const [isMobile, setIsMobile] = useState(false);
   const [showNextArrow, setShowNextArrow] = useState(false);
   const [showPrevArrow, setShowPrevArrow] = useState(false);
   const [nextArrowDirection, setNextArrowDirection] = useState<"up" | "down">(
@@ -29,145 +68,45 @@ export default function Play() {
   const touchEndXRef = useRef<number | null>(null);
   const touchEndYRef = useRef<number | null>(null);
 
-  // Resolve the primary media to display for the current play item
-  const normalizeImageItem = (
-    img: { src: string; aspectRatio?: string } | string
-  ): MediaItem => {
-    if (typeof img === "string") return img;
-    return { type: "image", src: img.src, aspectRatio: img.aspectRatio };
-  };
+  // Sync local state with store
+  useEffect(() => {
+    setCurrentIndex(currentPlayIndex);
+  }, [currentPlayIndex]);
 
-  const getPrimaryMedia = (media?: MediaItem[]): MediaItem | null => {
-    if (!media || media.length === 0) return null;
-    const first = media[0];
-    if (Array.isArray(first))
-      return first[0] ? normalizeImageItem(first[0]) : null;
-    if (
-      typeof first === "object" &&
-      "type" in first &&
-      first.type === "images"
-    ) {
-      const firstSrc = first.srcs[0];
-      return firstSrc ? normalizeImageItem(firstSrc) : null;
-    }
-    if (
-      typeof first === "object" &&
-      "type" in first &&
-      first.type === "videos"
-    ) {
-      const src = first.srcs[0];
-      if (!src) return null;
-      return {
-        type: "video",
-        src: typeof src === "string" ? src : src.src,
-        aspectRatio: typeof src === "object" ? src.aspectRatio : undefined,
-      };
-    }
-    if (typeof first === "object" && "type" in first) return first;
-    if (typeof first === "string") return normalizeImageItem(first);
-    return normalizeImageItem(first);
-  };
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const renderMedia = (item: MediaItem) => {
-    const basePath =
-      process.env.NODE_ENV === "development"
-        ? "/images"
-        : "/images";
+  const slides = useMemo(
+    () => playArray.map((item) => getPrimaryMedia(item.images) ?? ""),
+    []
+  );
 
-    // Helper to normalize src string
-    const resolveSrc = (src: string) => `${basePath}${src}`;
+  const mountedIndices = useMountedSlides(slides, currentIndex, {
+    enabled: true,
+    mountNeighbours: true,
+    allowVideoNeighbours: !isMobile,
+  });
 
-    // Video object
-    if (
-      typeof item === "object" &&
-      !Array.isArray(item) &&
-      "type" in item &&
-      item.type === "video"
-    ) {
-      return <MediaVideo src={item.src} backgroundColor="#000000" />;
-    }
+  useEffect(() => {
+    const count = slides.length;
+    if (count <= 1) return;
 
-    // Image object
-    if (
-      typeof item === "object" &&
-      !Array.isArray(item) &&
-      "type" in item &&
-      item.type === "image"
-    ) {
-      return (
-        <Image
-          src={resolveSrc(item.src)}
-          alt={item.src}
-          fill
-          className="object-contain"
-          priority
-        />
-      );
-    }
-
-    // Array of images (take first)
-    if (Array.isArray(item)) {
-      const src = typeof item[0] === "string" ? item[0] : item[0]?.src;
-      if (!src) return null;
-      return (
-        <Image
-          src={resolveSrc(src)}
-          alt={src}
-          fill
-          className="object-contain"
-          priority
-        />
-      );
-    }
-
-    // Fallback string image
-    if (typeof item === "string") {
-      return (
-        <Image
-          src={resolveSrc(item)}
-          alt={item}
-          fill
-          className="object-contain"
-          priority
-        />
-      );
-    }
-
-    // Fallback for videos/images with srcs arrays: choose first available
-    if (typeof item === "object" && "type" in item && item.type === "videos") {
-      const src =
-        typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
-      if (!src) return null;
-      return <MediaVideo src={src} backgroundColor="#000000" />;
-    }
-
-    if (typeof item === "object" && "type" in item && item.type === "images") {
-      const src =
-        typeof item.srcs[0] === "string" ? item.srcs[0] : item.srcs[0]?.src;
-      if (!src) return null;
-      return (
-        <Image
-          src={resolveSrc(src)}
-          alt={src}
-          fill
-          className="object-contain"
-          priority
-        />
-      );
-    }
-
-    return null;
-  };
+    prefetchSlide(slides[(currentIndex + 1) % count], PREFETCH_PRIORITY.adjacent);
+    prefetchSlide(
+      slides[(currentIndex - 1 + count) % count],
+      PREFETCH_PRIORITY.adjacent
+    );
+    prefetchSlides(slides, PREFETCH_PRIORITY.nearby);
+  }, [currentIndex, slides]);
 
   const nextImage = () => {
-    setCurrentIndex((prev) => {
-      const isLastImage = prev === playArray.length - 1;
-      setNextArrowDirection(isLastImage ? "down" : "up");
-      const newIndex = (prev + 1) % playArray.length;
-      return newIndex;
-    });
-    // Calculate newIndex outside updater to avoid calling setCurrentPlayIndex during render
     const newIndex = (currentIndex + 1) % playArray.length;
+    setNextArrowDirection(currentIndex === playArray.length - 1 ? "down" : "up");
+    setCurrentIndex(newIndex);
     setCurrentPlayIndex(newIndex);
     setShowNextArrow(true);
     setTimeout(() => {
@@ -176,14 +115,9 @@ export default function Play() {
   };
 
   const prevImage = () => {
-    setCurrentIndex((prev) => {
-      const isFirstImage = prev === 0;
-      setPrevArrowDirection(isFirstImage ? "up" : "down");
-      const newIndex = (prev - 1 + playArray.length) % playArray.length;
-      return newIndex;
-    });
-    // Calculate newIndex outside updater to avoid calling setCurrentPlayIndex during render
     const newIndex = (currentIndex - 1 + playArray.length) % playArray.length;
+    setPrevArrowDirection(currentIndex === 0 ? "up" : "down");
+    setCurrentIndex(newIndex);
     setCurrentPlayIndex(newIndex);
     setShowPrevArrow(true);
     setTimeout(() => {
@@ -229,7 +163,6 @@ export default function Play() {
   };
 
   const currentItem = playArray[currentIndex];
-  const primaryMedia = getPrimaryMedia(currentItem.images);
 
   return (
     <div className="relative px-[20px] pt-[66px] pb-[102px] xl:p-[80px] lg:p-[40px] w-full h-full flex items-center justify-center">
@@ -240,9 +173,32 @@ export default function Play() {
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
-        <div key={currentIndex} className="relative w-full h-full">
-          {primaryMedia && renderMedia(primaryMedia)}
-        </div>
+        {mountedIndices.map((index) => {
+          const slide = slides[index];
+          if (!slide) return null;
+          const isCurrent = index === currentIndex;
+
+          return (
+            <div
+              key={index}
+              className="absolute inset-0"
+              style={{
+                opacity: isCurrent ? 1 : 0,
+                zIndex: isCurrent ? 2 : 1,
+                pointerEvents: isCurrent ? undefined : "none",
+              }}
+              aria-hidden={!isCurrent}
+            >
+              <ProjectSlide
+                slide={slide}
+                title={playArray[index].title}
+                active={isCurrent}
+                priority={isCurrent}
+                videoBackgroundColor="#000000"
+              />
+            </div>
+          );
+        })}
       </div>
       <button
         onClick={prevImage}

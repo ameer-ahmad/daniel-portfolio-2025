@@ -40,6 +40,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased !bg-white touch-none`}>
+        {/* Vimeo players cannot be preloaded, so the handshakes are the only part
+            of their startup cost we can pay in advance. React hoists these. */}
+        <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="" />
         <FontLoader />
         <NavBar />
         <div className="all-content">{children}</div>

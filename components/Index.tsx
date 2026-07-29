@@ -5,6 +5,10 @@ import { projects } from "@/data/projects";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { useEffect, useState } from "react";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
+import {
+  PREFETCH_PRIORITY,
+  prefetchProjectHero,
+} from "@/app/(lib)/mediaSlides";
 
 export default function Index() {
   const { activeId, setActiveId, isActive } = useActiveProject();
@@ -91,6 +95,12 @@ export default function Index() {
             key={project}
             className={`${isActive(project) ? "opacity-[1]" : "opacity-[0.36]"} cursor-pointer italic`}
             onClick={() => setActiveId(project)}
+            onHoverStart={() =>
+              prefetchProjectHero(projects[project], PREFETCH_PRIORITY.adjacent)
+            }
+            onTouchStart={() =>
+              prefetchProjectHero(projects[project], PREFETCH_PRIORITY.adjacent)
+            }
           >
             <div className="flex items-center gap-[8px] relative">
               <motion.div

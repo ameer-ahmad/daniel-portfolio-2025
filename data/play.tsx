@@ -1,4 +1,5 @@
 import { MediaItem } from "./projects";
+import { videoSources } from "./videoSources";
 
 export type PlayType = {
   id: number;
@@ -10,7 +11,7 @@ export const playArray: PlayType[] = [
   {
     id: 1,
     title: "TouchDesigner experimentation",
-    images: [{ type: "video", src: "/Sequence_01_1.mp4" }],
+    images: [{ type: "video", src: videoSources.touchDesigner }],
   },
   {
     id: 2,
@@ -22,7 +23,7 @@ export const playArray: PlayType[] = [
     id: 3,
     title:
       "<span class='italic'>Thesis experiments</span>, photogrammetry-scanned render of Letraset on circuit board",
-    images: [{ type: "video", src: "/Finalvid.mp4" }],
+    images: [{ type: "video", src: videoSources.thesisCircuitBoard }],
   },
   {
     id: 4,

@@ -1,3 +1,5 @@
+import { videoSources } from "./videoSources";
+
 export type VideoItem = string | { src: string; aspectRatio?: string };
 export type ImageItem = string | { src: string; aspectRatio?: string };
 
@@ -32,9 +34,9 @@ export const projects: ProjectType = {
       "Crypto.<span class='lowercase'>com</span> Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
     desc: "Home of the Lakers, Kings, and Sparks—Crypto Arena is located in the core downtown hub of Los Angeles. This series of websites is for the renewal of the arena’s most premium seats, including lounges, private suites, and the Lexus Club. The design draws from the arena’s sleek branding, while showcasing its teams’ star-studded rosters.",
     images: [
-      { type: "video", src: "/home-recording-crypto.mp4", aspectRatio: "8:5" },
-      { type: "video", src: "/crypto-loader-mobile.mp4", aspectRatio: "1420:1900" },
-      { type: "video", src: "/crypto-renewal-exp.mp4", aspectRatio: "273:158" },
+      { type: "video", src: videoSources.cryptoHomeRecording, aspectRatio: "8:5" },
+      { type: "video", src: videoSources.cryptoMobileLoader, aspectRatio: "1420:1900" },
+      { type: "video", src: videoSources.cryptoRenewalExperience, aspectRatio: "273:158" },
       { type: "image", src: "/crypto-sections.jpg" },
     ],
     date: "March 2025",
@@ -52,11 +54,11 @@ export const projects: ProjectType = {
       {
         type: "videos",
         srcs: [
-          { src: "/rangers-home.mp4", aspectRatio: "960:619" },
-          { src: "/mobile-rangers.mp4", aspectRatio: "284:619" },
+          { src: videoSources.rangersHome, aspectRatio: "960:619" },
+          { src: videoSources.rangersMobile, aspectRatio: "284:619" },
         ],
       },
-      { type: "video", src: "/rangers-loader.mp4", aspectRatio: "1241:924" },
+      { type: "video", src: videoSources.rangersLoader, aspectRatio: "1241:924" },
       {
         type: "images",
         srcs: [

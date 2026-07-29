@@ -1,25 +1,33 @@
 "use client";
 
 import { ProjectType } from "@/data/projects";
-import Image from "next/image";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
+  PREFETCH_PRIORITY,
   getFlattenedSlides,
+  prefetchSlide,
   prefetchSlides,
 } from "@/app/(lib)/mediaSlides";
-import MediaVideo from "@/components/MediaVideo";
+import { useMountedSlides } from "@/app/(lib)/useMountedSlides";
+import ProjectSlide from "@/components/ProjectSlide";
 
 export default function Project({
   projectKey,
   project,
   firstProject,
+  inWindow = true,
 }: {
   projectKey: string;
   project: ProjectType[keyof ProjectType];
   firstProject: boolean;
+  /**
+   * False for projects far from the active one: the gallery stays in the tree
+   * (the vertical scroll maths depends on its height) but loads no media.
+   */
+  inWindow?: boolean;
 }) {
   const { loadingDone } = useLoadingDone();
   const { activeId, resetCounter } = useActiveProject();
@@ -32,12 +40,13 @@ export default function Project({
   const [prevArrowDirection, setPrevArrowDirection] = useState<"up" | "down">(
     "down"
   );
-  const [windowWidth, setWindowWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const touchEndXRef = useRef<number | null>(null);
   const touchEndYRef = useRef<number | null>(null);
+
+  const isActiveProject = activeId === projectKey;
 
   // Reset gallery index when project changes or NavBar is clicked (even if activeId doesn't change)
   useEffect(() => {
@@ -46,11 +55,9 @@ export default function Project({
 
   // Mobile detection
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
     setIsMobile(window.innerWidth < 768);
 
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
       setIsMobile(window.innerWidth < 768);
     };
 
@@ -63,12 +70,29 @@ export default function Project({
     [project.images, isMobile]
   );
 
-  // Tier 2: prefetch remaining slides while user is on this project's first slide
+  // Until the intro finishes, only the project on screen loads anything: every
+  // other byte would be competing with the one image the user is waiting for.
+  const mountedIndices = useMountedSlides(flattenedImages, currentIndex, {
+    enabled: inWindow && (isActiveProject || loadingDone),
+    mountNeighbours: isActiveProject && loadingDone,
+    allowVideoNeighbours: !isMobile,
+  });
+
+  // Warm what a single click or swipe can reach first, then the rest of the project.
   useEffect(() => {
-    if (activeId !== projectKey || currentIndex !== 0) return;
-    if (flattenedImages.length <= 1) return;
-    prefetchSlides(flattenedImages.slice(1));
-  }, [activeId, projectKey, currentIndex, flattenedImages]);
+    if (!isActiveProject || flattenedImages.length <= 1) return;
+
+    const count = flattenedImages.length;
+    prefetchSlide(
+      flattenedImages[(currentIndex + 1) % count],
+      PREFETCH_PRIORITY.adjacent
+    );
+    prefetchSlide(
+      flattenedImages[(currentIndex - 1 + count) % count],
+      PREFETCH_PRIORITY.adjacent
+    );
+    prefetchSlides(flattenedImages, PREFETCH_PRIORITY.nearby);
+  }, [isActiveProject, currentIndex, flattenedImages]);
 
   const nextImage = () => {
     if (flattenedImages.length <= 1) return;
@@ -94,117 +118,6 @@ export default function Project({
     setTimeout(() => {
       setShowPrevArrow(false);
     }, 700); // 500ms visible + 200ms exit delay
-  };
-
-  const currentImageItem = flattenedImages[currentIndex];
-  const isImageArray =
-    Array.isArray(currentImageItem) &&
-    (typeof currentImageItem[0] === "string" ||
-      (typeof currentImageItem[0] === "object" &&
-        "src" in currentImageItem[0]));
-  const isVideoObject =
-    typeof currentImageItem === "object" &&
-    !Array.isArray(currentImageItem) &&
-    "type" in currentImageItem &&
-    currentImageItem.type === "video";
-  const isVideosObject =
-    typeof currentImageItem === "object" &&
-    !Array.isArray(currentImageItem) &&
-    "type" in currentImageItem &&
-    currentImageItem.type === "videos";
-  const isImageObject =
-    typeof currentImageItem === "object" &&
-    !Array.isArray(currentImageItem) &&
-    "type" in currentImageItem &&
-    currentImageItem.type === "image";
-  const isImagesObject =
-    typeof currentImageItem === "object" &&
-    !Array.isArray(currentImageItem) &&
-    "type" in currentImageItem &&
-    currentImageItem.type === "images";
-
-  // Type guards for TypeScript
-  const videoItem = isVideoObject
-    ? (currentImageItem as {
-        type: "video";
-        src: string;
-        aspectRatio?: string;
-      })
-    : null;
-  const videosItem = isVideosObject
-    ? (currentImageItem as {
-        type: "videos";
-        srcs: (string | { src: string; aspectRatio?: string })[];
-      })
-    : null;
-  const imageItem = isImageObject
-    ? (currentImageItem as { type: "image"; src: string; aspectRatio?: string })
-    : null;
-  const imagesItem = isImagesObject
-    ? (currentImageItem as {
-        type: "images";
-        srcs: (string | { src: string; aspectRatio?: string })[];
-      })
-    : null;
-
-  // Helper function to parse aspect ratio and calculate flex value
-  const getAspectRatioValue = (aspectRatio?: string): number => {
-    if (!aspectRatio) return 1; // Default to equal width
-    const [width, height] = aspectRatio.split(":").map(Number);
-    if (!width || !height) return 1;
-    return width / height; // Return the ratio (wider videos get higher values)
-  };
-
-  // Calculate flex values for videos based on aspect ratios
-  const getVideoFlexValue = (
-    videoItem: string | { src: string; aspectRatio?: string },
-    allVideos: (string | { src: string; aspectRatio?: string })[]
-  ): number => {
-    const aspectRatio =
-      typeof videoItem === "string" ? undefined : videoItem.aspectRatio;
-    const thisRatio = getAspectRatioValue(aspectRatio);
-
-    // If no aspect ratios specified, default to equal width
-    const hasAnyAspectRatios = allVideos.some(
-      (v) => typeof v !== "string" && v.aspectRatio
-    );
-    if (!hasAnyAspectRatios) return 1;
-
-    // Calculate relative flex based on aspect ratios
-    const totalRatio = allVideos.reduce((sum, v) => {
-      const ratio =
-        typeof v === "string" ? 1 : getAspectRatioValue(v.aspectRatio);
-      return sum + ratio;
-    }, 0);
-
-    // Return proportional flex value (normalize to reasonable range)
-    return (thisRatio / totalRatio) * allVideos.length;
-  };
-
-  // Calculate flex values for images based on aspect ratios (same logic as videos)
-  const getImageFlexValue = (
-    imageItem: string | { src: string; aspectRatio?: string },
-    allImages: (string | { src: string; aspectRatio?: string })[]
-  ): number => {
-    const aspectRatio =
-      typeof imageItem === "string" ? undefined : imageItem.aspectRatio;
-    const thisRatio = getAspectRatioValue(aspectRatio);
-
-    // If no aspect ratios specified, default to equal width
-    const hasAnyAspectRatios = allImages.some(
-      (img) => typeof img !== "string" && img.aspectRatio
-    );
-    if (!hasAnyAspectRatios) return 1;
-
-    // Calculate relative flex based on aspect ratios
-    const totalRatio = allImages.reduce((sum, img) => {
-      const ratio =
-        typeof img === "string" ? 1 : getAspectRatioValue(img.aspectRatio);
-      return sum + ratio;
-    }, 0);
-
-    // Return proportional flex value (normalize to reasonable range)
-    return (thisRatio / totalRatio) * allImages.length;
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
@@ -324,150 +237,28 @@ export default function Project({
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
       >
-        <div key={currentIndex} className="relative w-full h-full">
-            {isVideosObject && videosItem ? (
-              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
-                {videosItem.srcs.map((videoItem, idx) => {
-                  const videoSrc =
-                    typeof videoItem === "string" ? videoItem : videoItem.src;
-                  const flexValue = getVideoFlexValue(
-                    videoItem,
-                    videosItem.srcs
-                  );
-                  const isTwoItems = videosItem.srcs.length === 2;
-                  const objectPosition = isTwoItems
-                    ? idx === 0
-                      ? "right center"
-                      : "left center"
-                    : "center";
-                  return (
-                    <div
-                      key={idx}
-                      className="relative"
-                      style={{ flex: flexValue }}
-                    >
-                      <MediaVideo
-                        src={videoSrc}
-                        objectPosition={objectPosition}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : isVideoObject && videoItem ? (
-              <div className="relative w-full h-full">
-                <MediaVideo src={videoItem.src} />
-              </div>
-            ) : isImagesObject && imagesItem ? (
-              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
-                {imagesItem.srcs.map((imageItem, idx) => {
-                  const imageSrc =
-                    typeof imageItem === "string" ? imageItem : imageItem.src;
-                  const flexValue = getImageFlexValue(
-                    imageItem,
-                    imagesItem.srcs
-                  );
-                  const isTwoItems = imagesItem.srcs.length === 2;
-                  const objectPosition = isTwoItems
-                    ? idx === 0
-                      ? "right center"
-                      : "left center"
-                    : "center";
-                  return (
-                    <div
-                      key={idx}
-                      className="relative"
-                      style={{ flex: flexValue }}
-                    >
-                      <Image
-                        src={`${
-                          process.env.NODE_ENV === "development"
-                            ? "/"
-                            : "/"
-                        }images${imageSrc}`}
-                        alt={`${project.title} - Image ${idx + 1}`}
-                        fill
-                        sizes="50%"
-                        className="object-contain"
-                        style={{ objectPosition }}
-                        priority={
-                          firstProject && currentIndex === 0 && idx === 0
-                        }
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : isImageArray ? (
-              <div className="w-full h-full flex xl:gap-[40px] gap-[20px]">
-                {currentImageItem.map((img, idx) => {
-                  const imageSrc = typeof img === "string" ? img : img.src;
-                  const flexValue = getImageFlexValue(
-                    img,
-                    currentImageItem as (
-                      | string
-                      | { src: string; aspectRatio?: string }
-                    )[]
-                  );
-                  const isTwoItems = currentImageItem.length === 2;
-                  const objectPosition = isTwoItems
-                    ? idx === 0
-                      ? "right center"
-                      : "left center"
-                    : "center";
-                  return (
-                    <div
-                      key={idx}
-                      className="relative"
-                      style={{ flex: flexValue }}
-                    >
-                      <Image
-                        src={`${
-                          process.env.NODE_ENV === "development"
-                            ? "/"
-                            : "/"
-                        }images${imageSrc}`}
-                        alt={`${project.title} - Image ${idx + 1}`}
-                        fill
-                        sizes="50%"
-                        className="object-contain"
-                        style={{ objectPosition }}
-                        priority={
-                          firstProject && currentIndex === 0 && idx === 0
-                        }
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : isImageObject && imageItem ? (
-              <Image
-                src={`${
-                  process.env.NODE_ENV === "development"
-                    ? "/"
-                    : "/"
-                }images${imageItem.src}`}
-                alt={project.title}
-                fill
-                sizes="100%"
-                className="object-contain"
-                priority={firstProject && currentIndex === 0}
+        {mountedIndices.map((index) => {
+          const isCurrent = index === currentIndex;
+          return (
+            <div
+              key={index}
+              className="absolute inset-0"
+              style={{
+                opacity: isCurrent ? 1 : 0,
+                zIndex: isCurrent ? 2 : 1,
+                pointerEvents: isCurrent ? undefined : "none",
+              }}
+              aria-hidden={!isCurrent}
+            >
+              <ProjectSlide
+                slide={flattenedImages[index]}
+                title={project.title}
+                active={isCurrent && isActiveProject}
+                priority={firstProject && index === 0}
               />
-            ) : (
-              <Image
-                src={`${
-                  process.env.NODE_ENV === "development"
-                    ? "/"
-                    : "/"
-                }images${currentImageItem}`}
-                alt={project.title}
-                fill
-                sizes="100%"
-                className="object-contain"
-                priority={firstProject && currentIndex === 0}
-              />
-            )}
-        </div>
+            </div>
+          );
+        })}
       </div>
       {flattenedImages.length > 1 && (
         <>

@@ -8,8 +8,15 @@ import { projects } from "@/data/projects";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
-import { useLayoutEffect, useRef, useEffect, useState } from "react";
+import { useLayoutEffect, useRef, useEffect, useMemo, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
+import {
+  PREFETCH_PRIORITY,
+  prefetchProjectHero,
+} from "@/app/(lib)/mediaSlides";
+
+/** Projects this far from the active one render their media; the rest stay blank. */
+const RENDER_WINDOW = 1;
 
 const Play = dynamic(() => import("@/components/Play"), {
   ssr: false,
@@ -21,6 +28,8 @@ export default function Home() {
   const loadingDone = useLoadingDone((s) => s.loadingDone);
   const [loadPlay, setLoadPlay] = useState(false);
   const firstProjectHeightOffset = 60;
+  const projectKeys = useMemo(() => Object.keys(projects), []);
+  const activeIndex = projectKeys.indexOf(activeId);
 
   const y = useMotionValue(0);
   const ySpring = useSpring(y, {
@@ -43,6 +52,21 @@ export default function Home() {
   useEffect(() => {
     if (playActive) setLoadPlay(true);
   }, [playActive]);
+
+  // A vertical swipe can only reach the next project, so warm those first and
+  // keep a second ring warm for momentum through the stack.
+  useEffect(() => {
+    if (!loadingDone || activeIndex < 0) return;
+
+    const warm = (offsets: number[], priority: number) =>
+      offsets.forEach((offset) => {
+        const key = projectKeys[activeIndex + offset];
+        if (key) prefetchProjectHero(projects[key], priority);
+      });
+
+    warm([1, -1], PREFETCH_PRIORITY.adjacent);
+    warm([2, -2], PREFETCH_PRIORITY.nearby);
+  }, [activeIndex, loadingDone, projectKeys]);
 
   useEffect(() => {
     if (!loadingDone) return;
@@ -168,7 +192,6 @@ export default function Home() {
       window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, [playActive, x]);
-  const projectKeys = Object.keys(projects);
   const getProjectY = (container: HTMLElement, projectId: string) => {
     const activeProject = document.getElementById(projectId);
     if (!activeProject) return null;
@@ -334,6 +357,10 @@ export default function Home() {
                     projectKey={project}
                     project={projects[project]}
                     firstProject={i === 0 ? true : false}
+                    inWindow={
+                      activeIndex < 0 ||
+                      Math.abs(i - activeIndex) <= RENDER_WINDOW
+                    }
                   />
                 </div>
                 );

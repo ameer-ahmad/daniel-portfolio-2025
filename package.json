@@ -6,11 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "media": "npm run media:posters && npm run media:images",
+    "media:posters": "node scripts/fetch-vimeo-posters.mjs",
+    "media:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.6",
-    "next": "15.4.2",
+    "next": "^15.5.22",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zustand": "^5.0.8"
@@ -22,8 +25,14 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.4.2",
+    "eslint-config-next": "^15.5.0",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.24",
+    "sharp": "$sharp",
+    "brace-expansion": ">5.0.7"
   }
 }
