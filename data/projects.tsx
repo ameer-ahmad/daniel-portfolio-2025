@@ -26,29 +26,12 @@ export type ProjectType = {
 };
 
 export const projects: ProjectType = {
-  "bulls-2026": {
+  "crypto-2026": {
     id: 1,
     title:
-      "Bulls Season Ticket Holder Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+      "Crypto.com Premium Renewal, <span class='lowercase not-italic'>websites</span>",
     subtitle:
-      "Bulls Season Ticket Holder Renewals 2026, <span class='lowercase not-italic'>websites</span>",
-    desc: "Yearly renewal campaign for Chicago Bulls season ticket holders. This year’s series spanned seven different website variations for various seat types (not including the non-autorenew versions of each site). ",
-    images: [
-      { type: "video", src: videoSources.bullsRecording, aspectRatio: "739:477" },
-      { type: "video", src: videoSources.bullsLoader, aspectRatio: "610:381" },
-      { type: "image", src: "/bulls-hero-mockup.jpg" },
-      { type: "image", src: "/bulls-mobile.jpg" },
-    ],
-    date: "Feb 2025",
-    details: "Website Series",
-    extra: "",
-  },
-  "crypto-2026": {
-    id: 2,
-    title:
-      "Crypto.com Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
-    subtitle:
-      "Crypto.<span class='lowercase'>com</span> Premium Renewal 2026, <span class='lowercase not-italic'>websites</span>",
+      "Crypto.<span class='lowercase'>com</span> Premium Renewal, <span class='lowercase not-italic'>websites</span>",
     desc: "Home of the Lakers, Kings, and Sparks—Crypto Arena is located in the core downtown hub of Los Angeles. This series of websites is for the renewal of the arena’s most premium seats, including lounges, private suites, and the Lexus Club. The design draws from the arena’s sleek branding, while showcasing its teams’ star-studded rosters.",
     images: [
       { type: "video", src: videoSources.cryptoHomeRecording, aspectRatio: "8:5" },
@@ -56,16 +39,33 @@ export const projects: ProjectType = {
       { type: "video", src: videoSources.cryptoRenewalExperience, aspectRatio: "273:158" },
       { type: "image", src: "/crypto-sections.jpg" },
     ],
-    date: "March 2025",
+    date: "March 2026",
+    details: "Website Series",
+    extra: "",
+  },
+  "bulls-2026": {
+    id: 2,
+    title:
+      "Bulls Season Ticket Holder Renewals, <span class='lowercase not-italic'>websites</span>",
+    subtitle:
+      "Bulls Season Ticket Holder Renewals, <span class='lowercase not-italic'>websites</span>",
+    desc: "Yearly renewal campaign for Chicago Bulls season ticket holders. This year’s series spanned seven different website variations for various seat types (not including the non-autorenew versions of each site). ",
+    images: [
+      { type: "video", src: videoSources.bullsLoader, aspectRatio: "610:381" },
+      { type: "image", src: "/bulls-hero-mockup.jpg" },
+      { type: "image", src: "/bulls-mobile.jpg" },
+      { type: "video", src: videoSources.bullsRecording, aspectRatio: "739:477" },
+    ],
+    date: "Feb 2026",
     details: "Website Series",
     extra: "",
   },
   "texas-rangers": {
     id: 3,
     title:
-      "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+      "Texas Rangers Renewals, <span class='lowercase not-italic'>websites</span>",
     subtitle:
-      "Texas Rangers Renewals 2026, <span class='lowercase not-italic'>websites</span>",
+      "Texas Rangers Renewals, <span class='lowercase not-italic'>websites</span>",
     desc: "Entering the 2026 MLB season, the Texas Rangers wanted a new look that stood out as much as their big offseason changes. This campaign spanned across a series of websites, including season ticket renewals, suites, new sales, and 20-game package plans.<br /><br />I led the design direction from end-to-end, including the web experience, interfaces, navigation, and creation of new assets. My designs for these websites drew from their latest branding campaign, “Neon Roadhouse”.",
     images: [
       {

@@ -219,7 +219,7 @@ export default function Home() {
       <motion.div style={{ x: xSpring }} className="flex w-[200vw]">
         <div className="flex all-content">
           <Index />
-          <div className="w-full h-full relative shadow-glow overflow-y-clip">
+          <div className="w-full h-full relative overflow-y-clip">
             <motion.div
               style={{ y: ySpring }}
               className="relative flex"
