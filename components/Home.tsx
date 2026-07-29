@@ -8,7 +8,14 @@ import { projects } from "@/data/projects";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useActiveProject } from "@/app/(lib)/stores/useActiveProject";
 import { useLoadingDone } from "@/app/(lib)/stores/useLoadingDone";
-import { useLayoutEffect, useRef, useEffect, useMemo, useState } from "react";
+import {
+  useLayoutEffect,
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import {
   PREFETCH_PRIORITY,
@@ -117,6 +124,19 @@ export default function Home() {
     }, 50);
   };
 
+  const getProjectY = useCallback(
+    (container: HTMLElement, projectId: string) => {
+      const activeProject = document.getElementById(projectId);
+      if (!activeProject) return null;
+      const containerTop = container.getBoundingClientRect().top;
+      const projectTop = activeProject.getBoundingClientRect().top;
+      const index = projectKeys.indexOf(projectId);
+      const stepOffset = index > 0 ? firstProjectHeightOffset : 0;
+      return -(projectTop - containerTop + stepOffset);
+    },
+    [projectKeys, firstProjectHeightOffset]
+  );
+
   useLayoutEffect(() => {
     const container = document.getElementById("ProjectsContainer");
     const activeProject = document.getElementById(activeId);
@@ -164,7 +184,7 @@ export default function Home() {
       window.removeEventListener("resize", () => updateY(false));
       window.removeEventListener("orientationchange", handleOrientationChange);
     };
-  }, [activeId, y]);
+  }, [activeId, y, getProjectY]);
 
   useLayoutEffect(() => {
     const updateX = () => {
@@ -192,15 +212,6 @@ export default function Home() {
       window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, [playActive, x]);
-  const getProjectY = (container: HTMLElement, projectId: string) => {
-    const activeProject = document.getElementById(projectId);
-    if (!activeProject) return null;
-    const containerTop = container.getBoundingClientRect().top;
-    const projectTop = activeProject.getBoundingClientRect().top;
-    const index = projectKeys.indexOf(projectId);
-    const stepOffset = index > 0 ? firstProjectHeightOffset : 0;
-    return -(projectTop - containerTop + stepOffset);
-  };
 
   return (
     <>
@@ -280,7 +291,6 @@ export default function Home() {
 
                   // If at boundary and trying to scroll in that direction, snap back with spring
                   if ((isAtFirstProject && tryingToScrollUp) || (isAtLastProject && tryingToScrollDown)) {
-                    const currentProject = document.getElementById(activeId);
                     const targetY = getProjectY(container, activeId);
                     if (targetY !== null) {
                       startAnimation();
@@ -307,7 +317,6 @@ export default function Home() {
                       setActiveId(targetProjectKey);
                     } else {
                       // Snap back to current project
-                      const currentProject = document.getElementById(activeId);
                       const targetY = getProjectY(container, activeId);
                       if (targetY !== null) {
                         startAnimation();

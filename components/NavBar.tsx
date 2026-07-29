@@ -14,7 +14,6 @@ import {
 } from "@/app/(lib)/mediaSlides";
 export default function NavBar() {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
-  const [isInfoHovered, setIsInfoHovered] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const { loadingDone } = useLoadingDone();
   const { setPlayActive, setActiveId, playActive, activeId } =
@@ -118,12 +117,6 @@ export default function NavBar() {
                   damping: 20,
                   mass: 1,
                 }}
-                onHoverStart={
-                  windowWidth >= 768 ? () => setIsInfoHovered(true) : undefined
-                }
-                onHoverEnd={
-                  windowWidth >= 768 ? () => setIsInfoHovered(false) : undefined
-                }
                 className="flex flex-col absolute right-0"
               >
                 <span

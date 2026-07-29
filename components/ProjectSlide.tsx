@@ -84,7 +84,6 @@ type ProjectSlideProps = {
   /** Drives video playback: inactive slides stay mounted and buffered but paused. */
   active: boolean;
   priority?: boolean;
-  videoBackgroundColor?: string;
 };
 
 export default function ProjectSlide({
@@ -92,7 +91,6 @@ export default function ProjectSlide({
   title,
   active,
   priority = false,
-  videoBackgroundColor,
 }: ProjectSlideProps) {
   const alt = plainText(title);
 
@@ -124,7 +122,6 @@ export default function ProjectSlide({
             src={slide.src}
             active={active}
             priority={priority}
-            backgroundColor={videoBackgroundColor}
             posterSizes={imageSizes(1)}
           />
         </div>
@@ -144,7 +141,6 @@ export default function ProjectSlide({
                 src={srcOf(item)}
                 active={active}
                 priority={priority}
-                backgroundColor={videoBackgroundColor}
                 posterSizes={imageSizes(slide.srcs.length)}
                 objectPosition={objectPositionFor(index, slide.srcs.length)}
               />
